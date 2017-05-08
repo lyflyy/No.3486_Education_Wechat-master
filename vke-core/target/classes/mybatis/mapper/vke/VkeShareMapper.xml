@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhishimao.core.vke.dao.VkeShareMapper">
+  <resultMap id="BaseResultMap" type="cn.zhishimao.core.vke.entity.VkeShare">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="obj_id" jdbcType="BIGINT" property="objId" />
+    <result column="total" jdbcType="INTEGER" property="total" />
+    <result column="view_count" jdbcType="INTEGER" property="viewCount" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="edit_time" jdbcType="TIMESTAMP" property="editTime" />
+    <result column="version" jdbcType="BIGINT" property="version" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    `id`, `user_id`, `obj_id`, `total`, `view_count`, `created_time`, `edit_time`, `version`, 
+    `remark`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from `vke_share`
+    where `id` = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from `vke_share`
+    where `id` = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.zhishimao.core.vke.entity.VkeShare">
+    insert into `vke_share` (`id`, `user_id`, `obj_id`, 
+      `total`, `view_count`, `created_time`, 
+      `edit_time`, `version`, `remark`
+      )
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{objId,jdbcType=BIGINT}, 
+      #{total,jdbcType=INTEGER}, #{viewCount,jdbcType=INTEGER}, #{createdTime,jdbcType=TIMESTAMP}, 
+      #{editTime,jdbcType=TIMESTAMP}, #{version,jdbcType=BIGINT}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.zhishimao.core.vke.entity.VkeShare">
+    insert into `vke_share`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        `id`,
+      </if>
+      <if test="userId != null">
+        `user_id`,
+      </if>
+      <if test="objId != null">
+        `obj_id`,
+      </if>
+      <if test="total != null">
+        `total`,
+      </if>
+      <if test="viewCount != null">
+        `view_count`,
+      </if>
+      <if test="createdTime != null">
+        `created_time`,
+      </if>
+      <if test="editTime != null">
+        `edit_time`,
+      </if>
+      <if test="version != null">
+        `version`,
+      </if>
+      <if test="remark != null">
+        `remark`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="objId != null">
+        #{objId,jdbcType=BIGINT},
+      </if>
+      <if test="total != null">
+        #{total,jdbcType=INTEGER},
+      </if>
+      <if test="viewCount != null">
+        #{viewCount,jdbcType=INTEGER},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editTime != null">
+        #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.zhishimao.core.vke.entity.VkeShare">
+    update `vke_share`
+    <set>
+      <if test="userId != null">
+        `user_id` = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="objId != null">
+        `obj_id` = #{objId,jdbcType=BIGINT},
+      </if>
+      <if test="total != null">
+        `total` = #{total,jdbcType=INTEGER},
+      </if>
+      <if test="viewCount != null">
+        `view_count` = #{viewCount,jdbcType=INTEGER},
+      </if>
+      <if test="createdTime != null">
+        `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editTime != null">
+        `edit_time` = #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        `version` = #{version,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null">
+        `remark` = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.zhishimao.core.vke.entity.VkeShare">
+    update `vke_share`
+    set `user_id` = #{userId,jdbcType=BIGINT},
+      `obj_id` = #{objId,jdbcType=BIGINT},
+      `total` = #{total,jdbcType=INTEGER},
+      `view_count` = #{viewCount,jdbcType=INTEGER},
+      `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+      `edit_time` = #{editTime,jdbcType=TIMESTAMP},
+      `version` = #{version,jdbcType=BIGINT},
+      `remark` = #{remark,jdbcType=VARCHAR}
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+  <sql id="Base_Condition">
+    <if test="userId != null">
+      and user_id = #{userId,jdbcType=BIGINT}
+    </if>
+    <if test="objId != null">
+      and obj_id = #{objId,jdbcType=BIGINT}
+    </if>
+    <if test="createdTime != null">
+      and created_time = #{createdTime,jdbcType=TIMESTAMP}
+    </if>
+
+  </sql>
+
+  <select id="listBy" parameterType="cn.zhishimao.core.vke.entity.VkeShare" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from vke_share
+    where 1=1
+    <include refid="Base_Condition" />
+    order by created_time desc
+  </select>
+
+  <update id="encreaseViewCount" parameterType="java.util.HashMap">
+    update vke_share set view_count = view_count +1
+    where obj_id = #{courseId,jdbcType=TIMESTAMP} and user_id = #{userId,jdbcType=TIMESTAMP}
+  </update>
+
+  <select id="selectAllByCourseId" parameterType="java.lang.Long" resultType="java.util.HashMap">
+      select vs.id,vs.user_id,vs.total,vs.view_count,vs.created_time,
+      vu.nick_name as user_nick_name, vu.avatar as user_avatar
+      from vke_share vs
+      left join vke_user vu on vu.id = vs.user_id
+      left join vke_course vc on vc.id = vs.obj_id
+      where vs.obj_id = #{courseId,jdbcType=BIGINT} and vc.id = #{courseId,jdbcType=BIGINT}
+      order by total DESC
+  </select>
+
+  <select id="selectTop" resultType="java.util.HashMap">
+    select vs.id,vs.user_id,vs.total,vs.view_count,vs.created_time,
+    vu.nick_name as user_nick_name, vu.avatar as user_avatar
+    from vke_share vs
+    left join vke_user vu on vu.id = vs.user_id
+    left join vke_course vc on vc.id = vs.obj_id
+    where vu.id is not null
+    and vs.obj_id = #{courseId,jdbcType=BIGINT}
+    and vc.id = #{courseId,jdbcType=BIGINT}
+    and total >= #{count,jdbcType=BIGINT}
+    order by total DESC limit 0,#{topN,jdbcType=BIGINT}
+  </select>
+
+  <select id="userShareInfo" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+      select  vs.total ,vu.nick_name, vu.avatar,vs.user_id,vs.view_count
+      from vke_share vs
+      left join vke_user vu on vu.id = vs.user_id
+      where vs.obj_id = #{courseId,jdbcType=BIGINT} and vs.user_id =#{studentId,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByUserIdAndObjId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from vke_share
+    where user_id =#{userId,jdbcType=BIGINT} and obj_id = #{objId,jdbcType=BIGINT}
+  </select>
+
+  <select id="findByUserId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from vke_share
+    where user_id =#{userId,jdbcType=BIGINT}
+  </select>
+
+  <select id="findAllShareUser" resultType="java.util.HashMap">
+    SELECT vs.total,vs.view_count,vs.created_time,vu.nick_name,vu.id userId
+    from vke_share vs,vke_user vu,vke_course vc
+    where vs.obj_id=vc.id and vs.user_id =vu.id and vc.id = #{courseId,jdbcType=BIGINT}
+    ORDER  by vs.created_time desc
+  </select>
+
+</mapper>

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="wx/fragment/frag :: common_header(~{::title},_)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>知识猫</title>
+</head>
+<body class="vke">
+<div class="container" id="app">
+
+    <div class="weui-tab">
+        <div class="page home">
+            <div class="page__hd">
+                <div class="weui-search-bar" id="searchBar">
+                    <form class="weui-search-bar__form">
+                        <div class="weui-search-bar__box">
+                            <i class="weui-icon-search"></i>
+                            <input type="search" class="weui-search-bar__input"
+                                   id="searchInput" placeholder="搜索感兴趣的课程和讲师" required="">
+                            <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
+                        </div>
+                        <label class="weui-search-bar__label" id="searchText"
+                               style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
+                            <i class="weui-icon-search"></i>
+                            <span>搜索感兴趣的课程和讲师</span>
+                        </label>
+                    </form>
+                    <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
+                </div>
+
+                <!--滚图-->
+                <div class="swiper-container" data-space-between='10' data-pagination='.swiper-pagination'
+                     data-autoplay="1000">
+                    <div class="swiper-wrapper">
+
+                        <div th:each="banner: ${bannerList}" class="swiper-slide">
+                            <div>
+                                <a th:href="@{/wx/view/banner?id={id}&type={type}&objId={objId}(id=${banner.id},type=${banner.objType},objId=${banner.objId})}">
+                                    <img th:src="${banner.masterimg}+ '?imageView2/1/w/375/h/180'" alt=""/>
+                                </a>
+                            </div>
+                            <!--推荐内容-->
+                            <div class="weui-panel  weui-panel_access">
+                                <div class="weui-panel__bd">
+                                    <div class="weui-media-box weui-media-box_text">
+                                        <h4 class="weui-media-box__title" th:text="${banner.title}">
+                                            这是推广课程获讲师主要内容，一行20个字</h4>
+                                        <p class="weui-media-box__desc" th:text="${banner.content}">Andy&nbsp;|&nbsp;互联网非资深产品</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+
+
+            </div>
+
+            <div class="page__bd default">
+                <div class="weui-flex btn-tab">
+                    <div class="weui-flex__item"><a href="/wx/view/course/all" class="placeholder">全部课程</a></div>
+                    <div class="weui-flex__item"><a href="/wx/view/lecturer/all?isHighQuality=1"
+                                                    class="placeholder">优质讲师</a></div>
+                </div>
+
+                <div class="weui-panel weui-panel_access">
+                    <div class="weui-panel__hd">直播中的课程</div>
+                    <div class="weui-panel__bd">
+                        <a th:each="course: ${c2List}" th:href="@{/wx/view/course/{id}(id=${course.id})}"
+                           class="weui-media-box weui-media-box_appmsg ">
+                            <div class="weui-media-box__hd">
+                                <img class="weui-media-box__thumb" th:src="'http://vke2016-10071423.image.myqcloud.com/' + ${course.avatar} + '?imageView2/1/w/180/h/180'"/>
+                                <span class="doing">	<img src="/public/wx/images/status_2.png"/></span>
+                            </div>
+
+                            <div class="weui-media-box__bd">
+                                <h4 class="weui-media-box__title" th:text="${course.name}"></h4>
+                                <p class="weui-media-box__desc">
+                                    <span th:text="${course.sigup_count}"></span>人报名
+                                </p>
+                                <p class="weui-media-box__desc">
+                                    <span th:text="${course.nick_name}"></span> | <span th:text="${course?.title}"></span>
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="weui-panel__ft">
+                        <a href="/wx/view/course/all?status=2" class="weui-cell weui-cell_access weui-cell_link">
+                            <div class="weui-cell__bd">查看更多</div>
+                            <span class="weui-cell__ft"></span>
+                        </a>
+                    </div>
+                </div>
+
+
+                <div class="weui-panel weui-panel_access">
+                    <div class="weui-panel__hd">报名中的课程</div>
+                    <div class="weui-panel__bd">
+                        <a th:each="course: ${c1List}" th:href="@{/wx/view/course/{id}(id=${course.id})}"
+                           class="weui-media-box weui-media-box_appmsg ">
+                            <div class="weui-media-box__hd">
+                                <img class="weui-media-box__thumb" th:src="'http://vke2016-10071423.image.myqcloud.com/' + ${course.avatar} + '?imageView2/1/w/180/h/180'"/>
+                                <span class="doing">	<img src="/public/wx/images/status_1.png"/></span>
+                            </div>
+
+                            <div class="weui-media-box__bd">
+                                <h4 class="weui-media-box__title" th:text="${course.name}"></h4>
+                                <p class="weui-media-box__desc">
+                                    <span th:text="${course.sigup_count}"></span>人报名
+                                </p>
+                                <p class="weui-media-box__desc">
+                                    <span th:text="${course.nick_name}"></span> | <span th:text="${course?.title}"></span>
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="weui-panel__ft">
+                        <a href="/wx/view/course/all?status=1" class="weui-cell weui-cell_access weui-cell_link">
+                            <div class="weui-cell__bd">查看更多</div>
+                            <span class="weui-cell__ft"></span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="weui-panel weui-panel_access">
+                    <div class="weui-panel__hd">已结束的课程</div>
+                    <div class="weui-panel__bd">
+                        <a th:each="course: ${c3List}" th:href="@{/wx/view/course/{id}(id=${course.id})}"
+                           class="weui-media-box weui-media-box_appmsg ">
+                            <div class="weui-media-box__hd">
+                                <img class="weui-media-box__thumb" th:src="'http://vke2016-10071423.image.myqcloud.com/' + ${course.avatar} + '?imageView2/1/w/180/h/180'"/>
+                                <span class="doing">	<img src="/public/wx/images/status_3.png"/></span>
+                            </div>
+
+                            <div class="weui-media-box__bd">
+                                <h4 class="weui-media-box__title" th:text="${course.name}"></h4>
+                                <p class="weui-media-box__desc">
+                                    <span th:text="${course.sigup_count}"></span>人报名
+                                </p>
+                                <p class="weui-media-box__desc">
+                                    <span th:text="${course.nick_name}"></span> | <span th:text="${course?.title}"></span>
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="weui-panel__ft">
+                        <a href="/wx/view/course/all?status=3" class="weui-cell weui-cell_access weui-cell_link">
+                            <div class="weui-cell__bd">查看更多</div>
+                            <span class="weui-cell__ft"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="weui-panel weui-panel_access lecturer-panel">
+                    <div class="weui-panel__hd">优质讲师</div>
+                    <div class="weui-panel__bd">
+
+                        <a th:each="lecturer: ${lecturerList}" th:href="@{/wx/view/lecturer/{id}(id=${lecturer.user_id})}"
+                           class="weui-media-box weui-media-box_appmsg ">
+                            <div class="weui-media-box__hd">
+                                <img class="weui-media-box__thumb avatar"
+                                     th:src="${lecturer.avatar}">
+                                <span th:if="${lecturer.is_high_quality eq true}"
+                                      class="quality vke-icon-you"></span>
+                            </div>
+
+                            <div class="weui-media-box__bd">
+                                <h4 class="weui-media-box__title " th:text="${lecturer.nick_name}"></h4>
+                                <p class="weui-media-box__desc" th:text="${lecturer.title}"></p>
+                            </div>
+                            <div class="weui-media-box__bd text-right">
+                                <p class="weui-media-box__desc">
+                                    <span th:text="${lecturer.subscibe_count}"></span> 订阅
+                                </p>
+                            </div>
+                        </a>
+
+                    </div>
+                    <div class="weui-panel__ft">
+                        <a href="/wx/view/lecturer/all?isHighQuality=1" class="weui-cell weui-cell_access weui-cell_link">
+                            <div class="weui-cell__bd">查看更多</div>
+                            <span class="weui-cell__ft"></span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+            <!--搜索-->
+            <div class="page__bd page_search">
+                <div class="weui-cells searchbar-result" id="searchAwResult" style="display: none;">
+                    <div class="list">
+
+                    </div>
+                    <div class="weui-loadmore">
+                        <i class="weui-loading"></i>
+                        <span class="weui-loadmore__tips">正在加载</span>
+                    </div>
+                </div>
+                <div id="searchResult" style="display: none;">
+                    <!--小菜单-->
+                    <div class="cm_menu_group">
+                        <a data-type="c" href="javascript:void(0);" class="active">课程</a>
+                        <a data-type="l"  href="javascript:void(0);">讲师</a>
+                    </div>
+                    <!--小菜单 end-->
+                    <div class="weui-panel weui-panel_access">
+                        <div class="weui-panel__bd">
+                            <div class="list">
+
+                            </div>
+                            <div class="weui-loadmore">
+                                <i class="weui-loading"></i>
+                                <span class="weui-loadmore__tips">正在加载</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="weui-msg" style="display: none;">
+                        <div class="weui-msg__icon-area"><i class="weui-icon-warn weui-icon_msg-primary"></i></div>
+                        <div class="weui-msg__text-area">
+                            <p class="weui-msg__desc"></p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!--搜索 end-->
+        </div>
+        <div th:replace="wx/fragment/frag::pageFooter"></div>
+    </div>
+</div>
+<div th:include="wx/fragment/frag::commonScript"></div>
+<script src="/public/wx/js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="/public/wx/js/swiper.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/template" id="awItem">
+    <div class="weui-cell weui-cell_access aw-iterm">
+        <div class="weui-cell__bd weui-cell_primary">
+            <p>#content#</p>
+        </div>
+    </div>
+</script>
+<script type="text/template" id="userItem">
+    <a href="/wx/view/lecturer/#id#" class="weui-media-box weui-media-box_appmsg ">
+        <div class="weui-media-box__hd">
+            <img class="weui-media-box__thumb avatar"
+                 src="#avatar#">
+                #you#
+        </div>
+        <div class="weui-media-box__bd">
+            <h4 class="weui-media-box__title">#nickname#</h4>
+            <p class="weui-media-box__desc">#title#</p>
+        </div>
+        <div class="weui-media-box__bd text-right">
+            <p class="weui-media-box__desc">
+                <span>#subcount#</span> 订阅
+            </p>
+        </div>
+    </a>
+</script>
+<script type="text/template" id="courseItem">
+    <a href="/wx/view/course/#id#" class="weui-media-box weui-media-box_appmsg ">
+        <div class="weui-media-box__hd">
+            <img class="weui-media-box__thumb"
+                 src="#avatar#">
+            <span class="doing"><img src="/public/wx/images/status_#status#.png"></span>
+        </div>
+
+        <div class="weui-media-box__bd">
+            <h4 class="weui-media-box__title">#name#</h4>
+            <p class="weui-media-box__desc">
+                <span>#member#</span>人报名
+            </p>
+            <p class="weui-media-box__desc">
+                <span>#nickName#</span> | <span>#title#</span>
+            </p>
+        </div>
+    </a>
+</script>
+<script type="text/javascript">
+    //			$(".swiper-container").swiper()
+    $(".swiper-container").swiper({
+        loop: true,
+        autoplay: 7000
+    });
+</script>
+
+</body>
+</html>

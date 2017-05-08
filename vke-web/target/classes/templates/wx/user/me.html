@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="wx/fragment/frag :: common_header(~{::title},_)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>我</title>
+</head>
+<body class="vke">
+<div class="container" id="app">
+    <div class="weui-tab">
+
+        <div class="page me">
+            <div class="page__bd">
+                <div class="weui-panel lecturer-panel">
+
+                    <div class="weui-panel__bd">
+                        <a th:href="@{/wx/view/user/{id}/edit(id=${session.vkeu.id})}"
+                           class="weui-media-box weui-media-box_appmsg ">
+                            <div class="weui-media-box__hd cm_avator">
+                                <img class="weui-media-box__thumb avatar" th:src="${session.vkeu.avatar}" alt="">
+                                <span th:if="${lecturer !=null and lecturer.isHighQuality eq true}"
+                                      class="quality vke-icon-you"></span>
+                            </div>
+                            <div class="weui-media-box__bd cm_flex cm_flex_te">
+                                <h4 class="weui-media-box__title" th:text="${session.vkeu.nickName}"></h4>
+                                <p th:if="${lecturer !=null }" class="cm_info_extra " th:text="${lecturer.title}">
+                                    互联网非资深产品</p>
+                            </div>
+                            <div class="weui-media-box__bd middle-box">
+                                <p class="cm_look">编辑资料
+                                    <span class="weui-cell__ft"></span>
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+
+                </div>
+
+                <div class="weui-panel">
+                    <div class="weui-panel__bd">
+                        <div class="weui-media-box weui-media-box_small-appmsg">
+                            <div class="weui-cells">
+                                <a class="weui-cell weui-cell_access" href="/wx/view/user/account">
+                                    <div class="weui-cell__hd"><i class="vke-icon-shouyi"></i></div>
+                                    <div class="weui-cell__bd weui-cell_primary">
+                                        <p>我的收益</p>
+                                    </div>
+                                    <span class="weui-cell__ft"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="weui-panel">
+                    <div class="weui-panel__bd">
+                        <div class="weui-media-box weui-media-box_small-appmsg">
+                            <div class="weui-cells">
+                                <a class="weui-cell weui-cell_access" href="/wx/view/course/buyed/me">
+                                    <div class="weui-cell__hd"><i class="vke-icon-book-on"></i></div>
+                                    <div class="weui-cell__bd weui-cell_primary">
+                                        <p>我报名的课程</p>
+                                    </div>
+                                    <span class="weui-cell__ft"></span>
+                                </a>
+                                <a class="weui-cell weui-cell_access" href="/wx/view/course/collected/me">
+                                    <div class="weui-cell__hd"><i class="vke-icon-heart"></i></div>
+                                    <div class="weui-cell__bd weui-cell_primary">
+                                        <p>我收藏的课程</p>
+                                    </div>
+                                    <span class="weui-cell__ft"></span>
+                                </a>
+                                <a class="weui-cell weui-cell_access" href="/wx/view/course/browsing/me">
+                                    <div class="weui-cell__hd"><i class="vke-icon-eye"></i></div>
+                                    <div class="weui-cell__bd weui-cell_primary">
+                                        <p>我最近看过的课程</p>
+                                    </div>
+                                    <span class="weui-cell__ft"></span>
+                                </a>
+                                <a class="weui-cell weui-cell_access" href="/wx/view/lecturer/me">
+                                    <div class="weui-cell__hd"><i class="vke-icon-users-fill"></i></div>
+                                    <div class="weui-cell__bd weui-cell_primary">
+                                        <p>我订阅的讲师</p>
+                                    </div>
+                                    <span class="weui-cell__ft"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div th:replace="wx/fragment/frag::pageFooter"></div>
+    </div>
+</div>
+
+<div th:include="wx/fragment/frag::commonScript"></div>
+<script src="/public/wx/js/main.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>

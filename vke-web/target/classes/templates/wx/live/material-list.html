@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head></head>
+<body>
+<!--素材列表-->
+<div th:each="ma: ${pageData.list}"  class="weui-media-box weui-media-box_appmsg">
+
+    <div class="weui-media-box__bd">
+        <p class="weui-media-box__desc" th:text="${ma.content}">
+        </p>
+        <ul class="weui-media-box__info  has_btn">
+            <li class="weui-media-box__info__meta" th:text="${#dates.format(ma.createdTime, 'MM/dd HH:mm:ss')}"></li>
+            <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">
+                <span class="weui-media-box__bar__btn stick" th:attr="data-id=${ma.id}">置顶</span>
+                <span class="weui-media-box__bar__btn del" th:attr="data-id=${ma.id}">删除</span>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="weui-msg" th:if="${#lists.isEmpty(pageData.list)}">
+    <div class="weui-msg__icon-area"><i class="weui-icon-warn weui-icon_msg-primary"></i></div>
+    <div class="weui-msg__text-area">
+        <p class="weui-msg__desc">暂时还没有素材噢！快点儿添加点儿吧!</p>
+    </div>
+</div>
+
+</body>
+</html>
+

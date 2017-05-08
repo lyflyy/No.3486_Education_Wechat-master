@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="wx/fragment/frag :: common_header(~{::title},~{::link})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>编辑资料</title>
+    <link href="/public/wx/css/weui.min.css" rel="stylesheet">
+    <link href="/public/wx/css/jquery-weui.min.css" rel="stylesheet">
+    <link href="/public/plugins/webuploader/webuploader.css" rel="stylesheet">
+</head>
+<body class="vke">
+<div class="container" id="app">
+    <div class="page me">
+        <div class="page__bd">
+            <form id="form" method="POST">
+                <div class="weui-cells weui-cells_form" style="margin-top:0">
+                    <div class="weui-cell" id="upload-avatar">
+                        <div class="weui-cell__hd"><label class="weui-label">头像</label></div>
+                        <div class="weui-cell__bd">
+                            <span class="touxiang"><img id="avatar" th:src="${user.avatar}"/></span>
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label class="weui-label">昵称</label></div>
+                        <div class="weui-cell__bd">
+                            <input type="hidden" name="id" th:value="${user.id}">
+                            <input class="weui-input" type="text" name="nickName" th:value="${user.nickName}"
+                                   placeholder="填写昵称">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label class="weui-label">真实姓名</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" type="text" name="realName" th:value="${user.realName}"
+                                   placeholder="填写真实姓名">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label class="weui-label">性别</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" type="text" name="sex" th:value="${user.sex}" placeholder="填写性别">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="weui-cells weui-cells_form">
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label class="weui-label">手机号码</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" type="number" pattern="[0-9]*" name="phone"
+                                   th:value="${user.phone}"
+                                   placeholder="请输入号码">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label class="weui-label">所在城市</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" type="text" name="city" th:value="${user.city}" placeholder="填写所在城市">
+                        </div>
+                    </div>
+                </div>
+                <div class="weui-btn-area">
+                    <button class="weui-btn weui-btn_primary" type="submit" id="showTooltips">确定</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<div id="toast" class="toast-text">
+    <div class="weui-mask_transparent"></div>
+    <div class="weui-toast">
+        <p class="weui-toast__content"></p>
+    </div>
+</div>
+<input type="hidden" th:value="${session.vkeu.id}" id="userId">
+
+<div th:replace="wx/fragment/frag::commonScript"></div>
+<!--<script src="/public/wx/js/city-picker.js" type="text/javascript" charset="utf-8"></script>-->
+<script src="/public/wx/js/fastclick.js" type="text/javascript" charset="utf-8"></script>
+<script src="/public/plugins/webuploader/webuploader.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    $("input[name='sex']").select({
+        title: "性别",
+        items: ["男", "女"],
+        onChange: function (d) {
+            console.log(this, d);
+        },
+        onClose: function () {
+            console.log("close");
+        },
+        onOpen: function () {
+            console.log("open");
+        }
+    });
+//    $("input[name='city']").cityPicker({
+//        title: "选择出发地",
+//        onChange: function (picker, values, displayValues) {
+//            console.log(values, displayValues);
+//        }
+//    });
+
+
+    var userId = $('#userId').val();
+
+    var uploadObj = {
+        init: function () {
+            var _this = this;
+            $.post("/api/file/sign", function (res) {
+                _this.initUpload(res.data);
+                uploadObj.sign = res.data.sign;
+            })
+        },
+        initUpload: function (data) {
+            var _this = this;
+            var uploader = this.uploader = WebUploader.create({
+                // swf文件路径
+//            swf: '/public/plugins/webuploader/Uploader.swf',
+                // 文件接收服务端。
+                server: 'http://web.image.myqcloud.com/photos/v2/' + data.appid + "/" + data.bucket + "/0",
+                // 选择文件的按钮。可选。
+                // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+                pick: '#upload-avatar',
+                auto: true,
+                fileVal: 'FileContent',
+                // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
+                resize: false,
+                accept: {
+                    title: 'Images',
+                    extensions: 'gif,jpg,jpeg,bmp,png'
+                }
+            });
+            //上传之前添加一些附加参数
+            uploader.on('uploadBeforeSend', uploadObj.uploadBeforeSend);
+            // 当有文件添加进来的时候
+            uploader.on('fileQueued', uploadObj.fileQueued);
+            // 文件上传成功回调
+            uploader.on('uploadSuccess', uploadObj.uploadSuccess);
+            //上传失败
+            uploader.on('uploadError', uploadObj.uploadError);
+        },
+        uploadBeforeSend: function (object, _data, headers) {
+            if (uploadObj.md5) {
+                _data['Md5'] = uploadObj.md5;
+            }
+            _data['MagicContext'] = JSON.stringify({
+                userId: userId,
+                type: 4,
+                remark: '头像'
+            });
+            headers['Authorization'] = uploadObj.sign;
+        },
+        fileQueued: function (file) {
+            var _this = this;
+            var $img = $('#avatar');
+            // 创建缩略图
+            // 如果为非图片文件，可以不用调用此方法。
+            // thumbnailWidth x thumbnailHeight 为 100 x 100
+            uploadObj.uploader.makeThumb(file, function (error, src) {
+                if (error) {
+                    $img.replaceWith('<span>不能预览</span>');
+                    return;
+                }
+                $img.attr('src', src);
+            }, 640, 640);
+            //计算md5
+            uploadObj.uploader.md5File(file)
+            // 及时显示进度
+                    .progress(function (percentage) {
+                        console.log('Percentage:', percentage);
+                    })
+                    // 完成
+                    .then(function (val) {
+                        uploadObj['md5'] = val;
+                    });
+
+        },
+        uploadSuccess: function (file, res) {
+            $.post('/wx/view/user/' + userId + "/avatar", {data: res._raw}, function (res) {
+                $('#toast .weui-toast__content').text('头像修改成功');
+                $('#toast').fadeIn(200);
+                setTimeout(function () {
+                    $('#toast').fadeOut(100);
+                }, 2000);
+            });
+        },
+        uploadError: function (file) {
+            $('#toast .weui-toast__content').text('头像修改失败');
+            $('#toast').fadeIn(200);
+            setTimeout(function () {
+                $('#toast').fadeOut(100);
+            }, 2000);
+        }
+    };
+    //初始化
+    uploadObj.init();
+
+
+</script>
+</body>
+</html>

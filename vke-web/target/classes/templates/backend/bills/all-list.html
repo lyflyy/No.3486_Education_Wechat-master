@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="backend/fragment/frag :: common_header(~{::title},_)">
+    <title>知识猫 - 运营系统</title>
+</head>
+<body>
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>所有交易订单</h5>
+                    <div class="ibox-tools">
+                        <!--<a href="projects.html" class="btn btn-primary btn-xs">添加管理员</a>-->
+                    </div>
+                </div>
+                <div class="ibox-content">
+
+                    <div class="row m-b-sm m-t-sm">
+                        <div class="col-md-11 form-inline">
+                            <div class="form-group">
+                                <label></label>
+                                <select  class="form-control" name="objType" placeholder="订单类型">
+                                    <option value="">订单类型</option>
+                                    <option value="course_upgrade">学员升级报名</option>
+                                    <option value="course_interact">互动学员报名</option>
+                                    <option value="course_audit">旁听学员报名</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control"  placeholder="开始时间">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control"  placeholder="结束时间">
+                            </div>
+                            <button type="submit" class="btn btn-primary">查询</button>
+                        </div>
+                    </div>
+
+                    <div class="project-list">
+
+                        <table id="exampleTableToolbar" data-mobile-responsive="true" class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>
+                                    订单编号
+                                </th>
+                                <th>
+                                    用户名称
+                                </th>
+                                <th>
+                                    订单类型
+                                </th>
+                                <th>
+                                    交易金额
+                                </th>
+                                <th>
+                                    状态
+                                </th>
+                                <th>
+                                    备注
+                                </th>
+                                <th>
+                                    创建时间
+                                </th>
+                                <th >
+                                    操作
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr  th:if="${not #lists.isEmpty(pageData.list)}" th:each="item : ${pageData.list}">
+                                    <td  th:text="${item[orderNum]}"></td>
+                                    <td>
+                                        <a  th:href="@{/backend/user/info/{userId}(userId=${item[userId]})}"><span th:text="${item[nickName]}"></span></a>
+                                    </td>
+                                    <td  th:text="${item[objType]}">
+                                        <span th:switch="${item[status]}">
+                                            <i th:case="'msg_redpacked'">消息红包</i>
+                                            <i th:case="'course'">课程报名</i>
+                                            <i th:case="'recharge'">充值</i>
+                                        </span>
+
+                                    </td>
+                                    <td  th:text="${item[amount]}"></td>
+                                    <td>
+                                        <span th:switch="${item[status]}">
+                                            <i th:case="'0'">未支付</i>
+                                            <i th:case="'1'">已支付</i>
+                                            <i th:case="'2'">已关闭</i>
+                                        </span>
+                                    </td>
+                                    <td  th:text="${item[remark]}"></td>
+                                    <td  th:text="${item[createdTime]==0?'':#dates.format(item[createdTime],'yyyy-MM-dd HH:mm:ss')}"></td>
+                                    <td></td>
+                                </tr>
+                                <tr class="no-records-found" th:if="${#lists.isEmpty(pageData.list)}">
+                                    <td colspan="8">没有找到匹配的记录</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div th:replace="backend/fragment/frag :: pagination"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

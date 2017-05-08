@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorator="backend/user/lecturer-info">
+<head th:replace="backend/fragment/frag :: common_header(~{::title},_)">
+    <title>知识猫 - 运营系统</title>
+</head>
+<body>
+
+
+<div layout:fragment="content">
+
+    <table id="exampleTableToolbar" data-mobile-responsive="true" class="table table-hover">
+        <thead>
+        <tr>
+            <th style="" data-field="nickName">
+                <div class="th-inner ">学员昵称</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="" data-field="nickName">
+                <div class="th-inner ">设备型号</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="" data-field="createdTime">
+                <div class="th-inner ">订阅时间</div>
+                <div class="fht-cell"></div>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr   th:if="${not #lists.isEmpty(pageData.list)}" th:each="item : ${pageData.list}">
+            <td  th:text="${item[nick_name]}"></td>
+            <td  th:text="${item[regist_device_num]}"></td>
+            <td  th:text="${item[created_time]==0?'':#dates.format(item[created_time],'yyyy-MM-dd HH:mm:ss')}"></td>
+        </tr>
+        <tr class="no-records-found" th:if="${#lists.isEmpty(pageData.list)}">
+            <td colspan="8">没有找到匹配的记录</td>
+        </tr>
+        </tbody>
+    </table>
+    <div th:replace="backend/fragment/frag :: pagination"></div>
+</div>
+
+</body>
+</html>

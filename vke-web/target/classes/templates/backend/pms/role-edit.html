@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="backend/fragment/frag :: common_header(~{::title},_)">
+    <title>知识猫 - 运营系统</title>
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>添加角色</h5>
+                </div>
+                <div class="ibox-content">
+                    <form role="form"  th:action="@{/backend/role/save}" method="post">
+                        <div class="row">
+                            <div class="col-sm-6 b-r">
+                                <input type="hidden" name="id" th:value="${role==null?'':role.id}">
+                                <div class="form-group">
+                                    <label>角色名</label>
+                                    <input type="text" name="roleName" placeholder="角色名称"  required="true"
+                                           class="form-control" th:value="${role==null?'':role.roleName}">
+                                </div>
+                                <div class="form-group">
+                                    <label>角色标识</label>
+                                    <input type="text" name="roleCode" placeholder="角色标识"  th:value="${role==null?'':role.roleCode}" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>备注</label>
+                                    <textarea class="form-control" name="remark"  th:text="${role==null?'':role.remark}" placeholder="备注" rows="3"> </textarea>
+                                </div>
+                                <div>
+                                    <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit">
+                                        <strong>添加</strong></button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

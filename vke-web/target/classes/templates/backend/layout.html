@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
+<head th:replace="backend/fragment/frag :: common_header(~{::title},_)">
+    <title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE">知识猫 - 运营系统</title>
+
+</head>
+
+
+<body class="fixed-sidebar full-height-layout gray-bg">
+<style type="text/css">
+    #content-main{
+        height: calc(100% - 98px);
+        overflow-y: scroll;
+    }
+</style>
+<div id="wrapper">
+    <!--左侧导航(开始)-->
+    <nav class="navbar-default navbar-static-side" role="navigation">
+        <div class="nav-close"><i class="fa fa-times-circle"></i></div>
+        <div class="sidebar-collapse">
+            <ul class="nav" id="side-menu">
+                <!--管理员头像+昵称+身份+个人资料+退出(开始)-->
+                <li class="nav-header">
+                    <div class="dropdown profile-element">
+                        <!--头像-->
+                        <span><img alt="image" class="img-circle" src="/public/img/profile_small.jpg"/></span>
+                        <!--昵称+身份-->
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                <span class="clear">
+                                    <span class="block m-t-xs"><strong class="font-bold">Andy.Hou</strong></span>
+                                <span class="text-muted text-xs block">超级管理员<b class="caret"></b></span>
+                                </span>
+                        </a>
+                        <!--个人资料+安全退出-->
+                        <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                            <li><a class="J_menuItem" href="user-profile.html">个人资料</a></li>
+                            <li class="divider"></li>
+                            <li><a href="/logout">安全退出</a></li>
+                        </ul>
+                    </div>
+                    <!--最小化菜单左上角显示LOGO-->
+                    <div class="logo-element">知识猫</div>
+                </li>
+                <!--管理员头像+昵称+身份+个人资料+退出(结束)-->
+                <!--业务菜单(开始)-->
+                <!--仪表盘-->
+                <li><a class="J_menuItem" th:href="@{/backend/console/}"><i class="fa fa-dashboard"></i><span
+                        class="nav-label">仪表盘</span></a>
+                </li>
+                <!--课程-->
+                <li>
+                    <a href="#"><i class="fa fa-tv"></i><span class="nav-label">课程</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li><a class="J_menuItem" th:href="@{/backend/course/list}">查看课程</a></li>
+                        <li><a class="J_menuItem" th:href="@{/backend/course/list/verify}">审核课程</a></li>
+                        <li><a class="J_menuItem" th:href="@{/backend/course/list/ex}">推广课程</a></li>
+                    </ul>
+                </li>
+                <!--账单-->
+                <li><a class="J_menuItem" href="bills.html"><i class="fa fa-money"></i><span class="nav-label">账单</span></a>
+                </li>
+                <!--用户-->
+                <li>
+                    <a href="#"><i class="fa fa-users"></i><span class="nav-label">用户</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li><a class="J_menuItem" th:href="@{/backend/user/list/students}">查看学员列表</a></li>
+                        <li><a class="J_menuItem" th:href="@{/backend/user/list/lecturers}">查看讲师列表</a></li>
+                        <li><a class="J_menuItem" th:href="@{/backend/user/list/verfiy}">优质讲师申请列表</a></li>
+                        <li><a class="J_menuItem" th:href="@{/backend/user/list/recommend}">推广课程列表</a></li>
+                        <li><a class="J_menuItem" th:href="@{/backend/user/list/mgrs}">查看后台用户列表</a></li>
+                    </ul>
+                </li>
+                <!--系统-->
+                <li>
+                    <a href="#"><i class="fa fa-gears"></i><span class="nav-label">系统</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li><a class="J_menuItem" th:href="@{/backend/sys/setting}" href="system-options.html">系统配置</a>
+                        </li>
+                        <li><a class="J_menuItem" th:href="@{/backend/sys/msg}" href="system-messages.html">系统消息推送</a>
+                        </li>
+                        <li><a class="J_menuItem" th:href="@{/backend/sys/wx}" href="system-wechat.html">微信</a></li>
+                    </ul>
+                </li>
+                <!--业务菜单(结束)-->
+            </ul>
+        </div>
+    </nav>
+    <!--左侧导航(结束)-->
+
+    <!--右侧部分(开始)-->
+    <div id="page-wrapper" class="gray-bg dashbard-1">
+        <!--顶部操作(开始)-->
+        <div class="row border-bottom">
+            <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                <!--顶部操作左侧-->
+                <div class="navbar-header">
+                    <!--收起菜单-->
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i>
+                    </a>
+                    <!--搜索-->
+                    <form role="search" class="navbar-form-custom" method="post" action="#">
+                        <div class="form-group">
+                            <input type="text" placeholder="请输入要查找的课程和讲师..." class="form-control" name="top-search"
+                                   id="top-search">
+                        </div>
+                    </form>
+                </div>
+                <!--顶部操作右侧(开始)-->
+                <ul class="nav navbar-top-links navbar-right">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                            <i class="fa fa-envelope"></i> <span class="label label-warning">16</span>
+                        </a>
+                        <!--消息列表(开始)-->
+                        <ul class="dropdown-menu dropdown-messages">
+                            <!--消息-->
+                            <li>
+                                <div class="dropdown-messages-box">
+                                    <a href="#" class="pull-left"><img alt="image" class="img-circle"
+                                                                       src="/public/img/a4.jpg"></a>
+                                    <div class="media-body ">
+                                        <small class="pull-right text-navy">25小时前</small>
+                                        <strong>国民岳父</strong> 如何看待“男子不满自己爱犬被称为狗，刺伤路人”？——这人比犬还凶
+                                        <br/>
+                                        <small class="text-muted">昨天</small>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="divider"></li>
+                            <!--查看所有消息-->
+                            <li>
+                                <div class="text-center link-block">
+                                    <a class="J_menuItem" href="#"><i class="fa fa-envelope"></i> <strong>
+                                        查看所有消息</strong></a>
+                                </div>
+                            </li>
+                        </ul>
+                        <!--消息列表(结束)-->
+                    </li>
+                </ul>
+                <!--顶部操作右侧(结束)-->
+            </nav>
+        </div>
+        <!--顶部操作(结束)-->
+        <!--内容区(开始)-->
+        <div class="row J_mainContent" id="content-main" layout:fragment="content">
+
+        </div>
+
+        <!--内容区(结束)-->
+        <!--版权信息(开始)-->
+        <div th:replace="backend/fragment/frag :: copy"></div>
+        <!--版权信息(结束)-->
+
+
+    </div>
+
+    <!--右侧部分(结束)-->
+</div>
+
+<script src="/public/js/jquery.min.js?v=2.1.4"></script>
+<script src="/public/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="/public/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="/public/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="/public/js/plugins/layer/layer.min.js"></script>
+<script src="/public/js/zsm-ui.min.js?v=4.1.0"></script>
+<div layout:fragment="footer"></div>
+
+
+</body>
+
+</html>

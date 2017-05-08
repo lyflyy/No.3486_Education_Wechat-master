@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="vke-service">
+        <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/jave/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/qcloud-sms/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/vke-core/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/vke-core/src/test/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/vke-task/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/vke-web/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/vke-web/src/test/java"/>
+        <property name="context-root" value="vke-service"/>
+        <property name="java-output-path" value="/vke-service/bin"/>
+    </wb-module>
+</project-modules>

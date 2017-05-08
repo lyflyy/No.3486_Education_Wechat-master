@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="backend/fragment/frag :: common_header(~{::title},_)">
+    <title>知识猫 - 运营系统</title>
+</head>
+<script type="text/javascript">
+function withdraw(id){
+    $.post("/backend/bills/withdraw", postData, function (data) {
+        if(data.success){
+            layer.alert("提现操作成功!",function () {
+                window.location.href="/backend/bills/withdraw/list";
+            });
+        }else{
+            layer.alert(data.msg);
+        }
+    })
+}
+
+</script>
+<body>
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>提现申请</h5>
+                    <div class="ibox-tools">
+                        <!--<a href="projects.html" class="btn btn-primary btn-xs">添加管理员</a>-->
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row m-b-sm m-t-sm">
+                        <div class="col-md-11 form-inline">
+                            <div class="form-group">
+                                <input type="text" class="form-control"  placeholder="开始时间">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control"  placeholder="结束时间">
+                            </div>
+                            <button type="submit" class="btn btn-primary">查询</button>
+                        </div>
+                    </div>
+
+                    <div class="project-list">
+
+
+                        <table id="exampleTableToolbar" data-mobile-responsive="true" class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th> 编号 </th>
+                                <th> 状态 </th>
+                                <th >
+                                    <div class="th-inner ">申请人</div>
+                                </th>
+                                <th style="" data-field="phone">
+                                    <div class="th-inner ">提现金额</div>
+                                    <div class="fht-cell"></div>
+                                </th>
+
+                                <th style="" data-field="applyTime">
+                                    <div class="th-inner ">申请时间</div>
+                                    <div class="fht-cell"></div>
+                                </th>
+                                <th style="" data-field="registTime">
+                                    <div class="th-inner ">审核时间</div>
+                                    <div class="fht-cell"></div>
+                                </th>
+                                <th style="" data-field="registTime">
+                                    <div class="th-inner ">支付时间</div>
+                                    <div class="fht-cell"></div>
+                                </th>
+                                <th style="" data-field="registTime">
+                                    <div class="th-inner ">完成时间</div>
+                                    <div class="fht-cell"></div>
+                                </th>
+                                <th style="" data-field="title">
+                                    <div class="th-inner ">备注</div>
+                                    <div class="fht-cell"></div>
+                                </th>
+                                <th style="" data-field="description">
+                                    <div class="th-inner ">操作</div>
+                                    <div class="fht-cell"></div>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                    <tr th:if="${not #lists.isEmpty(pageData.list)}" th:each="item : ${pageData.list}">
+                                        <td th:text="${item.id}"></td>
+                                        <td>
+                                            <span th:switch="${item.status}">
+                                                <i th:case="1">待审核</i>
+                                                <i th:case="2">等待支付</i>
+                                                <i th:case="3">审核拒绝</i>
+                                                <i th:case="4">支付成功</i>
+                                                <i th:case="5">支付失败</i>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <a th:href="@{/backend/user/info/{userId}(userId=${item.userId})}"><span th:text="${item.userName}"></span></a>
+                                        </td>
+                                        <td th:text="${#numbers.formatDecimal(item.balance,1,2,'COMMA')}"></td>
+                                        <td th:text="${item.createdTime==0?'':#dates.format(item.createdTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+                                        <td th:text="${item.checkedTime==0?'':#dates.format(item.checkedTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+                                        <td th:text="${item.payTime==0?'':#dates.format(item.payTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+                                        <td th:text="${item.completedTime==0?'':#dates.format(item.completedTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+                                        <td th:text="${item.remark}"></td>
+                                        <td >
+                                            <a th:if="${item.status=='1'}" th:href="@{/backend/bills/withdraw/toAudit/{id}(id=${item.id})}"  class="btn btn-white btn-sm"><i class="fa fa-folder"></i> 提现审核 </a>
+                                            <a th:if="${item.status=='5' || item.status=='2'}" href="#" th:onclick="'javascript:withdraw(\''+ ${item.id} + '\');'" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> 提现</a>
+                                        </td>
+                                    </tr>
+                                    <tr class="no-records-found" th:if="${#lists.isEmpty(pageData.list)}">
+                                        <td colspan="8">没有找到匹配的记录</td>
+                                    </tr>
+                            </tbody>
+                        </table>
+                        <div th:replace="backend/fragment/frag :: pagination"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="backend/fragment/frag :: common_header(~{::title},_)">
+    <title>知识猫 - 运营系统</title>
+</head>
+<body class="gray-bg">
+
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>所有角色</h5>
+                    <div class="ibox-tools">
+                        <a  th:href="@{/backend/role/addUi}" class="btn btn-primary btn-xs">添加角色</a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="project-list">
+
+                        <table id="exampleTableToolbar" data-mobile-responsive="true" class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th style="" data-field="roleName">
+                                    <div class="th-inner ">角色名称</div>
+                                </th>
+                                <th style="" data-field="roleCode">
+                                    <div class="th-inner ">角色code</div>
+                                </th>
+                                <th style="" data-field="status">
+                                    <div class="th-inner ">状态</div>
+                                </th>
+                                <th style="" data-field="createdTime">
+                                    <div class="th-inner ">添加时间</div>
+                                </th>
+                                <th style="" data-field="remark">
+                                    <div class="th-inner ">备注</div>
+                                </th>
+                                <th class="text-right">
+                                    <div class="th-inner ">操作</div>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr   th:if="${not #lists.isEmpty(pageData.list)}" th:each="item : ${pageData.list}">
+                                    <td th:text="${item.roleName}"></td>
+                                    <td th:text="${item.roleCode}"></td>
+                                    <td>
+                                        <span th:switch="${item.status}">
+                                            <i th:case="'0'">禁用</i>
+                                            <i th:case="'1'">正常</i>
+                                        </span>
+                                    </td>
+                                    <td th:text="${item.createdTime==0?'':#dates.format(item.createdTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+                                    <td th:text="${item.remark}"></td>
+                                    <td class="project-actions">
+                                        <a th:if="${not #strings.startsWith(item.roleCode,'admin')}" th:href="@{/backend/role/editUi/{id}(id=${item.id})}" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> 修改 </a>
+                                        <a th:if="${not #strings.startsWith(item.roleCode,'admin')}" th:href="@{/backend/role/toGrandPerission/{id}(id=${item.id})}" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> 赋予权限 </a>
+                                        <a th:if="${not #strings.startsWith(item.roleCode,'admin')}" th:href="@{/backend/role/del/{id}(id=${item.id})}" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> 删除 </a>
+                                    </td>
+                                </tr>
+                                <tr class="no-records-found" th:if="${#lists.isEmpty(pageData.list)}">
+                                    <td colspan="8">没有找到匹配的记录</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div th:replace="backend/fragment/frag :: pagination"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function(){$("#loading-example-btn").click(function(){btn=$(this);simpleLoad(btn,true);simpleLoad(btn,false)})});function simpleLoad(btn,state){if(state){btn.children().addClass("fa-spin");btn.contents().last().replaceWith(" Loading")}else{setTimeout(function(){btn.children().removeClass("fa-spin");btn.contents().last().replaceWith(" Refresh")},2000)}};
+</script>
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/projects.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:44 GMT -->
+
+</body>
+</html>

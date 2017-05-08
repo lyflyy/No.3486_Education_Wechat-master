@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="backend/fragment/frag :: common_header(~{::title},_)">
+    <title>知识猫 - 运营系统</title>
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>添加管理员</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-6 b-r">
+                            <form role="form" th:action="@{/backend/operator/save}" method="post">
+                                <div class="form-group">
+                                    <label>登录名</label>
+                                    <input type="email" placeholder="E-mail地址"  name="loginName" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>登录密码</label>
+                                    <input type="password" placeholder="请输入登录密码" name="loginPwd" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>备注</label>
+                                    <textarea class="form-control" placeholder="备注" name="remark" rows="3"> </textarea>
+                                </div>
+                                <div>
+                                    <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>添加</strong> </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

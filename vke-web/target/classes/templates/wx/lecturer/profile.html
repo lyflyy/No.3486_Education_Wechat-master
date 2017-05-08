@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="wx/fragment/frag :: common_header(~{::title},~{::link})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>修改讲师资料</title>
+    <link href="/public/plugins/webuploader/webuploader.css" rel="stylesheet">
+</head>
+<body class="vke">
+<div class="container" id="app">
+    <div class="page course">
+        <div class="page__bd">
+            <form id="form" method="post">
+                <div class="weui-cells weui-cells_form" style="margin-top:0">
+                    <div class="weui-cell"  id="upload-avatar">
+                        <div class="weui-cell__hd"><label class="weui-label">头像</label></div>
+                        <div class="weui-cell__bd">
+                            <span class="touxiang"><img id="avatar" th:src="${lecturer.avatar}"/></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="weui-cells weui-cells_form">
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label class="weui-label">昵称</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" required="true" name="nickName" type="text" th:value="${lecturer.nick_name}" placeholder="填写真实姓名，以后不可更改">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label class="weui-label">头衔</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" type="text" required="true" name="title" th:value="${lecturer.title}" placeholder="填写从事的职业，最多20个字">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label class="weui-label">讲师介绍</label></div>
+                        <div class="weui-cell__bd">
+                            <textarea class="weui-textarea" name="intro" placeholder="填写讲师的基本情况，最多100个字" rows="3" th:text="${lecturer.intro}"></textarea>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="weui-btn-area">
+                    <button type="submit" class="weui-btn weui-btn_primary">保存</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+<div id="toast" class="toast-text">
+    <div class="weui-mask_transparent"></div>
+    <div class="weui-toast">
+        <p class="weui-toast__content"></p>
+    </div>
+</div>
+<div th:include="wx/fragment/frag::commonScript"></div>
+<script src="/public/plugins/webuploader/webuploader.min.js" type="text/javascript" charset="utf-8"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var userId = [[${session.vkeu.id}]];
+    /*]]>*/
+
+    /**
+     * 初始化文件上传
+     * @param data
+     */
+    var initUpload = function (data) {
+        var uploader = WebUploader.create({
+            // swf文件路径
+//            swf: '/public/plugins/webuploader/Uploader.swf',
+            // 文件接收服务端。
+            server: 'http://web.image.myqcloud.com/photos/v2/' + data.appid + "/" + data.bucket + "/0",
+            // 选择文件的按钮。可选。
+            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+            pick: '#upload-avatar',
+            auto: true,
+            fileVal: 'FileContent',
+            // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
+            resize: false,
+            accept: {
+                title: 'Images',
+                extensions: 'gif,jpg,jpeg,bmp,png'
+            }
+        });
+        //上传之前添加一些附加参数
+        uploader.on('uploadBeforeSend', function (object, _data, headers) {
+            if (data.md5) {
+                _data['Md5'] = data.md5;
+            }
+            _data['MagicContext'] = JSON.stringify({
+                userId: userId,
+                type: 4,
+                remark: '头像'
+            });
+            headers['Authorization'] = data.sign;
+        })
+
+        // 当有文件添加进来的时候
+        uploader.on('fileQueued', function (file) {
+            $.showLoading("上传中...")
+            var $img = $('#avatar');
+            // 创建缩略图
+            // 如果为非图片文件，可以不用调用此方法。
+            // thumbnailWidth x thumbnailHeight 为 100 x 100
+            uploader.makeThumb(file, function (error, src) {
+                if (error) {
+                    $img.replaceWith('<span>不能预览</span>');
+                    return;
+                }
+                $img.attr('src', src);
+            }, 640, 640);
+            //计算md5
+            uploader.md5File(file)
+            // 及时显示进度
+                    .progress(function (percentage) {
+                        console.log('Percentage:', percentage);
+                    })
+                    // 完成
+                    .then(function (val) {
+                        data['md5'] = val;
+                    });
+
+        });
+        // 文件上传成功回调
+        uploader.on('uploadSuccess', function (file, res) {
+            $.post('/wx/view/user/' + userId + "/avatar", {data: res._raw}, function (res) {
+                $.hideLoading();
+                $.toast('头像修改成功','text');
+            })
+        });
+        //上传失败
+        uploader.on('uploadError', function (file) {
+            $.hideLoading();
+            $.toast('头像修改失败','text');
+        })
+    };
+
+    $.post("/api/file/sign", function (res) {
+        initUpload(res.data);
+    })
+
+</script>
+</body>
+</html>

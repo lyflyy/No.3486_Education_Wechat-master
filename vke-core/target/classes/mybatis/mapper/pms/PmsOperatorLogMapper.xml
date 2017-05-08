@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhishimao.core.pms.dao.PmsOperatorLogMapper">
+  <resultMap id="BaseResultMap" type="cn.zhishimao.core.pms.entity.PmsOperatorLog">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="version" jdbcType="BIGINT" property="version" />
+    <result column="creater" jdbcType="VARCHAR" property="creater" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="editor" jdbcType="VARCHAR" property="editor" />
+    <result column="edit_time" jdbcType="TIMESTAMP" property="editTime" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="module_name" jdbcType="VARCHAR" property="moduleName" />
+    <result column="operate_name" jdbcType="VARCHAR" property="operateName" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="params" jdbcType="VARCHAR" property="params" />
+    <result column="work_time" jdbcType="BIGINT" property="workTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    `id`, `version`, `creater`, `created_time`, `editor`, `edit_time`, `status`, `remark`, 
+    `module_name`, `operate_name`, `ip`, `params`, `work_time`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from `pms_operator_log`
+    where `id` = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from `pms_operator_log`
+    where `id` = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.zhishimao.core.pms.entity.PmsOperatorLog">
+    insert into `pms_operator_log` (`id`, `version`, `creater`, 
+      `created_time`, `editor`, `edit_time`, 
+      `status`, `remark`, `module_name`, 
+      `operate_name`, `ip`, `params`, 
+      `work_time`)
+    values (#{id,jdbcType=BIGINT}, #{version,jdbcType=BIGINT}, #{creater,jdbcType=VARCHAR}, 
+      #{createdTime,jdbcType=TIMESTAMP}, #{editor,jdbcType=VARCHAR}, #{editTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{moduleName,jdbcType=VARCHAR}, 
+      #{operateName,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, #{params,jdbcType=VARCHAR}, 
+      #{workTime,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.zhishimao.core.pms.entity.PmsOperatorLog">
+    insert into `pms_operator_log`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        `id`,
+      </if>
+      <if test="version != null">
+        `version`,
+      </if>
+      <if test="creater != null">
+        `creater`,
+      </if>
+      <if test="createdTime != null">
+        `created_time`,
+      </if>
+      <if test="editor != null">
+        `editor`,
+      </if>
+      <if test="editTime != null">
+        `edit_time`,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="remark != null">
+        `remark`,
+      </if>
+      <if test="moduleName != null">
+        `module_name`,
+      </if>
+      <if test="operateName != null">
+        `operate_name`,
+      </if>
+      <if test="ip != null">
+        `ip`,
+      </if>
+      <if test="params != null">
+        `params`,
+      </if>
+      <if test="workTime != null">
+        `work_time`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=BIGINT},
+      </if>
+      <if test="creater != null">
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editor != null">
+        #{editor,jdbcType=VARCHAR},
+      </if>
+      <if test="editTime != null">
+        #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleName != null">
+        #{moduleName,jdbcType=VARCHAR},
+      </if>
+      <if test="operateName != null">
+        #{operateName,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null">
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="params != null">
+        #{params,jdbcType=VARCHAR},
+      </if>
+      <if test="workTime != null">
+        #{workTime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.zhishimao.core.pms.entity.PmsOperatorLog">
+    update `pms_operator_log`
+    <set>
+      <if test="version != null">
+        `version` = #{version,jdbcType=BIGINT},
+      </if>
+      <if test="creater != null">
+        `creater` = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editor != null">
+        `editor` = #{editor,jdbcType=VARCHAR},
+      </if>
+      <if test="editTime != null">
+        `edit_time` = #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        `remark` = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleName != null">
+        `module_name` = #{moduleName,jdbcType=VARCHAR},
+      </if>
+      <if test="operateName != null">
+        `operate_name` = #{operateName,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null">
+        `ip` = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="params != null">
+        `params` = #{params,jdbcType=VARCHAR},
+      </if>
+      <if test="workTime != null">
+        `work_time` = #{workTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.zhishimao.core.pms.entity.PmsOperatorLog">
+    update `pms_operator_log`
+    set `version` = #{version,jdbcType=BIGINT},
+      `creater` = #{creater,jdbcType=VARCHAR},
+      `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+      `editor` = #{editor,jdbcType=VARCHAR},
+      `edit_time` = #{editTime,jdbcType=TIMESTAMP},
+      `status` = #{status,jdbcType=VARCHAR},
+      `remark` = #{remark,jdbcType=VARCHAR},
+      `module_name` = #{moduleName,jdbcType=VARCHAR},
+      `operate_name` = #{operateName,jdbcType=VARCHAR},
+      `ip` = #{ip,jdbcType=VARCHAR},
+      `params` = #{params,jdbcType=VARCHAR},
+      `work_time` = #{workTime,jdbcType=BIGINT}
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+  <sql id="Base_Condition">
+    <if test="id != null">
+      and `id` = #{id,jdbcType=BIGINT}
+    </if>
+    <if test="version != null">
+      and  `version` = #{version,jdbcType=BIGINT}
+    </if>
+    <if test="creater != null">
+      and `creater` = #{creater,jdbcType=VARCHAR}
+    </if>
+    <if test="createdTime != null">
+      and `created_time` = #{createdTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="editor != null">
+      and `editor` = #{editor,jdbcType=VARCHAR}
+    </if>
+    <if test="editTime != null">
+      and `edit_time` = #{editTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="status != null">
+      and `status` = #{status,jdbcType=VARCHAR}
+    </if>
+    <if test="remark != null">
+      and `remark` = #{remark,jdbcType=VARCHAR}
+    </if>
+    <if test="moduleName != null">
+      and `module_name` = #{moduleName,jdbcType=VARCHAR}
+    </if>
+    <if test="operateName != null">
+      and `operate_name` = #{operateName,jdbcType=VARCHAR}
+    </if>
+    <if test="ip != null">
+      and `ip` = #{ip,jdbcType=VARCHAR}
+    </if>
+    <if test="params != null">
+      and `params` = #{params,jdbcType=VARCHAR}
+    </if>
+    <if test="workTime != null">
+      and `work_time` = #{workTime,jdbcType=BIGINT}
+    </if>
+  </sql>
+
+  <select id="listByEntity" parameterType="cn.zhishimao.core.pms.entity.PmsOperatorLog" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from `pms_operator_log`
+    where 1=1
+    <include refid="Base_Condition" />
+    order by created_time desc
+  </select>
+</mapper>

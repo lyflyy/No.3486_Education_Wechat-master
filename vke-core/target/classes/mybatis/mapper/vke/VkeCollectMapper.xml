@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhishimao.core.vke.dao.VkeCollectMapper">
+  <resultMap id="BaseResultMap" type="cn.zhishimao.core.vke.entity.VkeCollect">
+    <id column="user_id" jdbcType="BIGINT" property="userId" />
+    <id column="obj_id" jdbcType="BIGINT" property="objId" />
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="edit_time" jdbcType="TIMESTAMP" property="editTime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="version" jdbcType="BIGINT" property="version" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    `user_id`, `obj_id`, `id`, `created_time`, `edit_time`, `remark`, `version`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from `vke_collect`
+    where `user_id` = #{userId,jdbcType=BIGINT}
+      and `obj_id` = #{objId,jdbcType=BIGINT}
+      and `id` = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="map">
+    delete from `vke_collect`
+    where `user_id` = #{userId,jdbcType=BIGINT}
+      and `obj_id` = #{objId,jdbcType=BIGINT}
+      and `id` = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.zhishimao.core.vke.entity.VkeCollect">
+    insert into `vke_collect` (`user_id`, `obj_id`, `id`, 
+      `created_time`, `edit_time`, `remark`, 
+      `version`)
+    values (#{userId,jdbcType=BIGINT}, #{objId,jdbcType=BIGINT}, #{id,jdbcType=BIGINT}, 
+      #{createdTime,jdbcType=TIMESTAMP}, #{editTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, 
+      #{version,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.zhishimao.core.vke.entity.VkeCollect">
+    insert into `vke_collect`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        `user_id`,
+      </if>
+      <if test="objId != null">
+        `obj_id`,
+      </if>
+      <if test="id != null">
+        `id`,
+      </if>
+      <if test="createdTime != null">
+        `created_time`,
+      </if>
+      <if test="editTime != null">
+        `edit_time`,
+      </if>
+      <if test="remark != null">
+        `remark`,
+      </if>
+      <if test="version != null">
+        `version`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="objId != null">
+        #{objId,jdbcType=BIGINT},
+      </if>
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editTime != null">
+        #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.zhishimao.core.vke.entity.VkeCollect">
+    update `vke_collect`
+    <set>
+      <if test="createdTime != null">
+        `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editTime != null">
+        `edit_time` = #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        `remark` = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        `version` = #{version,jdbcType=BIGINT},
+      </if>
+    </set>
+    where `user_id` = #{userId,jdbcType=BIGINT}
+      and `obj_id` = #{objId,jdbcType=BIGINT}
+      and `id` = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.zhishimao.core.vke.entity.VkeCollect">
+    update `vke_collect`
+    set `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+      `edit_time` = #{editTime,jdbcType=TIMESTAMP},
+      `remark` = #{remark,jdbcType=VARCHAR},
+      `version` = #{version,jdbcType=BIGINT}
+    where `user_id` = #{userId,jdbcType=BIGINT}
+      and `obj_id` = #{objId,jdbcType=BIGINT}
+      and `id` = #{id,jdbcType=BIGINT}
+  </update>
+  <sql id="Base_Condition">
+    <if test="id != null">
+     and  `id` = #{id,jdbcType=TIMESTAMP}
+    </if><if test="objId != null">
+    and `obj_id` = #{objId,jdbcType=TIMESTAMP}
+  </if>
+    <if test="userId != null">
+      and `user_id` = #{userId,jdbcType=TIMESTAMP}
+    </if>
+    <if test="createdTime != null">
+      and `created_time` = #{createdTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="editTime != null">
+      and `edit_time` = #{editTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="remark != null">
+      and `remark` = #{remark,jdbcType=VARCHAR}
+    </if>
+    <if test="version != null">
+      and `version` = #{version,jdbcType=BIGINT}
+    </if>
+
+  </sql>
+  <select id="listByEntity" parameterType="cn.zhishimao.core.vke.entity.VkeCollect" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from vke_collect
+    where 1=1
+    <include refid="Base_Condition"/>
+  </select>
+
+  <delete id="deleteByParam" parameterType="java.util.HashMap">
+    delete from vke_collect
+    <where>
+      <include refid="Base_Condition"/>
+    </where>
+  </delete>
+
+  <select id="countByCourseIdAndUserId" resultType="java.lang.Integer">
+    select count(id) from vke_collect
+    where obj_id = #{courseId,jdbcType=BIGINT} and user_id = #{userId,jdbcType=BIGINT}
+  </select>
+</mapper>

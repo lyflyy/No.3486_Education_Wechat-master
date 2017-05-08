@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" class="vke">
+<head th:replace="wx/fragment/frag :: common_header(~{::title},~{::link})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+    <title th:text="${course.name}  + '-知识猫'"></title>
+    <!-- build:css css/vlive.min.css -->
+    <link rel="stylesheet" href="../../../static/public/wx/css/vlive.css"/>
+    <link href="../../../static/public/plugins/webuploader/webuploader.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../static/public/wx/raty/lib/jquery.raty.css"/>
+    <!-- endbuild -->
+</head>
+<body class="live">
+<div class="container" id="app">
+    <div class="page" id="live-page">
+        <div class="page__bd">
+            <div class="float_bar">
+                <div class="item"><a href="/wx/view">主页</a></div>
+                <div class="item"  th:if="${isLecturer}"><a href="javascript:void(0);" class="open-popup" data-target="#tlq">讨论</a></div>
+                <div class="item" id="refresh"><a>刷新</a></div>
+                <div class="item"><a>帮助</a></div>
+            </div>
+            <div class="page__desc">
+
+                本课程于<span th:text="${#dates.format(course.startTime, 'yyyy-MM-dd HH:mm:ss')}"></span> 开始
+            </div>
+            <div id="chat-list" class="chat_list">
+
+            </div>
+        </div>
+
+
+        <div class="page__ft " id="chat-ft">
+            <div class="ft_bar">
+                <div class="weui-flex" th:if="${isLecturer}">
+                    <div class="weui-flex__item" id="pvoice">
+                        <a class="st_btn">
+                            <i class="st_icon vke-icon-voice"></i>
+                            <span class="st_txt">语音</span>
+                        </a>
+                    </div>
+                    <div class="weui-flex__item open-popup" data-target="#ptxt">
+                        <a class="st_btn">
+                            <i class="st_icon vke-icon-text"></i>
+                            <span class="st_txt">文字</span>
+                        </a>
+                    </div>
+                    <div class="weui-flex__item" id="pimg">
+                        <a class="st_btn">
+                            <i class="st_icon vke-icon-img"></i>
+                            <span class="st_txt">图片</span>
+                        </a>
+                    </div>
+                    <div class="weui-flex__item" id="psetting">
+                        <a class="st_btn">
+                            <i class="st_icon vke-icon-setting"></i>
+                            <span class="st_txt">设置</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="weui-flex" th:unless="${isLecturer}">
+                    <div class="weui-flex__item open-popup" data-target="#tlq" id="stlq">
+                        <a class="st_btn">
+                            <i class="st_icon vke-icon-voice"></i>
+                            <span class="st_txt">讨论（<span th:text="${tlqCount}"></span>）</span>
+                        </a>
+                    </div>
+                    <div class="weui-flex__item" id="psetting">
+                        <a class="st_btn">
+                            <i class="st_icon vke-icon-setting"></i>
+                            <span class="st_txt">设置</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="ft_bar_content" id="ft_bar_content">
+                <div class="ft_bar_voice">
+
+                    <div class="pattern voice">
+                        <div class="voice_hd">
+                            <span class="voice_tips_msg">向上滑动并松开手指，可取消发送</span>
+                            <div class="voice_time"><span class="voice_time_doing">1</span>s&nbsp;/&nbsp;<span
+                                    class="voice_time_total">60</span>s
+                            </div>
+                        </div>
+                        <div class="voice_tips">按住开始说话</div>
+                        <div class="wave">
+                            <em class=""><i class="vke-icon-voice"></i></em>
+                        </div>
+                        <div class="voice_tips pattern_change">
+                            <span class="to_voice"><i class="dot"></i>语音模式</span>
+                            <span class="to_record">录音模式</span>
+                        </div>
+                    </div>
+
+                    <div class="pattern record">
+                        <div class="voice_hd">
+                            <span class="voice_tips_msg"> 满60秒自动发送，并开始录制下一条 </span>
+                            <div class="voice_time">
+                                <span class="voice_time_doing">5</span>s&nbsp;/&nbsp;<span
+                                    class="voice_time_total">60</span>s
+                                <a class="cancel-record weui-btn weui-btn_plain-primary weui-btn_mini">取消</a>
+                            </div>
+                        </div>
+                        <div class="voice_tips">点击开始录音</div>
+                        <div class="wave">
+                            <em class=""><i class="record_icon"></i></em>
+                        </div>
+                        <div class="voice_tips pattern_change">
+                            <span class="to_voice">语音模式</span>
+                            <span class="to_record"><i class="dot"></i>录音模式</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ft_bar_ext" id="ft_bar_ext" th:if="${isLecturer}">
+                    <div class="weui-flex">
+                        <div th:if="${isLecturer}" class="weui-flex__item open-popup" data-target="#st_material">
+                            <a class="st_btn">
+                                <i class="st_icon vke-icon-shucai"></i>
+                                <span class="st_txt">素材库</span>
+                            </a>
+                        </div>
+                        <div th:if="${isLecturer}" class="weui-flex__item" id="st_shielding">
+                            <a class="st_btn">
+                                <i class="st_icon vke-icon-pingbi"></i>
+                                <span class="st_txt">屏蔽发言</span>
+                            </a>
+                        </div>
+                        <div class="weui-flex__item" id="st_earnings">
+                            <a class="st_btn">
+                                <i class="st_icon vke-icon-shouyi"></i>
+                                <span class="st_txt">课程收益</span>
+                            </a>
+                        </div>
+                        <div th:if="${isLecturer}" class="weui-flex__item" th:attr="data-end=${course.endTime}"
+                             id="st_edit">
+                            <a th:unless="${course.endTime}" th:href="@{/wx/view/course/edit?id={id}(id=${course.id})}"
+                               class="st_btn">
+                                <i class="st_icon vke-icon-edit"></i>
+                                <span class="st_txt">修改课程</span>
+                            </a>
+
+                            <a class="st_btn" th:if="${course.endTime}">
+                                <i class="st_icon vke-icon-edit"></i>
+                                <span class="st_txt">修改课程</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="weui-flex">
+                        <div class="weui-flex__item" th:attr="data-collected=${isCollect}" id="st_collect">
+                            <a class="st_btn">
+                                <i class="st_icon vke-icon-heart"></i>
+                                <span class="st_txt" th:unless="${isCollect}">收藏课程</span>
+                                <span class="st_txt" th:if="${isCollect}">已收藏</span>
+                            </a>
+                        </div>
+                        <div class="weui-flex__item" id="st_share"><a class="st_btn">
+                            <i class="st_icon vke-icon-share"></i>
+                            <span class="st_txt">分享课程</span>
+                        </a>
+                        </div>
+                        <div th:if="${isLecturer}" th:attr="data-end=${course.status}" class="weui-flex__item"
+                             id="st_finish">
+                            <a class="st_btn">
+                                <i class="st_icon vke-icon-finish"></i>
+                                <span th:if="${course.status eq 3}" class="st_txt">已结束</span>
+                                <span th:unless="${course.status eq 3}" class="st_txt">结束课程</span>
+                            </a>
+                        </div>
+                        <div class="weui-flex__item">
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="ft_bar_ext" id="ft_bar_ext" th:unless="${isLecturer}">
+
+                    <div class="weui-flex">
+                        <div class="weui-flex__item" id="st_earnings">
+                            <a class="st_btn">
+                                <i class="st_icon vke-icon-shouyi"></i>
+                                <span class="st_txt">课程收益</span>
+                            </a>
+                        </div>
+                        <div class="weui-flex__item" id="st_share">
+                            <a class="st_btn">
+                                <i class="st_icon vke-icon-share"></i>
+                                <span class="st_txt">分享课程</span>
+                            </a>
+                        </div>
+                        <div class="weui-flex__item" id="st_comment">
+                            <a class="st_btn">
+                                <i class="st_icon vke-icon-comment"></i>
+                                <span class="st_txt">课程评价</span>
+                            </a>
+                        </div>
+                        <div class="weui-flex__item" id="st_tusou">
+                            <a class="st_btn">
+                                <i class="st_icon vke-icon-tousu"></i>
+                                <span class="st_txt">投诉</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="weui-flex">
+                        <div class="weui-flex__item" id="st_collect">
+                            <a class="st_btn">
+                                <i class="st_icon vke-icon-heart"></i>
+                                <span class="st_txt" th:unless="${isCollect}">收藏课程</span>
+                                <span class="st_txt" th:if="${isCollect}">已收藏</span>
+                            </a>
+                        </div>
+                        <div class="weui-flex__item">
+                        </div>
+                        <div class="weui-flex__item">
+                        </div>
+                        <div class="weui-flex__item">
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+</div>
+
+
+<div id="dialogs">
+    <!--BEGIN dialog1-->
+    <div class="js_dialog" id="redpacked_dialog" style="display: none;">
+        <div class="weui-mask"></div>
+        <div class="weui-dialog rp">
+            <div class="weui-dialog__hd">
+                <a class="dialog__close">
+                    <i class="weui-icon-cancel"></i>
+                </a>
+                <div class="rp_head_wrap">
+                    <div class="rp_head_fix_top"></div>
+                    <div class="rp_head"></div>
+                </div>
+                <div class="uinfo">
+                    <div class="avatar-wrap">
+                        <img class="avatar" th:src="${session.vkeu.avatar}">
+                    </div>
+                    <div class="nickname" th:text="${session.vkeu.nickName}"></div>
+                    <div class="desc">爱赞赏的人，运气也不会差哦～</div>
+                </div>
+            </div>
+            <div class="weui-dialog__bd">
+                <div class="rp_money_wrap">
+                    <a class="rp_money" data-money="2">2元</a>
+                    <a class="rp_money" data-money="5">5元</a>
+                    <a class="rp_money" data-money="10">10元</a>
+                </div>
+                <div class="rp_money_wrap">
+                    <a class="rp_money" data-money="50">50元</a>
+                    <a class="rp_money" data-money="100">100元</a>
+                    <a class="rp_money" data-money="200">200元</a>
+                </div>
+                <div class="rp_money_other">
+                    其他金额(元)<input name="rpO" type="number" placeholder="可填写2-1000"/>
+                </div>
+                <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_warn" id="payRedpacket">去支付</a>
+            </div>
+        </div>
+    </div>
+    <!--END dialog1-->
+</div>
+
+<!--讨论区-->
+<div id="tlq" class="weui-popup__container">
+    <div class="weui-popup__overlay"></div>
+    <div class="weui-popup__modal j-tlq-model tlq">
+        <div class="container">
+            <div class="page">
+                <div class="page__hd">
+                    <a href="javascript:;" class="weui-btn weui-btn_primary close-popup">回到课程</a>
+                </div>
+                <div class="page__bd">
+
+                    <div class="weui-panel weui-panel_access loading">
+
+                        <div class="weui-panel__bd">
+                            <div class="data-list" id="forum-list">
+
+                            </div>
+
+                            <div class="weui-loadmore">
+                                <i class="weui-loading"></i>
+                                <span class="weui-loadmore__tips">正在加载</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="page__ft ">
+                    <div class="ft_bar">
+                        <div class="weui-flex">
+                            <div class="weui-flex__item">
+                                <input id="forum-input" placeholder="来说点儿什么吧"/>
+                            </div>
+                            <div class="weui-flex__item">
+                                <a href="javascript:;" id="forum-btn" class="weui-btn weui-btn_primary">发送</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!--素材-->
+<div id="st_material" class="weui-popup__container">
+    <div class="weui-popup__overlay"></div>
+    <div class="weui-popup__modal stma tlq">
+        <div class="container">
+            <div class="page">
+                <div class="page__hd">
+                    <a href="javascript:;" class="weui-btn weui-btn_primary close-popup">回到课程</a>
+                </div>
+                <div class="page__bd">
+
+                    <div class="weui-panel">
+                        <div class="weui-panel__bd">
+                            <div class="data-list" id="material-list">
+
+                            </div>
+
+                            <div class="weui-loadmore">
+                                <i class="weui-loading"></i>
+                                <span class="weui-loadmore__tips">正在加载</span>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="page__ft ">
+                    <div class="ft_bar">
+                        <div class="weui-flex">
+                            <div class="weui-flex__item">
+                                <input id="ma-input" placeholder="在这里输入文字素材"/>
+                            </div>
+                            <div class="weui-flex__item">
+                                <a href="javascript:;" id="ma-btn" class="weui-btn weui-btn_primary">添加</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--文本内容-->
+<div id="ptxt" class="weui-popup__container">
+    <div class="weui-popup__overlay"></div>
+    <div class="weui-popup__modal tlq ptxt">
+        <div class="container">
+            <div class="page">
+                <div class="page__hd txt_bar">
+                    <div class="weui-cells weui-cells_form">
+                        <div class="weui-cell">
+                            <div class="weui-cell__bd">
+                                <textarea class="weui-textarea" id="msg-text-input" placeholder="请输入文本"
+                                          rows="5"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="weui-panel weui-panel_access">
+                        <div class="weui-panel__bd">
+                            <div href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg">
+                                <div class="weui-media-box__bd">
+                                    <div class="weui-flex">
+                                        <div class="weui-flex__item close-popup"><span>取消</span></div>
+                                        <div class="weui-flex__item text-right" id="sendCTxtMsg">
+                                            <a class="weui-cell_link" href="javascript:;">发送</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="page__bd">
+
+                    <div class="weui-panel weui-panel_access">
+                        <div class="weui-panel__bd">
+                            <div class="data-list" id="ptext-pre-list">
+
+                            </div>
+
+                            <div class="weui-loadmore">
+                                <i class="weui-loading"></i>
+                                <span class="weui-loadmore__tips">正在加载</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<input id="userId" th:value="${session.vkeu.id}" type="hidden">
+<input id="courseId" th:value="${live.courseId}" type="hidden">
+<input id="selSessHeadUrl" th:value="${course.avatar}" type="hidden">
+<input id="liveId" th:value="${live.id}" type="hidden">
+<input id="lecturerId" th:value="${live.lecturerId}" type="hidden">
+<input id="isDisableForum" th:value="${live.isDisableForum}" type="hidden">
+<input id="isLecturer" th:value="${isLecturer}" type="hidden">
+<input id="isDisableInteract" th:value="${live.isDisableInteract}" type="hidden">
+<input id="data-isbf" th:value="${isbf}" type="hidden">
+<input id="data-isbl" th:value="${isbl}" type="hidden">
+
+<!--BEGIN dialog2-->
+<div class="js_dialog dialog-wrap" id="dialog2" style="display: none;">
+    <div class="weui-mask"></div>
+    <div class="weui-dialog tousu_dialog">
+        <div class="weui-dialog__bd">
+            <h3>投诉</h3>
+            <div class="weui-cells weui-cells_form">
+                <div class="weui-cell cm_bd_bg">
+                    <textarea class="weui-textarea " id="verfiyReason" placeholder="请填写投诉的理由和联系方式" rows="5"></textarea>
+                </div>
+            </div>
+            <p class="cm_info_extra">谢谢，我们的工作人员会及时联系您</p>
+        </div>
+        <div class="weui-dialog__ft">
+            <a href="javascript:;" class="weui-dialog__btn tousu_btn weui-dialog__btn_primary">立即投诉</a>
+        </div>
+    </div>
+
+    <div class="weui-dialog finish_dialog" style="display: none;">
+        <div class="weui-dialog__bd">确定要屏蔽互动区吗？建议互动区不要屏蔽持续超过五分钟</div>
+        <div class="weui-dialog__ft">
+            <a href="javascript:;" class="weui-dialog__btn ikown weui-dialog__btn_primary">知道了</a>
+        </div>
+    </div>
+</div>
+
+
+<!--END dialog2-->
+<script type="text/template" id="tlq-item-template">
+    <div class="weui-media-box weui-media-box_appmsg">
+        <div class="weui-media-box__hd">
+            <img class="weui-media-box__thumb" src="#avatar#" alt="">
+        </div>
+        <div class="weui-media-box__bd">
+            <ul class="weui-media-box__info">
+                <li class="weui-media-box__info__meta"><span>#nick_name#</span>&nbsp;| &nbsp;
+                    <span>#userType#</span>
+                </li>
+                <li class="weui-media-box__info__meta">#created_time#</li>
+            </ul>
+            <p class="weui-media-box__desc">#content#</p>
+            <div class="weui-media-box__bar">
+                <span class="weui-media-box__bar__btn del" data-uid="#user_id#" style="display: #delshow#;" data-uname="#nick_name#" data-id="#id#">删除</span>
+                <span class="weui-media-box__bar__btn banned" #bannedDis# th:if="${isLecturer}" data-banned="#banned_id#" data-uid="#user_id#" data-uname="#nick_name#" data-id="#id#">#bannedTxt#</span>
+                <span class="weui-media-box__bar__btn towall" #towallDis# th:if="${isLecturer}" data-towall="#is_to_wall#" data-uid="user_id" data-uname="#nick_name#"
+                      data-id="#id#">#towallTxt#</span>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/template" id="lmt-send-item-template">
+    <a class="weui-media-box weui-media-box_appmsg toSend" href="javascript:void(0);">
+        <div class="weui-media-box__bd">
+            <p class="weui-media-box__desc">#content#</p>
+        </div>
+    </a>
+</script>
+<script type="text/template" id="lmt-item-template">
+    <div class="weui-media-box weui-media-box_appmsg">
+
+        <div class="weui-media-box__bd">
+            <p class="weui-media-box__desc">
+                #content#
+            </p>
+            <ul class="weui-media-box__info  has_btn">
+                <li class="weui-media-box__info__meta">#cteatedTime#</li>
+                <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">
+                    <span class="weui-media-box__bar__btn stick" data-stick="#isStick#" data-id="#id#">置顶</span>
+                    <span class="weui-media-box__bar__btn del" data-id="#id#">删除</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</script>
+
+<script type="text/template" id="chat-msg-item-template">
+    <div class="chat_item">
+        <div class="weui-flex__item msg">
+            <div class="content bubble">
+                #content#
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/tpl" id="d-earnings">
+    <h5>报名收益: #signupM#</h5>
+    <h5>分享收益: #shareM#</h5>
+    <h5>赞赏收益: #msgM#</h5>
+
+</script>
+<script type="text/tpl" id="tousu-d">
+            <div class="weui-cells weui-cells_form">
+            <div class="weui-cell cm_bd_bg">
+            <textarea class="weui-textarea " id="fbcontent" placeholder="请填写投诉的理由和联系方式" rows="5"></textarea>
+            </div>
+            </div>
+            <p class="cm_info_extra">谢谢，我们的工作人员会及时联系您</p>
+
+</script>
+
+<script type="text/tpl" id="towall-d">
+            <div class="weui-cells weui-cells_form">
+            <div class="weui-cell cm_bd_bg">
+            <textarea class="weui-textarea " id="towallContent" placeholder="点击确定后，回复内容会同步到互动区。回复内容可以为空" rows="5"></textarea>
+            </div>
+            </div>
+
+</script>
+<script type="text/tpl" id="comment-d">
+            <div class="weui-cells weui-cells_form">
+
+            <div class="weui-cell star-wrap">
+                课程: <span id="cs-star"></span>
+                <input type="hidden" id="hintcs">
+            </div>
+                <div class="weui-cell star-wrap last-child">
+                讲师: <span id="ls-star"></span>
+                <input type="hidden" id="hintls">
+            </div>
+            <div class="weui-cell cm_bd_bg">
+                <textarea class="weui-textarea " id="fbcontent" placeholder="请在这里填写您对讲师和课程的评价" rows="5"></textarea>
+            </div>
+            </div>
+
+</script>
+<script type="text/tpl" id="forbid-d">
+        <div class="weui-cells weui-cells_form">
+            <div class="weui-cell weui-cell_switch">
+                <div class="weui-cell__bd">互动区禁言模式</div>
+                <div class="weui-cell__ft">
+                    <label for="hdCP" class="weui-switch-cp">
+                        <input id="hdCP" class="weui-switch-cp__input" th:checked="${live.isDisableForum}" type="checkbox">
+                        <div class="weui-switch-cp__box"></div>
+                    </label>
+                </div>
+            </div>
+            <div class="weui-cell weui-cell_switch">
+                <div class="weui-cell__bd">讨论群禁言模式</div>
+                <div class="weui-cell__ft">
+                    <label for="tlqCP" class="weui-switch-cp">
+                        <input id="tlqCP" class="weui-switch-cp__input" th:checked="${live.isDisableInteract}" type="checkbox">
+                        <div class="weui-switch-cp__box"></div>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <h5 class="dtitle" style="display:none;">屏蔽的互动学员</h5>
+        <div class="uin-list">
+        <div class="weui-cells">
+
+        </div>
+        </div>
+
+</script>
+<script type="text/tpl" id="forbid-item">
+    <div class="weui-cell">
+            <div class="weui-cell__hd"><img class="avatar" src="#avatar#" alt="" ></div>
+            <div class="weui-cell__bd">
+            <p>#nickName#</p>
+            </div>
+        <div class="weui-cell__ft"><a class="link unblockm">解除屏蔽</a></div>
+    </div>
+
+</script>
+<script type="text/javascript" src="//res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<!-- build:js js/common.min.js -->
+<script src="../../../static/public/wx/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../static/public/wx/js/jquery-weui.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../static/public/wx/js/fastclick.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="../../../static/public/wx/raty/lib/jquery.raty.js" charset="utf-8"></script>
+<script src="../../../static/public/plugins/webuploader/webuploader.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../static/public/wx/js/jquery.hammer.js" type="text/javascript" charset="utf-8"></script>
+<script type='text/javascript' src='../../../static/public/wx/js/swiper.js' charset='utf-8'></script>
+<script src="../../../static/public/js/lodash.core.min.js?t=111" type="text/javascript" charset="utf-8"></script>
+<script src="../../../static/public/wx/im/json2.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../static/public/wx/im/webim.js" type="text/javascript" charset="utf-8"></script>
+<!-- endbuild -->
+<script type="text/javascript" src="/public/wx/im/vlive_base.js?t=116"></script>
+<script type="text/javascript" src="/public/wx/im/vlive_group_notice.js"></script>
+<script type="text/javascript" src="/public/wx/im/vlive.js?t=113" charset="utf-8"></script>
+
+
+<script type="text/javascript">
+FastClick.attach(document.body);
+    //帐号模式，0-表示独立模式，1-表示托管模式
+    var accountMode = 0;
+
+    //官方 demo appid,需要开发者自己修改（托管模式）
+    var sdkAppID = null;
+    var accountType = null;
+
+    var avChatRoomId = null; //默认房间群ID，群类型必须是直播聊天室（AVChatRoom），这个为官方测试ID(托管模式)
+
+    if (webim.Tool.getQueryString("groupid")) {
+        avChatRoomId = webim.Tool.getQueryString("groupid");//用户自定义房间群id
+    }
+
+    var selType = webim.SESSION_TYPE.GROUP;
+    var selToID = null;//当前选中聊天id（当聊天类型为私聊时，该值为好友帐号，否则为群号）
+    var selSess = null;//当前聊天会话
+
+    //默认群组头像(选填)
+    var selSessHeadUrl = $('#selSessHeadUrl').val();
+    var loginInfo = null;
+
+    //当前用户身份
+    //    var loginInfo = {
+    //        'sdkAppID': sdkAppID, //用户所属应用id,必填
+    //        'appIDAt3rd': sdkAppID, //用户所属应用id，必填
+    //        'accountType': accountType, //用户所属应用帐号类型，必填
+    //        'identifier': _logininfo.identifier + "", //当前用户ID,必须是否字符串类型，选填
+    //        'identifierNick': _logininfo.identifierNick, //当前用户昵称，选填
+    //        'userSig': _logininfo.userSig, //当前用户身份凭证，必须是字符串类型，选填
+    //        'headurl': _logininfo.headurl //当前用户默认头像，选填
+    //    };
+    //监听（多终端同步）群系统消息方法，方法都定义在demo_group_notice.js文件中
+    //注意每个数字代表的含义，比如，
+    //1表示监听申请加群消息，2表示监听申请加群被同意消息，3表示监听申请加群被拒绝消息等
+    var onGroupSystemNotifys = {
+        //"1": onApplyJoinGroupRequestNotify, //申请加群请求（只有管理员会收到,暂不支持）
+        //"2": onApplyJoinGroupAcceptNotify, //申请加群被同意（只有申请人能够收到,暂不支持）
+        //"3": onApplyJoinGroupRefuseNotify, //申请加群被拒绝（只有申请人能够收到,暂不支持）
+        //"4": onKickedGroupNotify, //被管理员踢出群(只有被踢者接收到,暂不支持)
+        "5": onDestoryGroupNotify, //群被解散(全员接收)
+        //"6": onCreateGroupNotify, //创建群(创建者接收,暂不支持)
+        //"7": onInvitedJoinGroupNotify, //邀请加群(被邀请者接收,暂不支持)
+        //"8": onQuitGroupNotify, //主动退群(主动退出者接收,暂不支持)
+        //"9": onSetedGroupAdminNotify, //设置管理员(被设置者接收,暂不支持)
+        //"10": onCanceledGroupAdminNotify, //取消管理员(被取消者接收,暂不支持)
+        "11": onRevokeGroupNotify, //群已被回收(全员接收)
+        "255": onCustomGroupNotify//用户自定义通知(默认全员接收)
+    };
+
+
+    //监听连接状态回调变化事件
+    var onConnNotify = function (resp) {
+        switch (resp.ErrorCode) {
+            case webim.CONNECTION_STATUS.ON:
+                //webim.Log.warn('连接状态正常...');
+                break;
+            case webim.CONNECTION_STATUS.OFF:
+                webim.Log.warn('连接已断开，无法收到新消息，请检查下你的网络是否正常');
+                break;
+            default:
+                webim.Log.error('未知连接状态,status=' + resp.ErrorCode);
+                break;
+        }
+    };
+
+
+    //监听事件
+    var listeners = {
+        "onConnNotify": onConnNotify, //选填
+        "jsonpCallback": jsonpCallback, //IE9(含)以下浏览器用到的jsonp回调函数,移动端可不填，pc端必填
+        "onBigGroupMsgNotify": onBigGroupMsgNotify, //监听新消息(大群)事件，必填
+        "onMsgNotify": onMsgNotify,//监听新消息(私聊(包括普通消息和全员推送消息)，普通群(非直播聊天室)消息)事件，必填
+        "onGroupSystemNotifys": onGroupSystemNotifys, //监听（多终端同步）群系统消息事件，必填
+        "onGroupInfoChangeNotify": onGroupInfoChangeNotify//监听群资料变化事件，选填
+    };
+
+    var isAccessFormalEnv = true;//是否访问正式环境
+
+    if (webim.Tool.getQueryString("isAccessFormalEnv") == "false") {
+        isAccessFormalEnv = false;//访问测试环境
+    }
+
+    var isLogOn = true;//是否在浏览器控制台打印sdk日志
+    var currentMsgSeq = 1;//当前消息序列id
+
+    //其他对象，选填
+    var options = {
+        'isAccessFormalEnv': isAccessFormalEnv,//是否访问正式环境，默认访问正式，选填
+        'isLogOn': isLogOn//是否开启控制台打印日志,默认开启，选填
+    };
+
+    var curPlayAudio = null;//当前正在播放的audio对象
+    var curPlayVoice = null; //当前正在播放的微信语音
+    webim.Log.setOn(false);
+    var vlive = new Vlive();
+
+
+</script>
+</body>
+</html>

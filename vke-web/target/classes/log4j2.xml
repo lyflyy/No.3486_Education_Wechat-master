@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info" monitorInterval="60">
+    <properties>
+        <property name="log.dir">/data/app/logs/</property>
+    </properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout>
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %1p [%X{logId}] [%C{1}:%L] - %m%n</Pattern>
+            </PatternLayout>
+        </Console>
+
+        <RollingRandomAccessFile name="Debugger" fileName="${log.dir}/vke.debug.log"
+                                 filePattern="${log.dir}/vke.debug.log.%d{yyyy-MM-dd}">
+            <PatternLayout>
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %1p [%X{logId}] [%C{1}:%L] - %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+        </RollingRandomAccessFile>
+
+
+        <!--<SMTP name="Mail" subject="huluRedpacketErrorLog-test"-->
+        <!--smtpHost="smtp.ym.163.com" from="mail@huluuu.com" to="1171602588@qq.com"-->
+        <!--smtpUsername="mail@huluuu.com" smtpPassword="mail123" smtpPort="25" bufferSize="50" smtpDebug="true">-->
+        <!--<PatternLayout>-->
+        <!--<Pattern>%d{yyyy-MM-dd HH:mm:ss,SSS} %1p [%C{1}:%L] - %m%n</Pattern>-->
+        <!--</PatternLayout>-->
+        <!--</SMTP>-->
+
+    </Appenders>
+
+    <Loggers>
+        <Logger name="cn.zhishimao" level="info" additivity="true">
+            <AppenderRef ref="Debugger"/>
+            <!--<AppenderRef ref="Mail" level="error" />-->
+        </Logger>
+
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+
+</Configuration>

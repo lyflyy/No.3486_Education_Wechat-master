@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="backend/fragment/frag :: common_header(~{::title},_)">
+    <title>知识猫 - 运营系统</title>
+</head>
+<script src="/public/js/jquery.min.js?v=2.1.4"></script>
+<script src="/public/js/plugins/layer/layer.min.js?v=1.1"></script>
+<script type="text/javascript">
+$(function () {
+    $.post("/backend/menu/getMenulist", {}, function (data) {
+        data = $.parseJSON(data)
+        $.each(data,function(name,value) {
+            $("#pidSelect").append('<option value='+value.id+'>'+value.name+'</option>');
+        });
+    })
+})
+
+</script>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>添加权限资源</h5>
+                </div>
+                <div class="ibox-content">
+                    <form role="form" class="form-horizontal" th:action="@{/backend/menu/save}" method="post">
+                        <div class="row">
+                            <div class="col-sm-6 b-r">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">资源名称</label>
+
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" name="name" required>
+                                    </div>
+                                </div>
+                                <div class="hr-line-dashed"></div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">url(相对地址)</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" name="url" required> <span
+                                            class="help-block m-b-none">URl是一个相对地址</span>
+                                    </div>
+                                </div>
+                                <div class="hr-line-dashed"></div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">类型</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control m-b" name="type" required>
+                                            <option value="">请选择...</option>
+                                            <option value="1">菜单</option>
+                                            <option value="2">按钮</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">父级</label>
+
+                                    <div class="col-sm-10">
+                                        <select class="form-control m-b" name="parentId" id="pidSelect" required>
+                                            <option value="">请选择...</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="hr-line-dashed"></div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">备注</label>
+
+                                    <div class="col-sm-10">
+                                        <textarea name="remark" placeholder="备注" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div class="hr-line-dashed"></div>
+                                <div class="form-group" required>
+                                <label class="col-sm-2 control-label">是叶子节点?
+                                </label>
+
+                                <div class="col-sm-10">
+                                    <div class="radio i-checks">
+                                        <label>
+                                            <div class="iradio_square-green checked" style="position: relative;">
+                                                <input type="radio" checked="" value="1" name="isLeaf"  style="position: absolute; opacity: 0;">
+                                                <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                                            </div>
+                                            <i></i> 是</label>
+                                    </div>
+                                    <div class="radio i-checks">
+                                        <label>
+                                            <div class="iradio_square-green checked " style="position: relative;">
+                                                <input type="radio" checked="" value="0" name="isLeaf"  style="position: absolute; opacity: 0;">
+                                                <ins class="iCheck-helper"  style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                                            </div>
+                                            <i></i> 否</label>
+                                    </div>
+                                </div>
+                            </div>
+                                <div class="hr-line-dashed"></div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">标识</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" name="code" required> <span
+                                            class="help-block m-b-none">一个纯英文，且唯一的名字，用于内部标识</span>
+                                    </div>
+                                </div>
+                                <div class="hr-line-dashed"></div>
+                                <div class="form-group">
+                                    <div class="col-sm-4 col-sm-offset-2">
+                                        <button class="btn btn-primary" type="submit">保存内容</button>
+                                        <button class="btn btn-white" type="submit">取消</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:object="${course}">
+<head th:replace="wx/fragment/frag :: common_header(~{::title},~{::link})">
+    <meta charset="UTF-8">
+    <title th:unless="${course?.id}">创建课程</title>
+    <title th:if="${course?.id}" th:text="'编辑-' + *{name}"></title>
+    <link href="/public/wx/css/weui.min.css" rel="stylesheet">
+    <link href="/public/wx/css/jquery-weui.min.css" rel="stylesheet">
+    <link href="/public/plugins/webuploader/webuploader.css" rel="stylesheet">
+</head>
+<body class="vke">
+<div class="container" id="app">
+    <div class="page course">
+
+        <div class="page__bd">
+            <form id="form" method="post" >
+                <div class="weui-cells__title"><label class="weui-label" for="name">课程标题</label></div>
+                <div class="weui-cells">
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd">
+                            <input type="hidden" th:if="${course?.id}" name="id" th:value="*{id}">
+                            <input type="hidden" th:if="${course?.id}" id="status" name="status" th:value="*{status}">
+                            <input class="weui-input" th:disabled="${(course.status eq 2) or (course.status eq 3)}" name="name" id="name" th:value="*{name}" type="text" required="true" placeholder="请输入文本">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="weui-cells__title"><label class="weui-label" for="course-avatar">课程图片</label></div>
+                <div class="weui-cells cm_addPhoto" th:classappend="*{avatar}?preview:''">
+                    <div class="weui-cell" id="upload-course-avatar">
+                        <input type="hidden" id="course-avatar" name="avatar"  th:value="*{avatar}">
+
+                        <div th:unless="${course?.id}" class="weui-cell__bd" id="course-avatar-wrap">
+                            <span><i>+</i> <b>添加图片</b></span>
+                        </div>
+                        <div th:if="${course?.id}" class="weui-cell__bd" id="course-avatar-wrap"><img th:src="'http://vke2016-10071423.image.myqcloud.com/' + *{avatar} +'?imageView2/1/w/375/h/180'"></div>
+                    </div>
+                </div>
+
+
+                <div class="weui-cells__title">课程属性</div>
+                <div class="weui-cells weui-cells_form">
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label class="weui-label" for="startTime">开课时间</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" th:disabled="${(course.status eq 2) or (course.status eq 3) or (course.status eq 1)}" id="startTime" type="text"  required="true" name="startTime"
+                                   th:value="${#dates.format(course.startTime, 'yyyy-MM-dd HH:mm')}"
+                                   placeholder="点击选择时间">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label class="weui-label" for="duration">课程时长</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" th:disabled="${(course.status eq 2) or (course.status eq 3) or (course.status eq 1)}" pattern="\d*" type="number" id="duration" name="duration"  required="true" th:value="*{duration}"
+                                   placeholder="大约时间(分钟)，不要超过90分钟">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label class="weui-label" for="maxSigupCount">互动人数</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" th:disabled="${(course.status eq 2) or (course.status eq 3) or (course.status eq 1)}" id="maxSigupCount" pattern="\d*" name="maxSigupCount"  required="true" th:value="*{maxSigupCount}" type="number"
+                                   placeholder="在课堂互动学员的人数(个)">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label class="weui-label" for="price" >价格</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" th:disabled="${(course.status eq 2) or (course.status eq 3) or (course.status eq 1)}" id="price" type="number" name="price" required="true"   th:value="*{price}"
+                                   placeholder="报名互动学员的价格(元)">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="weui-cells__title" for="intro">课程介绍</div>
+                <div class="weui-cells weui-cells_form">
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd">
+                            <textarea class="weui-textarea" th:disabled="${(course.status eq 2) or (course.status eq 3)}"  id="intro" required="true" name="intro" placeholder="请在这里输入课程的介绍" rows="4"
+                                      th:text="*{intro}"></textarea>
+                            <!--<div class="weui-textarea-counter"><span>0</span>/200</div>-->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="weui-btn-area">
+                    <button type="submit" th:unless="${course?.id}" class="weui-btn weui-btn_primary" id="showTooltips">创建课程 </button>
+                    <button type="submit" th:if="${course?.id}" class="weui-btn weui-btn_primary" id="showTooltips">保存课程</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+<div id="toast" class="toast-text">
+    <div class="weui-mask_transparent"></div>
+    <div class="weui-toast">
+        <p class="weui-toast__content"></p>
+    </div>
+</div>
+<input type="hidden" id="userId" th:value="${session.vkeu.id}">
+<div th:include="wx/fragment/frag::commonScript"></div>
+<script src="/public/js/jquery-html5Validate.js" type="text/javascript" charset="utf-8"></script>
+<script src="/public/plugins/webuploader/webuploader.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#startTime").datetimePicker({
+            title: "请选择开课时间",
+            min: function () {
+                var currentDate = new Date();
+                return currentDate.getFullYear() + "-" + (currentDate.getMonth() + 1) + "-" + currentDate.getDate();
+            }
+        });
+        var userId = $("#userId").val();
+
+        /**
+         * 初始化文件上传
+         * @param data
+         */
+        var initUpload = function (data) {
+            var uploader = WebUploader.create({
+                // swf文件路径
+//            swf: '/public/plugins/webuploader/Uploader.swf',
+                // 文件接收服务端。
+                server: 'http://web.image.myqcloud.com/photos/v2/' + data.appid + "/" + data.bucket + "/0",
+                // 选择文件的按钮。可选。
+                // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+                pick: '#upload-course-avatar',
+                auto: true,
+                fileVal: 'FileContent',
+                // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
+                resize: false,
+                accept: {
+                    title: 'Images',
+                    extensions: 'gif,jpg,jpeg,bmp,png'
+                }
+            });
+            //上传之前添加一些附加参数
+            uploader.on('uploadBeforeSend', function (object, _data, headers) {
+                if (data.md5) {
+                    _data['Md5'] = data.md5;
+                }
+                _data['MagicContext'] = JSON.stringify({
+                    userId: userId,
+                    type: 3,
+                    remark: '课程图片'
+                });
+                headers['Authorization'] = data.sign;
+            })
+
+            // 当有文件添加进来的时候
+            uploader.on('fileQueued', function (file) {
+                $.showLoading("图片上传中...");
+                var $img = $('<img>');
+                // 创建缩略图
+                // 如果为非图片文件，可以不用调用此方法。
+                // thumbnailWidth x thumbnailHeight 为 100 x 100
+                uploader.makeThumb(file, function (error, src) {
+                    if (error) {
+                        $img.replaceWith('<span>不能预览</span>');
+                        return;
+                    }
+                    $img.attr('src', src);
+                    $("#course-avatar-wrap").html($img);
+                    $("#upload-course-avatar").parent(".cm_addPhoto").addClass("preview");
+                }, 640, 640);
+                //计算md5
+                uploader.md5File(file)
+                // 及时显示进度
+                        .progress(function (percentage) {
+                            console.log('Percentage:', percentage);
+                        })
+                        // 完成
+                        .then(function (val) {
+                            data['md5'] = val;
+                        });
+
+            });
+            // 文件上传成功回调
+            uploader.on('uploadSuccess', function (file, res) {
+                $.hideLoading();
+                $("#course-avatar").val(res.data.fileid);
+                $.toast('课程图片上传成功','text')
+            });
+            //上传失败
+            uploader.on('uploadError', function (file) {
+                $.hideLoading();
+                $.toast('图片上传失败','text')
+            })
+        };
+        var cstatus = $("#status").val();
+        if (cstatus != 2 && cstatus != 3){
+            $.post("/api/file/sign", function (res) {
+                initUpload(res.data);
+            })
+        }
+
+        $("#form").html5Validate(function () {
+            // 全部验证通过，该干嘛干嘛~~
+            this.submit();
+        }, {
+//            novalidate: true,
+//            labelDrive: true,
+            validate: function () {
+                var ca = $.trim($("#course-avatar").val());
+                if (ca.length < 1) {
+                    $.alert("请上传课程封面图片","");
+                    return false;
+                }
+                return true;
+            }
+
+        });
+
+    });
+</script>
+
+</body>
+</html>

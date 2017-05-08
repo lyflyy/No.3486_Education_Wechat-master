@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="backend/fragment/frag :: common_header(~{::title},_)">
+    <title>知识猫 - 运营系统</title>
+</head>
+<body>
+<div class="wrapper wrapper-content">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>推广管理</h5>
+            <div class="ibox-tools">
+                <a href="/backend/recommend/edit" class="btn btn-primary btn-xs">添加推广</a>
+            </div>
+        </div>
+        <div class="ibox-content">
+            <div class="project-list">
+
+                <table class="table table-hover">
+                    <tbody>
+                    <tr th:if="${not #lists.isEmpty(pageData.list)}" th:each="item : ${pageData.list}">
+                        <td class="project-status">
+                            <span class="label label-danger">已到结束时间 </span>
+                        </td>
+                        <td class="project-title">
+                            <a href="/backend/recommend/info" th:text="${item.title}"></a>
+                            <br>
+                            <small>推荐时间: 2014.08.15</small>
+                        </td>
+                        <td class="project-completion">
+                            <small>时间： 2014.08.15</small>
+                        </td>
+                        <td class="project-completion">
+                            <small>成交(订阅或者订单)： 22333</small>
+                        </td>
+                        <td class="project-completion">
+                            <small>浏览： 223/33</small>
+                        </td>
+                        <td class="project-people">
+                            <a href="projects.html"><img alt="image" class="img-circle" src="img/a3.jpg"></a>
+                        </td>
+                        <td class="project-actions">
+                            <a href="projects.html#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> 查看 </a>
+                            <a href="projects.html#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> 下线推广</a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="project-status">
+
+                                            <span class="label label-danger">已到结束时间 </span>
+                        </td>
+                        <td class="project-title">
+                            <a href="/backend/recommend/info">LIKE－一款能够让用户快速获得认同感的兴趣社交应用</a>
+                            <br>
+                            <small>推荐时间: 2014.08.15</small>
+                        </td>
+                        <td class="project-completion">
+                            <small>结束时间： 2014.08.15</small>
+                        </td>
+                        <td class="project-completion">
+                            <small>成交(订阅或者订单)： 22333</small>
+                        </td>
+                        <td class="project-completion">
+                            <small>浏览： 223/33</small>
+                        </td>
+                        <td class="project-people">
+                            <a href="projects.html"><img alt="image" class="img-circle" src="img/a3.jpg"></a>
+                        </td>
+                        <td class="project-actions">
+                            <a href="projects.html#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> 查看 </a>
+                            <a href="projects.html#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> 下线推广</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="project-status">
+                                            <span class="label label-default">已下线
+                                        </span></td>
+                        <td class="project-title">
+                            <a href="project_detail.html">LIKE－一款能够让用户快速获得认同感的兴趣社交应用</a>
+                            <br>
+                            <small>推荐时间: 2014.08.15</small>
+                        </td>
+                        <td class="project-completion">
+                            <small>结束时间： 2014.08.15</small>
+                        </td>
+                        <td class="project-completion">
+                            <small>成交(订阅或者订单)： 22333</small>
+                        </td>
+                        <td class="project-completion">
+                            <small>浏览： 223/33</small>
+                        </td>
+                        <td class="project-people">
+                            <a href="projects.html"><img alt="image" class="img-circle" src="img/a3.jpg"></a>
+                        </td>
+                        <td class="project-actions">
+                            <a href="projects.html#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> 查看 </a>
+                            <a href="projects.html#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> 下线推广</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

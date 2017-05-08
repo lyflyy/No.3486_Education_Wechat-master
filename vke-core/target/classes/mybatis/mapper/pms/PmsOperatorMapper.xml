@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhishimao.core.pms.dao.PmsOperatorMapper">
+  <resultMap id="BaseResultMap" type="cn.zhishimao.core.pms.entity.PmsOperator">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="version" jdbcType="BIGINT" property="version" />
+    <result column="creater" jdbcType="VARCHAR" property="creater" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="editor" jdbcType="VARCHAR" property="editor" />
+    <result column="edit_time" jdbcType="TIMESTAMP" property="editTime" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="login_name" jdbcType="VARCHAR" property="loginName" />
+    <result column="login_pwd" jdbcType="VARCHAR" property="loginPwd" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="salt" jdbcType="VARCHAR" property="salt" />
+    <result column="is_deleted" jdbcType="VARCHAR" property="isDeleted" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    `id`, `version`, `creater`, `created_time`, `editor`, `edit_time`, `status`, `remark`, 
+    `login_name`, `login_pwd`, `type`, `salt`, `is_deleted`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from `pms_operator`
+    where `id` = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from `pms_operator`
+    where `id` = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.zhishimao.core.pms.entity.PmsOperator">
+    insert into `pms_operator` (`id`, `version`, `creater`, 
+      `created_time`, `editor`, `edit_time`, 
+      `status`, `remark`, `login_name`, 
+      `login_pwd`, `type`, `salt`, 
+      `is_deleted`)
+    values (#{id,jdbcType=BIGINT}, #{version,jdbcType=BIGINT}, #{creater,jdbcType=VARCHAR}, 
+      #{createdTime,jdbcType=TIMESTAMP}, #{editor,jdbcType=VARCHAR}, #{editTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{loginName,jdbcType=VARCHAR}, 
+      #{loginPwd,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, 
+      #{isDeleted,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.zhishimao.core.pms.entity.PmsOperator">
+    insert into `pms_operator`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        `id`,
+      </if>
+      <if test="version != null">
+        `version`,
+      </if>
+      <if test="creater != null">
+        `creater`,
+      </if>
+      <if test="createdTime != null">
+        `created_time`,
+      </if>
+      <if test="editor != null">
+        `editor`,
+      </if>
+      <if test="editTime != null">
+        `edit_time`,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="remark != null">
+        `remark`,
+      </if>
+      <if test="loginName != null">
+        `login_name`,
+      </if>
+      <if test="loginPwd != null">
+        `login_pwd`,
+      </if>
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="salt != null">
+        `salt`,
+      </if>
+      <if test="isDeleted != null">
+        `is_deleted`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=BIGINT},
+      </if>
+      <if test="creater != null">
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editor != null">
+        #{editor,jdbcType=VARCHAR},
+      </if>
+      <if test="editTime != null">
+        #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="loginName != null">
+        #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPwd != null">
+        #{loginPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null">
+        #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.zhishimao.core.pms.entity.PmsOperator">
+    update `pms_operator`
+    <set>
+      <if test="version != null">
+        `version` = #{version,jdbcType=BIGINT},
+      </if>
+      <if test="creater != null">
+        `creater` = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editor != null">
+        `editor` = #{editor,jdbcType=VARCHAR},
+      </if>
+      <if test="editTime != null">
+        `edit_time` = #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        `remark` = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="loginName != null">
+        `login_name` = #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPwd != null">
+        `login_pwd` = #{loginPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        `type` = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null">
+        `salt` = #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null">
+        `is_deleted` = #{isDeleted,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.zhishimao.core.pms.entity.PmsOperator">
+    update `pms_operator`
+    set `version` = #{version,jdbcType=BIGINT},
+      `creater` = #{creater,jdbcType=VARCHAR},
+      `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+      `editor` = #{editor,jdbcType=VARCHAR},
+      `edit_time` = #{editTime,jdbcType=TIMESTAMP},
+      `status` = #{status,jdbcType=VARCHAR},
+      `remark` = #{remark,jdbcType=VARCHAR},
+      `login_name` = #{loginName,jdbcType=VARCHAR},
+      `login_pwd` = #{loginPwd,jdbcType=VARCHAR},
+      `type` = #{type,jdbcType=VARCHAR},
+      `salt` = #{salt,jdbcType=VARCHAR},
+      `is_deleted` = #{isDeleted,jdbcType=VARCHAR}
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="listByEntity" parameterType="cn.zhishimao.core.pms.entity.PmsOperator" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from `pms_operator`
+    where 1=1
+    <include refid="Base_Condition" />
+  </select>
+
+  <select id="findAll">
+    select
+    <include refid="Base_Column_List" />
+    from `pms_operator`
+  </select>
+
+  <sql id="Base_Condition">
+    <if test="version != null">
+      `version` = #{version,jdbcType=BIGINT},
+    </if>
+    <if test="creater != null">
+      `creater` = #{creater,jdbcType=VARCHAR},
+    </if>
+    <if test="createdTime != null">
+      `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+    </if>
+    <if test="editor != null">
+      `editor` = #{editor,jdbcType=VARCHAR},
+    </if>
+    <if test="editTime != null">
+      `edit_time` = #{editTime,jdbcType=TIMESTAMP},
+    </if>
+    <if test="status != null">
+      `status` = #{status,jdbcType=VARCHAR},
+    </if>
+    <if test="remark != null">
+      `remark` = #{remark,jdbcType=VARCHAR},
+    </if>
+    <if test="loginName != null">
+      `login_name` = #{loginName,jdbcType=VARCHAR},
+    </if>
+    <if test="loginPwd != null">
+      `login_pwd` = #{loginPwd,jdbcType=VARCHAR},
+    </if>
+    <if test="type != null">
+      `type` = #{type,jdbcType=VARCHAR},
+    </if>
+    <if test="salt != null">
+      `salt` = #{salt,jdbcType=VARCHAR},
+    </if>
+  </sql>
+
+  <select id="findByLoginName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from `pms_operator`
+    where login_name = #{loginName,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectOperatorInfoList" resultType="java.util.HashMap">
+    select pmsOperator.id ,pmsOperator.login_name loginName,pmsOperator.created_time createdTime,
+    GROUP_CONCAT(pmsRole.role_name) roleName,pmsOperator.status,pmsOperator.remark
+    from pms_operator pmsOperator LEFT JOIN pms_role_operator pmsRoleOperator on  pmsOperator.id = pmsRoleOperator.operator_id
+    LEFT JOIN pms_role pmsRole on  pmsRoleOperator.role_id = pmsRole.id
+    group by pmsOperator.id order by pmsOperator.created_time desc
+  </select>
+</mapper>

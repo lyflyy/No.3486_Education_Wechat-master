@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhishimao.core.course.dao.VkeCourseForumMapper">
+  <resultMap id="BaseResultMap" type="cn.zhishimao.core.course.entity.VkeCourseForum">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="course_id" jdbcType="BIGINT" property="courseId" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="pid" jdbcType="BIGINT" property="pid" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="edit_time" jdbcType="TIMESTAMP" property="editTime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="version" jdbcType="BIGINT" property="version" />
+    <result column="is_to_wall" jdbcType="BIT" property="isToWall"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    `id`, `course_id`, `user_id`, `content`, `pid`, `created_time`, `edit_time`, `remark`, 
+    `version`,`is_to_wall`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from `vke_course_forum`
+    where `id` = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from `vke_course_forum`
+    where `id` = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert"   useGeneratedKeys="true" keyProperty="id" parameterType="cn.zhishimao.core.course.entity.VkeCourseForum">
+    insert into `vke_course_forum` (`id`, `course_id`, `user_id`, 
+      `content`, `pid`, `created_time`, 
+      `edit_time`, `remark`, `version`
+      )
+    values (#{id,jdbcType=BIGINT}, #{courseId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, 
+      #{content,jdbcType=VARCHAR}, #{pid,jdbcType=BIGINT}, #{createdTime,jdbcType=TIMESTAMP}, 
+      #{editTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, #{version,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective"   useGeneratedKeys="true" keyProperty="id" parameterType="cn.zhishimao.core.course.entity.VkeCourseForum">
+    insert into `vke_course_forum`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        `id`,
+      </if>
+      <if test="courseId != null">
+        `course_id`,
+      </if>
+      <if test="userId != null">
+        `user_id`,
+      </if>
+      <if test="content != null">
+        `content`,
+      </if>
+      <if test="pid != null">
+        `pid`,
+      </if>
+      <if test="createdTime != null">
+        `created_time`,
+      </if>
+      <if test="editTime != null">
+        `edit_time`,
+      </if>
+      <if test="remark != null">
+        `remark`,
+      </if>
+      <if test="version != null">
+        `version`,
+      </if>
+      <if test="isToWall != null">
+        `is_to_wall`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="courseId != null">
+        #{courseId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null">
+        #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editTime != null">
+        #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=BIGINT},
+      </if>
+      <if test="isToWall!= null">
+        #{is_to_wall,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.zhishimao.core.course.entity.VkeCourseForum">
+    update `vke_course_forum`
+    <set>
+      <if test="courseId != null">
+        `course_id` = #{courseId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        `user_id` = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="content != null">
+        `content` = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null">
+        `pid` = #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="createdTime != null">
+        `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editTime != null">
+        `edit_time` = #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        `remark` = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        `version` = #{version,jdbcType=BIGINT},
+      </if>
+      <if test="isToWall!= null">
+        `is_to_wall` = #{isToWall,jdbcType=BIGINT},
+      </if>
+    </set>
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.zhishimao.core.course.entity.VkeCourseForum">
+    update `vke_course_forum`
+    set `course_id` = #{courseId,jdbcType=BIGINT},
+      `user_id` = #{userId,jdbcType=BIGINT},
+      `content` = #{content,jdbcType=VARCHAR},
+      `pid` = #{pid,jdbcType=BIGINT},
+      `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+      `edit_time` = #{editTime,jdbcType=TIMESTAMP},
+      `remark` = #{remark,jdbcType=VARCHAR},
+      `version` = #{version,jdbcType=BIGINT}
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+  <sql id="Base_Condition">
+    <if test="id != null">
+      and `id` = #{id,jdbcType=BIGINT}
+    </if>
+    <if test="courseId != null">
+      and `course_id` = #{courseId,jdbcType=BIGINT}
+    </if>
+    <if test="userId != null">
+      and `user_id` = #{userId,jdbcType=BIGINT}
+    </if>
+    <if test="content != null">
+      and `content` = #{content,jdbcType=VARCHAR}
+    </if>
+    <if test="pid != null">
+      and  `pid` = #{pid,jdbcType=BIGINT}
+    </if>
+    <if test="createdTime != null">
+      and `created_time` = #{createdTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="editTime != null">
+      and `edit_time` = #{editTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="remark != null">
+      and `remark` = #{remark,jdbcType=VARCHAR}
+    </if>
+    <if test="version != null">
+      and `version` = #{version,jdbcType=BIGINT}
+    </if>
+  </sql>
+
+  <select id="countByCourseId" resultType="java.lang.Long">
+    select count(id)
+    from vke_course_forum
+    where  course_id = #{_parameter,jdbcType=BIGINT}
+  </select>
+
+  <select id="listByEntity" parameterType="cn.zhishimao.core.course.entity.VkeCourseForum" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from vke_course_forum
+    where 1=1
+    <include refid="Base_Condition" />
+  </select>
+
+  <select id="selectByCourseId"  resultType="java.util.HashMap">
+    select
+     vcf.id,vcf.course_id,vcf.user_id,vcf.content, vcf.is_to_wall, DATE_FORMAT(vcf.created_time,'%y/%m/%d %H:%i:%s') as created_time,
+     vu.avatar,vu.nick_name,vu.user_type,vcb.id as banned_id
+    from vke_course_forum vcf
+    left join vke_user vu on vu.id = vcf.user_id
+    left join vke_course_banned vcb on vcb.user_id = vcf.user_id and vcb.type = 2
+    <where>
+       vcf.course_id = #{_parameter,jdbcType=BIGINT}
+    </where>
+
+    order by vcf.created_time DESC
+  </select>
+</mapper>

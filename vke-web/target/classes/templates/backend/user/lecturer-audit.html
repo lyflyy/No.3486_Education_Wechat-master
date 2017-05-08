@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="backend/fragment/frag :: common_header(~{::title},_)">
+    <title>知识猫 - 运营系统</title>
+</head>
+<script src="/public/js/jquery.min.js?v=2.1.4"></script>
+<script src="/public/js/plugins/layer/layer.min.js?v=1.1"></script>
+<script type="text/javascript">
+    $(function(){
+        $("#submitBtn").click(function () {
+            var verifyId = $("#verifyId").val();
+            var isPass = $('input:radio[name="isPass"]:checked').val();
+            var reason =  $("#reason").val();
+            if(reason==null||reason==''){
+                layer.alert('请填写审核备注!')
+                return;
+            }
+            if(isPass==null||isPass==''){
+                layer.alert('请选择审核结果!');
+                return;
+            }
+            var postData = {'verifyId':verifyId,'isPass':isPass,'reason':reason};
+            $.post("/backend/user/audit", postData, function (data) {
+                if(data.success){
+                    layer.alert("审核操作成功!",function () {
+                        window.location.href="/backend/user/list/verfiy";
+                    });
+                }else{
+                    layer.alert(data.msg);
+                }
+            })
+        })
+    })
+</script>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>优质讲师审核</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-6 b-r">
+                            <form role="form" th:action="@{/backend/user/audit}" method="post">
+                                <div class="form-group">
+                                    <input type="hidden" name="verifyId" id = "verifyId" th:value="${verifyId}"/>
+                                </div>
+                                <div class="form-group">
+                                    <label>审核备注</label>
+                                    <input type="textarea"  name="reason" id="reason" class="form-control" rows="5" required/>
+                                </div>
+                                <div class="form-group" required>
+                                    <label>审核结果</label><br>
+                                    <input type="radio"  name="isPass" value="true"/>通过
+                                    <input type="radio"  name="isPass" value="false"/>拒绝
+                                </div>
+                                <div>
+                                    <button id="submitBtn" class="btn btn-sm btn-primary pull-right m-t-n-xs" type="button"><strong>提交</strong> </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

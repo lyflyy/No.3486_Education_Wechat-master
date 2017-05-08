@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="backend/fragment/frag :: common_header(~{::title},_)">
+    <title>知识猫 - 运营系统</title>
+</head>
+<script src="/public/js/jquery.min.js?v=2.1.4"></script>
+<script src="/public/js/plugins/layer/layer.min.js?v=1.1"></script>
+<!--引入webuploaderCSS-->
+<link rel="stylesheet" type="text/css" href="/public/plugins/webuploader/webuploader.css">
+<!--引入webuploader js-->
+<script type="text/javascript" src="/public/plugins/webuploader/webuploader.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+        var $ = jQuery,
+        $list = $('#fileList'),
+        // 优化retina, 在retina下这个值是2
+        ratio = window.devicePixelRatio || 1,
+        // 缩略图大小
+        thumbnailWidth = 100 * ratio, thumbnailHeight = 100 * ratio,
+        // Web Uploader实例
+        // 初始化Web Uploader
+        uploader = WebUploader.create({
+            // 自动上传。
+            auto : true,
+            // swf文件路径
+            swf : 'webuploader/Uploader.swf',
+            // 文件接收服务端。
+            server : '/api/file/upload',
+            // 选择文件的按钮。可选。
+            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+            pick : '#filePicker',
+            // 只允许选择文件，可选。
+            accept : {
+                title : 'Images',
+                extensions : 'gif,jpg,jpeg,bmp,png',
+                mimeTypes : 'image/*'
+            },
+            // 上传文件个数
+            fileNumLimit : 1,
+            fileSizeLimit: 50*1024*1024,//5M
+            fileSingleSizeLimit: 5*1024*1024 ,//1M
+            // 全局设置, 文件上传请求的参数表，每次发送都会发送此对象中的参数。
+            formData: {
+            }
+        });
+        // 当有文件添加进来的时候
+        uploader.on('fileQueued', function(file) {
+            var $li = $('<div id="' + file.id + '" class="file-item thumbnail">'
+                + '<img>' + '<div class="info">' + file.name + '</div>'
+                + '</div>'), $img = $li.find('img');
+            $list.html($li);
+            // 创建缩略图
+            uploader.makeThumb(file, function(error, src) {
+                if (error) {
+                    $img.replaceWith('<span>不能预览</span>');
+                    return;
+                }
+                $img.attr('src', src);
+            }, thumbnailWidth, thumbnailHeight);
+        });
+        //局部设置，给每个独立的文件上传请求参数设置，每次发送都会发送此对象中的参数。。参考：https://github.com/fex-team/webuploader/issues/145
+        uploader.on('uploadBeforeSend', function( block, data, headers) {
+            data.key = new Date().toLocaleTimeString();
+        });
+        // 文件上传过程中创建进度条实时显示。
+        uploader.on('uploadProgress', function(file, percentage) {
+            var $li = $('#' + file.id), $percent = $li.find('.progress span');
+            // 避免重复创建
+            if (!$percent.length) {
+                $percent = $('').appendTo($li)
+                    .find('span');
+            }
+            $percent.css('width', percentage * 100 + '%');
+        });
+        // 文件上传成功，给item添加成功class, 用样式标记上传成功。
+        uploader.on('uploadSuccess', function(file,response) {
+            $('#' + file.id).addClass('upload-state-done');
+            alert(response.msg);
+            if(response.success){
+                $("#masterImgId").val(response.data.downloadUrl);
+            }
+        });
+        // 文件上传失败，现实上传出错。
+        uploader.on('uploadError', function(file) {
+            alert('uploadError=');
+            var $li = $('#' + file.id), $error = $li.find('div.error');
+            // 避免重复创建
+            if (!$error.length) {
+                $error = $('<div class="error"></div>').appendTo($li);
+            }
+            $error.text('上传失败');
+        });
+        // 完成上传完了，成功或者失败，先删除进度条。
+        uploader.on('uploadComplete', function(file) {
+            $('#' + file.id).find('.progress').remove();
+        });
+        uploader.on('uploadAccept', function(file, response) {
+            if (!response.success) {
+                // 通过return false来告诉组件，此文件上传有错。
+                alert("上传失败");
+                return false;
+            }
+        });
+        // 先从文件队列中移除之前上传的图片，第一次上传则跳过
+        $("#filePicker").on('click', function () {
+            if (!WebUploader.Uploader.support()) {
+                var error = "上传控件不支持您的浏览器！请尝试升级flash版本或者使用Chrome引擎的浏览器。<a target='_blank' href='http://se.360.cn'>下载页面</a>";
+                alert(error);
+                return;
+            }
+            var id = $list.find("div").attr("id");
+            if (undefined != id) {
+                uploader.removeFile(uploader.getFile(id));
+            }
+        });
+        
+        $("#recommendId").click(function () {
+            var isShowBanner = $('input:radio[name="isShowBanner"]:checked').val();
+            var masterimg = $("#masterImgId").val();
+            var objId = $("#objId").val();
+            var objType = $("#objType").val();
+            var title = $("#title").val();
+            var content = $("#content").val();
+            var seq = $("#seq").val();
+            var code = $("#code").val();
+            if(masterimg==null || masterimg==''){
+                layer.alert("请上传推广图片！");
+                return ;
+            }
+            if(title==null || title==''){
+                layer.alert("请输入推广标题！");
+                return ;
+            }
+            if(content==null || content==''){
+                layer.alert("请输入推广内容！");
+                return ;
+            }
+            if(isShowBanner==null || isShowBanner==''){
+                layer.alert("请选择是否在banner展示！");
+                return ;
+            }
+            if(seq==null || seq==''){
+                layer.alert("请输入banner位置！");
+                return ;
+            }
+
+
+            var postData = { "isShowBanner": isShowBanner, "masterimg": masterimg, "objId":objId,"objType":objType,
+                "title":title, "content":content, "seq":seq, "code":code};
+            $.post("/backend/recommend/recommend", postData, function (data) {
+                if(data.success){
+                    layer.alert("推广成功!",function () {
+                        if(objType==1){
+                            window.location.href="/backend/course/list";
+                        }else if(objType==2){
+                            window.location.href="/backend/user/list/recommend";
+                        }
+                    });
+                }else{
+                    layer.alert("推广失败,请重新操作!");
+                }
+            })
+        })
+    })
+</script>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>课程推广</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-6 b-r">
+                            <form role="form" th:action="@{/backend/redommend/recommend}" method="post">
+                                <div class="form-group">
+                                    <input type="hidden" name="objId" id="objId" th:value="${objId}">
+                                    <input type="hidden" name="objType"  id="objType" th:value="${objType}"/>   <!-- 推进类型为课程-->
+                                    <input type="hidden" name="masterImg" id="masterImgId"  value="" required/>
+                                    <div id="uploader">
+                                        <label>banner图片</label>
+                                        <!--用来存放item-->
+                                        <div id="fileList" class="uploader-list" name="file"></div>
+                                        <div class="btn btn-sm btn-primary" id="filePicker">选择图片</div>
+                                    </div>
+                                    <!--<input type="file"  name="masterImg" multiple="multiple" required/>-->
+                                </div>
+                                <div class="form-group">
+                                    <label>banner标题</label>
+                                    <input type="textarea"  name="title" id="title" class="form-control" rows="2" required/>
+                                </div>
+                                <div class="form-group">
+                                    <label>banner内容</label>
+                                    <input type="textarea"  name="content" id="content" class="form-control" rows="5" required/>
+                                </div>
+                                <div class="form-group" required>
+                                    <label>立刻显示banner</label><br>
+                                    <input type="radio"  name="isShowBanner" value="1" />是
+                                    <input type="radio"  name="isShowBanner" value="0"/>否
+                                </div>
+                                <div class="form-group">
+                                    <label>banner位置(如:1，表示第一张；2表示第二张)</label>
+                                    <input type="text"  name="seq" id="seq" class="form-control" required/>
+                                </div>
+                                <!--<div class="form-group">-->
+                                    <!--<label>推广码</label>-->
+                                    <!--<input type="text"  name="code" id="code" class="form-control" required/>-->
+                                <!--</div>-->
+                                <div>
+                                        <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="button" id="recommendId"><strong>确认推广</strong> </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

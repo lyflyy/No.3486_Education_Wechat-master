@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="wx/fragment/frag :: common_header(~{::title},~{::link})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title th:text="${detailObj.course.name} + '-知识猫'"></title>
+    <meta name="description" th:attr="content=${detailObj.course.intro}">
+    <link rel="stylesheet" href="/public/wx/raty/lib/jquery.raty.css"/>
+</head>
+<body class="vke">
+<img style="height: 0;width: 0;" class="weui-media-box__thumb avatar"
+     th:src="'http://vke2016-10071423.image.myqcloud.com/' + ${detailObj.course.avatar}  +''"
+     th:alt="${detailObj.course.name}"/>
+<div class="container course" id="app">
+    <div class="page ">
+
+        <div class="page__bd">
+            <div class="cm_course">
+                <img th:src="'http://vke2016-10071423.image.myqcloud.com/' + ${detailObj.course.avatar}  +'?imageView2/1/w/375/h/180'"/>
+                <span th:class="${'status_' + detailObj.course.status}"></span>
+                <!--默认：报名中 status_1：直播中 status_2：已结束-->
+                <input type="hidden" th:value="${detailObj.startTime}" id="dstartTime"/>
+            </div>
+            <input id="courseId" th:value="${detailObj.course.id}" type="hidden"/>
+
+            <div class="weui-panel weui-panel_access mtn">
+                <div class="weui-panel__bd">
+                    <div class="weui-media-box weui-media-box_text">
+                        <h4 class="weui-media-box__title" th:text="${detailObj.course.name}"></h4>
+                        <p class="weui-media-box__desc share-btn-wrap">
+                            <a href="#" class="weui-btn weui-btn_mini weui-btn_plain-primary" id="do-share"
+                               th:onclick="'javascript:shareCourse(\''+ ${detailObj.course.id} + '\');'">分享课程</a>
+                            <a th:onclick="'javascript:collectCourse(\''+ ${detailObj.course.id} + '\',\''+${isCollect}+'\');'"
+                               href="#" th:unless="${isCollect}" class="weui-btn weui-btn_mini weui-btn_plain-primary"
+                               id="do-collect">收藏课程</a>
+
+                            <a th:onclick="'javascript:collectCourse(\''+ ${detailObj.course.id} + '\',\''+${isCollect}+'\');'"
+                               href="#" th:if="${isCollect}"
+                               class="weui-btn weui-btn_mini weui-btn_plain-default">取消收藏</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="weui-panel lecturer-panel">
+
+                <div class="weui-panel__bd">
+                    <a th:href="@{/wx/view/lecturer/{id}(id=${detailObj.course.lecturerId})}"
+                       class="weui-media-box weui-media-box_appmsg ">
+                        <div class="weui-media-box__hd">
+                            <img class="weui-media-box__thumb avatar"
+                                 th:src="${detailObj.lecturer.avatar}"
+                                 th:alt="${detailObj.lecturer.nickName}">
+                            <span th:if="${detailObj.lecturer.is_high_quality eq true}"
+                                  class="quality vke-icon-you"></span>
+                        </div>
+                        <div class="weui-media-box__bd cm_flex cm_flex_te">
+                            <h4 class="weui-media-box__title " th:text="${detailObj.lecturer.nickName}"></h4>
+                            <p class="cm_info_extra " th:text="${detailObj.lecturer.title}">互联网非资深产品</p>
+                        </div>
+                        <div class="weui-media-box__bd middle-box">
+                            <p class="cm_look">查看讲师
+                                <span class="weui-cell__ft"></span>
+                            </p>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="weui-panel">
+                <div class="weui-cells weui-cells_form">
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label class="weui-label">开课时间</label></div>
+                        <div class="weui-cell__bd " id="startTime"
+                             th:text="${#dates.format(detailObj.course.startTime, 'yyyy-MM-dd HH:mm')}">今天 9:20
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label class="weui-label">课程时长</label></div>
+                        <div class="weui-cell__bd"><span th:text="${detailObj.course.duration}"></span>分钟</div>
+                    </div>
+                    <div class="weui-cell" th:if="${detailObj.course.status eq 1}">
+                        <div class="weui-cell__hd"><label class="weui-label">倒计时</label></div>
+                        <div class="weui-cell__bd" th:datetime="${detailObj.startTime}">
+                            <span><span id="ctDay">02</span>天</span>
+                            <span><span id="ctHour">04</span>时</span><span><span id="ctM">03</span>分</span><span><span
+                                id="ctS"></span>秒</span>
+                        </div>
+                    </div>
+                    <div class="weui-cell" th:if="${detailObj.course.status eq 2}">
+                        <div class="weui-cell__hd"><label class="weui-label">已开始</label></div>
+                        <div class="weui-cell__bd" th:datetime="${detailObj.startTime}">
+                            <span><span id="ctDay">02</span>天</span><span><span
+                                id="ctHour">04</span>时</span><span><span id="ctM">03</span>分</span><span><span
+                                id="ctS"></span>秒</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="weui-panel">
+                <div class="weui-panel__hd">报名人数（已报名<span
+                        th:text="${detailObj.course.sigupCount}"></span>人 |
+                    互动生<span th:text="${detailObj.course.interactCount}"></span>/<span
+                            th:text="${detailObj.course.maxSigupCount}"></span>）
+                </div>
+                <div class="weui-panel__bd">
+                    <div class="weui-media-box weui-media-box_text weui-cell_access weui-cell_link">
+                        <div th:unless="${#lists.isEmpty(detailObj.memberList)}" class="cm_apply">
+                            <span th:each="member: ${detailObj.memberList}">
+                                <img th:if="${member}" class="avatar" th:src="${member.avatar}"/>
+                            </span>
+                            <a th:href="@{/wx/view/course/{courseId}/student(courseId=${detailObj.course.id})}"></a>
+                        </div>
+                        <span class="none" th:if="${#lists.isEmpty(detailObj.memberList)}">还没有人报名噢！赶快报名吧</span>
+                    </div>
+                </div>
+            </div>
+            <div class="weui-panel">
+                <div class="weui-panel__hd">分享榜（5人上榜）</div>
+                <div class="weui-panel__bd">
+                    <div class="weui-media-box weui-media-box_text weui-cell_access weui-cell_link">
+                        <div th:unless="${#lists.isEmpty(detailObj.shareList)}" class="cm_apply">
+                            <span th:each="share: ${detailObj.shareList}">
+                                <img class="avatar" th:if="${share.user_avatar}" th:src="${share.user_avatar}"/>
+                            </span>
+                            <a th:href="@{/wx/view/course/{id}/share(id=${detailObj.course.id})}"></a>
+                        </div>
+                        <span class="none" th:if="${#lists.isEmpty(detailObj.shareList)}">还没有人分享噢！赶快分享吧</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="weui-panel">
+                <div class="weui-panel__hd">课程介绍</div>
+                <div class="weui-panel__bd">
+                    <div class="weui-media-box weui-media-box_text">
+                        <h5 th:text="${detailObj.course.intro}"></h5>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="weui-panel comment">
+                <div class="weui-panel__hd">学员评价（课程<span th:text="${detailObj.evaluateInfo.courseRate}"></span>，讲师<span
+                        th:text="${detailObj.evaluateInfo.lecturerRate}"></span>）
+                </div>
+                <div class="weui-panel__bd" th:each="comment: ${detailObj.evaluateInfo.commentList}">
+                    <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg ">
+                        <div class="weui-media-box__hd">
+                            <img class="weui-media-box__thumb avatar" th:src="${comment.avatar}" alt="">
+                        </div>
+                        <div class="weui-media-box__bd info">
+                            <h4 class="weui-media-box__title " th:text="${comment.nick_name}"></h4>
+                            <p class="cm_info_extra ">
+                                课程：<span class="cm_star" title="regular"> <i
+                                    th:each="i : ${#numbers.sequence( 1, 5)}" data-alt="1"
+                                    th:class="${i le comment.courseRate}?'star-on-png':'star-off-png'"
+                                    title="regular"></i>&nbsp;</span>
+                                讲师：<span class="cm_star" title="regular"><i
+                                    th:each="i : ${#numbers.sequence( 1, 5)}" data-alt="1"
+                                    th:class="${i le comment.lecturerRate}?'star-on-png':'star-off-png'"
+                                    title="regular"></i>&nbsp;</span>
+                            </p>
+                            </p>
+                        </div>
+                        <div class="cm_bd_time">
+                            <p class="cm_info_extra timeago"
+                               th:attr="datetime=${#dates.format(comment.created_time, 'yyyy-MM-dd HH:mm:ss')}"
+                               th:text="${#dates.format(comment.created_time, 'yyyy-MM-dd HH:mm')}">今天 12:30</p>
+                        </div>
+                    </a>
+                    <article class="weui-article cm_text">
+                        <section>
+                            <p th:text="${comment.content}"></p>
+                        </section>
+                    </article>
+                </div>
+                <div class="weui-panel__ft" th:if="${not #lists.isEmpty(detailObj.evaluateInfo.commentList)}">
+                    <a th:href="@{/wx/view/course/{courseId}/evaluate(courseId=${detailObj.course.id})}"
+                       class="weui-cell weui-cell_access weui-cell_link">
+                        <div class="weui-cell__bd">查看更多</div>
+                        <span class="weui-cell__ft"></span>
+                    </a>
+                </div>
+                <div class="weui-panel__ft" th:if="${#lists.isEmpty(detailObj.evaluateInfo.commentList)}">
+                    <a href="javascript:void(0);" class="weui-cell weui-cell_access weui-cell_link">
+                        <span class="none">暂时没有评价记录!</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="weui-panel">
+                <div class="weui-panel__hd">版权声明</div>
+                <div class="weui-panel__bd">
+                    <div class="weui-media-box weui-media-box_text">
+                        <article class="weui-article copyright">
+                            <section>
+                                <p class="" th:text="${detailObj.config.c_copyright}"></p>
+                            </section>
+                        </article>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="page__fd">
+        <div class="weui-panel">
+            <!--登录了且是讲师自己-->
+            <div class="weui-flex  btn-tab"
+                 th:if="${session.vkeu !=null and (session.vkeu.id eq detailObj.course.lecturerId)}">
+                <div class="weui-flex__item btn-wrap">
+                    <a th:href="@{/wx/view/live/{id}(id=${detailObj.course.id})}"
+                       class="weui-btn weui-btn_primary lh">进入课堂</a>
+                </div>
+                <div class="weui-flex__item btn-wrap">
+                    <a th:href="@{/wx/view/course/edit?id={id}(id=${detailObj.course.id})}"
+                       class="weui-btn weui-btn_primary lh">编辑课程</a>
+                </div>
+            </div>
+            <!--课程结束后购买旁听[登录了且不是讲师自己|未登录]-->
+            <div class="weui-panel"
+                 th:if="${student == null  and (detailObj.course.status eq 3 ) and ((session.vkeu !=null and (session.vkeu.id != detailObj.course.lecturerId) or (session.vkeu ==null)))}">
+                <div class="weui-flex  btn-tab">
+                    <div class="weui-flex__item  btn-wrap">
+                        <a class="weui-btn weui-btn_primary"
+                           th:onclick="'javascript:buyCourse(\''+ ${detailObj.course.id} +'\',\''+${detailObj.course.name}+'\',\''+${ detailObj.config.c_audit_price}+'\',\'course_audit\');'"
+                           href="#"><span>报名旁听生</span><span class="btn-desc">（¥<span
+                                th:text="${detailObj.config.c_audit_price}"></span>／人 不限名额）</span></a>
+                    </div>
+                </div>
+            </div>
+            <!--是该课程的学生[已报名,课程已结束]-->
+            <div class="weui-flex  btn-tab" th:if="${student != null and (detailObj.course.status eq 3 )}">
+                <div class="weui-flex__item btn-wrap">
+                    <a th:href="@{/wx/view/live/{id}(id=${detailObj.course.id})}"
+                       class="weui-btn lh weui-btn_primary">进入课堂</a>
+                </div>
+            </div>
+            <!--是该课程的学生[报名|正在直播]-->
+            <div class="weui-flex  btn-tab"
+                 th:if="${student != null and (detailObj.course.status eq 1 or detailObj.course.status eq 2)}">
+                <div class="weui-flex__item btn-wrap" th:if="${student.type eq 'course_audit'}">
+                    <a class="weui-btn weui-btn_primary" href="#"
+                       th:onclick="'javascript:buyCourse(\''+ ${detailObj.course.id} +'\',\''+${detailObj.course.name}+'\',\''+${detailObj.course.price}+'\',\'course_upgrade\');'"><span>升级互动生</span><span
+                            class="btn-desc">（¥<span
+                            th:text="${detailObj.course.price}"></span>／人 剩余名额<span
+                            th:text="${detailObj.course.maxSigupCount - detailObj.course.interactCount}"></span>人）</span></a>
+                </div>
+                <div class="weui-flex__item btn-wrap">
+                    <a th:href="@{/wx/view/live/{id}(id=${detailObj.course.id})}"
+                       class="weui-btn lh weui-btn_primary">进入课堂</a>
+                </div>
+            </div>
+            <!--不是该课程的学生[报名|正在直播]-->
+            <div class="weui-flex  btn-tab"
+                 th:if="${student == null  and (detailObj.course.status eq 1 or detailObj.course.status eq 2) and ((session.vkeu !=null and (session.vkeu.id != detailObj.course.lecturerId) or (session.vkeu ==null)))}">
+                <div class="weui-flex__item btn-wrap">
+                    <a class="weui-btn weui-btn_primary" href="#"
+                       th:onclick="'javascript:buyCourse(\''+ ${detailObj.course.id}+'\',\''+${detailObj.course.name} +'\',\''+${detailObj.course.price}+'\',\'course_interact\');'"><span>报名互动生</span><span
+                            class="btn-desc">（¥<span
+                            th:text="${detailObj.course.price}"></span>／人 剩余名额<span
+                            th:text="${detailObj.course.maxSigupCount - detailObj.course.interactCount}"></span>人）</span></a>
+                </div>
+                <div class="weui-flex__item  btn-wrap">
+                    <a class="weui-btn weui-btn_primary" href="#"
+                       th:onclick="'javascript:buyCourse(\''+ ${detailObj.course.id} +'\',\''+${detailObj.course.name}+'\',\''+${ detailObj.config.c_audit_price}+'\',\'course_audit\');'"><span>报名旁听生</span><span
+                            class="btn-desc">（¥<span
+                            th:text="${detailObj.config.c_audit_price}"></span>／人 剩余名额<span
+                            th:text="${detailObj.config.c_audit_count - detailObj.course.auditCount}"></span>人）</span></a>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<div th:include="wx/fragment/frag::commonScript"></div>
+<script src="/public/wx/js/fastclick.js" type="text/javascript" charset="utf-8"></script>
+<script src="/public/js/timeago.js" type="text/javascript" charset="utf-8"></script>
+<script src="/public/js/timeago.locales.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/public/js/timeCountDown.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+
+    function buyCourse(courseId, courseName, price, type) {
+        var body = "报名知识猫课程-";
+        var remark = courseName;
+        if (type == "course_audit") {
+            body += "旁听生"
+            remark += "报名旁听生";
+        } else if (type == "course_interact") {
+            body += "互动生"
+            remark += "报名互动生";
+        } else {
+            body += "升级为互动生";
+            remark += "升级为互动生";
+        }
+        var postData = {'courseId': courseId, 'price': price, 'type': type, 'remark': remark};
+        $.post("/wx/view/order/pre", postData, function (data) {
+            if (data.success) {
+                if (price == 0) {
+                    $.toast("课程报名成功!");
+                    window.location.reload();
+                    return;
+                }
+                var postData = {'totalFee': price, 'body': body, 'outTradeNo': data.data.orderNum};
+                $.post("/api/WxPay/jssdkPayInfo", postData, function (data) {
+                    if (data.code != null || data.code != '') {
+                        var payParam = $.parseJSON(data.data);
+                        callPay(payParam)
+                    } else if (data.msg != null || data.msg != '') {
+                        $.toast(data.msg);
+                    } else {
+                        $.toast("网络异常，请重新操作!");
+                    }
+                })
+
+            } else if (data.msg != null || data.msg != '') {
+                $.toast(data.msg);
+            } else {
+                $.toast("网络异常，请重新操作!");
+            }
+        })
+    }
+
+    function callPay(payParam) {
+        if (typeof WeixinJSBridge == "undefined") {
+            if (document.addEventListener) {
+                document.addEventListener('WeixinJSBridgeReady', onBridgeReady,
+                    false);
+            } else if (document.attachEvent) {
+                document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+                document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+            }
+        } else {
+            onBridgeReady(payParam);
+        }
+    }
+
+    function onBridgeReady(payParam) {
+        WeixinJSBridge.invoke('getBrandWCPayRequest', payParam, function (res) { // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
+            if (res.err_msg == "get_brand_wcpay_request:ok") {
+                $.toast("支付成功!");
+                window.location.reload();
+            } else if (res.err_msg == "get_brand_wcpay_request:cancel") {
+                $.toast("交易取消");
+                $.post("/wx/view/order/cancel", {orderNum: payParam.outTradeNo}, function (data) {
+                    window.location.reload();
+                });
+            } else {
+                $.toast("支付失败", "forbidden");
+                $.post("/wx/view/order/cancel", {orderNum: payParam.outTradeNo}, function (data) {
+                    window.location.reload();
+                });
+            }
+        });
+    }
+
+    //收藏课程
+    function collectCourse(courseId, isCollect) {
+        var url = "/wx/view/course/collect/" + courseId;
+        $.post(url, {isCollect: isCollect}, function (data) {
+            if (data.success) {
+                $.toast(data.msg);
+                window.location.reload();
+            } else {
+                $.toast(data.msg);
+            }
+        });
+    }
+
+    function shareCourse(courseId) {
+        //alert(location.href.split('#')[0])
+        $.modal({
+            title: "已为您生成专属的分享链接，点击右上角发送给指定的朋友或朋友圈!！",
+            autoClose: true,
+            buttons: [
+                {
+                    text: "知道了", className: "default", onClick: function () {
+                    $.closeModal();
+                }
+                },
+            ]
+        });
+    }
+
+    $(function () {
+        var courseId = $('#courseId').val();
+        $.post("/wx/view/course/share/" + courseId, {}, function (data) {
+            if (data.success) {
+
+                var param = $.parseJSON(data.data);
+                param.imgUrl = 'http://vke2016-10071423.image.myqcloud.com/' + param.imgUrl + "?imageView2/1/w/300/h/300";
+                window.shareData = param;
+//                alert(shareData.imgUrl);
+                wx.config({
+                    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                    appId: param.appid, // 和获取Ticke的必须一样------必填，公众号的唯一标识
+                    timestamp: param.timestamp, // 必填，生成签名的时间戳
+                    nonceStr: param.noncestr, // 必填，生成签名的随机串
+                    signature: param.signature,// 必填，签名，见附录1
+                    jsApiList: [
+                        'onMenuShareTimeline',
+                        'onMenuShareAppMessage', 'hideMenuItems'
+                    ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+                });
+            }
+        });
+    });
+
+    wx.ready(function () {
+        wx.hideMenuItems({
+            menuList: ['menuItem:share:qq', 'menuItem:share:weiboApp', 'menuItem:share:facebook', 'menuItem:share:QZone'] // 要隐藏的菜单项，只能隐藏“传播类”和“保护类”按钮，所有menu项见附录3
+        });
+
+        wx.onMenuShareTimeline({
+            title: shareData.title, // 分享标题param.title
+            link: shareData.shareUrl + '?shareid=' + shareData.shareid, // 分享链接
+            imgUrl: shareData.imgUrl, // 分享图标
+            success: function (res) {
+                //alert('success');
+            },
+            cancel: function (res) {
+                //alert('cancle');
+            },
+            fail: function (res) {
+                $.toast("分享失败，请重新尝试", "cancel");
+            }
+        });
+        wx.onMenuShareAppMessage({
+            title: shareData.title, // 分享标题
+            desc: shareData.desc, // 分享描述
+            link: shareData.shareUrl + '?shareid=' + shareData.shareid, // 商品购买地址
+            imgUrl: shareData.imgUrl, // 分享的图标
+            fail: function (res) {
+                $.toast("分享失败，请重新尝试", "cancel");
+            }
+        });
+
+    });
+
+    $(function () {
+        var time = parseInt($('#dstartTime').val());
+        var d = new Date(time);
+        fnTimeCountDown(d, {
+            sec: document.getElementById("ctS"),
+            mini: document.getElementById("ctM"),
+            hour: document.getElementById("ctHour"),
+            day: document.getElementById("ctDay"),
+        })
+        var timeagoInstance = new timeago();
+        timeagoInstance.render(document.querySelectorAll('.timeago'), 'zh_CN');
+
+    })
+
+</script>
+</body>
+</html>

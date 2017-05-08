@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhishimao.core.vke.dao.VkeRecommendMapper">
+    <resultMap id="BaseResultMap" type="cn.zhishimao.core.vke.entity.VkeRecommend">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="obj_id" jdbcType="BIGINT" property="objId"/>
+        <result column="obj_type" jdbcType="VARCHAR" property="objType"/>
+        <result column="masterImg" jdbcType="VARCHAR" property="masterimg"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
+        <result column="creater" jdbcType="VARCHAR" property="creater"/>
+        <result column="created_time" jdbcType="TIMESTAMP" property="createdTime"/>
+        <result column="editor" jdbcType="VARCHAR" property="editor"/>
+        <result column="start_time" jdbcType="TIMESTAMP" property="startTime"/>
+        <result column="edit_time" jdbcType="TIMESTAMP" property="editTime"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="version" jdbcType="BIGINT" property="version"/>
+        <result column="seq" jdbcType="INTEGER" property="seq"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="view_count" jdbcType="INTEGER" property="viewCount"/>
+        <result column="sub_count" jdbcType="INTEGER" property="subCount"/>
+        <result column="order_count" jdbcType="INTEGER" property="orderCount"/>
+        <result column="is_show_banner" jdbcType="BIT" property="isShowBanner"/>
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    `id`, `obj_id`, `obj_type`, `masterImg`, `title`, `content`, `creater`, `created_time`, 
+    `editor`, `start_time`, `edit_time`, `status`, `remark`, `version`, `seq`, `code`, 
+    `view_count`, `sub_count`, `order_count`, `is_show_banner`, `end_time`
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `vke_recommend`
+        where `id` = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from `vke_recommend`
+    where `id` = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="cn.zhishimao.core.vke.entity.VkeRecommend">
+    insert into `vke_recommend` (`id`, `obj_id`, `obj_type`, 
+      `masterImg`, `title`, `content`, 
+      `creater`, `created_time`, `editor`, 
+      `start_time`, `edit_time`, `status`, 
+      `remark`, `version`, `seq`, 
+      `code`, `view_count`, `sub_count`, 
+      `order_count`, `is_show_banner`, `end_time`
+      )
+    values (#{id,jdbcType=BIGINT}, #{objId,jdbcType=BIGINT}, #{objType,jdbcType=VARCHAR}, 
+      #{masterimg,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{creater,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{editor,jdbcType=VARCHAR}, 
+      #{startTime,jdbcType=TIMESTAMP}, #{editTime,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{version,jdbcType=BIGINT}, #{seq,jdbcType=INTEGER}, 
+      #{code,jdbcType=VARCHAR}, #{viewCount,jdbcType=INTEGER}, #{subCount,jdbcType=INTEGER}, 
+      #{orderCount,jdbcType=INTEGER}, #{isShowBanner,jdbcType=BIT}, #{endTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="cn.zhishimao.core.vke.entity.VkeRecommend">
+        insert into `vke_recommend`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                `id`,
+            </if>
+            <if test="objId != null">
+                `obj_id`,
+            </if>
+            <if test="objType != null">
+                `obj_type`,
+            </if>
+            <if test="masterimg != null">
+                `masterImg`,
+            </if>
+            <if test="title != null">
+                `title`,
+            </if>
+            <if test="content != null">
+                `content`,
+            </if>
+            <if test="creater != null">
+                `creater`,
+            </if>
+            <if test="createdTime != null">
+                `created_time`,
+            </if>
+            <if test="editor != null">
+                `editor`,
+            </if>
+            <if test="startTime != null">
+                `start_time`,
+            </if>
+            <if test="editTime != null">
+                `edit_time`,
+            </if>
+            <if test="status != null">
+                `status`,
+            </if>
+            <if test="remark != null">
+                `remark`,
+            </if>
+            <if test="version != null">
+                `version`,
+            </if>
+            <if test="seq != null">
+                `seq`,
+            </if>
+            <if test="code != null">
+                `code`,
+            </if>
+            <if test="viewCount != null">
+                `view_count`,
+            </if>
+            <if test="subCount != null">
+                `sub_count`,
+            </if>
+            <if test="orderCount != null">
+                `order_count`,
+            </if>
+            <if test="isShowBanner != null">
+                `is_show_banner`,
+            </if>
+            <if test="endTime != null">
+                `end_time`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="objId != null">
+                #{objId,jdbcType=BIGINT},
+            </if>
+            <if test="objType != null">
+                #{objType,jdbcType=VARCHAR},
+            </if>
+            <if test="masterimg != null">
+                #{masterimg,jdbcType=VARCHAR},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="creater != null">
+                #{creater,jdbcType=VARCHAR},
+            </if>
+            <if test="createdTime != null">
+                #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="editor != null">
+                #{editor,jdbcType=VARCHAR},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="editTime != null">
+                #{editTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=BIGINT},
+            </if>
+            <if test="seq != null">
+                #{seq,jdbcType=INTEGER},
+            </if>
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="viewCount != null">
+                #{viewCount,jdbcType=INTEGER},
+            </if>
+            <if test="subCount != null">
+                #{subCount,jdbcType=INTEGER},
+            </if>
+            <if test="orderCount != null">
+                #{orderCount,jdbcType=INTEGER},
+            </if>
+            <if test="isShowBanner != null">
+                #{isShowBanner,jdbcType=BIT},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.zhishimao.core.vke.entity.VkeRecommend">
+        update `vke_recommend`
+        <set>
+            <if test="objId != null">
+                `obj_id` = #{objId,jdbcType=BIGINT},
+            </if>
+            <if test="objType != null">
+                `obj_type` = #{objType,jdbcType=VARCHAR},
+            </if>
+            <if test="masterimg != null">
+                `masterImg` = #{masterimg,jdbcType=VARCHAR},
+            </if>
+            <if test="title != null">
+                `title` = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                `content` = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="creater != null">
+                `creater` = #{creater,jdbcType=VARCHAR},
+            </if>
+            <if test="createdTime != null">
+                `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="editor != null">
+                `editor` = #{editor,jdbcType=VARCHAR},
+            </if>
+            <if test="startTime != null">
+                `start_time` = #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="editTime != null">
+                `edit_time` = #{editTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                `status` = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                `remark` = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                `version` = #{version,jdbcType=BIGINT},
+            </if>
+            <if test="seq != null">
+                `seq` = #{seq,jdbcType=INTEGER},
+            </if>
+            <if test="code != null">
+                `code` = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="viewCount != null">
+                `view_count` = #{viewCount,jdbcType=INTEGER},
+            </if>
+            <if test="subCount != null">
+                `sub_count` = #{subCount,jdbcType=INTEGER},
+            </if>
+            <if test="orderCount != null">
+                `order_count` = #{orderCount,jdbcType=INTEGER},
+            </if>
+            <if test="isShowBanner != null">
+                `is_show_banner` = #{isShowBanner,jdbcType=BIT},
+            </if>
+            <if test="endTime != null">
+                `end_time` = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where `id` = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.zhishimao.core.vke.entity.VkeRecommend">
+    update `vke_recommend`
+    set `obj_id` = #{objId,jdbcType=BIGINT},
+      `obj_type` = #{objType,jdbcType=VARCHAR},
+      `masterImg` = #{masterimg,jdbcType=VARCHAR},
+      `title` = #{title,jdbcType=VARCHAR},
+      `content` = #{content,jdbcType=VARCHAR},
+      `creater` = #{creater,jdbcType=VARCHAR},
+      `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+      `editor` = #{editor,jdbcType=VARCHAR},
+      `start_time` = #{startTime,jdbcType=TIMESTAMP},
+      `edit_time` = #{editTime,jdbcType=TIMESTAMP},
+      `status` = #{status,jdbcType=VARCHAR},
+      `remark` = #{remark,jdbcType=VARCHAR},
+      `version` = #{version,jdbcType=BIGINT},
+      `seq` = #{seq,jdbcType=INTEGER},
+      `code` = #{code,jdbcType=VARCHAR},
+      `view_count` = #{viewCount,jdbcType=INTEGER},
+      `sub_count` = #{subCount,jdbcType=INTEGER},
+      `order_count` = #{orderCount,jdbcType=INTEGER},
+      `is_show_banner` = #{isShowBanner,jdbcType=BIT},
+      `end_time` = #{endTime,jdbcType=TIMESTAMP}
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+
+    <sql id="Base_Condition">
+        <if test="id != null">
+            and `id` = #{id,jdbcType=BIGINT}
+        </if>
+        <if test="objId != null">
+            and `obj_id` = #{objId,jdbcType=BIGINT}
+        </if>
+        <if test="objType != null">
+            and `obj_type` = #{objType,jdbcType=VARCHAR}
+        </if>
+        <if test="masterimg != null">
+            and `masterImg` = #{masterimg,jdbcType=VARCHAR}
+        </if>
+        <if test="title != null">
+            and `title` = #{title,jdbcType=VARCHAR}
+        </if>
+        <if test="content != null">
+            and `content` = #{content,jdbcType=VARCHAR}
+        </if>
+        <if test="creater != null">
+            and `creater` = #{creater,jdbcType=VARCHAR}
+        </if>
+        <if test="createdTime != null">
+            and `created_time` = #{createdTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="editor != null">
+            and `editor` = #{editor,jdbcType=VARCHAR}
+        </if>
+        <if test="startTime != null">
+            and `start_time` = #{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="editTime != null">
+            and `edit_time` = #{editTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="status != null">
+            and `status` = #{status,jdbcType=VARCHAR}
+        </if>
+        <if test="remark != null">
+            and `remark` = #{remark,jdbcType=VARCHAR}
+        </if>
+        <if test="version != null">
+            and `version` = #{version,jdbcType=BIGINT}
+        </if>
+        <if test="seq != null">
+            and `seq` = #{seq,jdbcType=INTEGER}
+        </if>
+        <if test="code != null">
+            and `code` = #{code,jdbcType=VARCHAR}
+        </if>
+        <if test="viewCount != null">
+            and `view_count` = #{viewCount,jdbcType=INTEGER}
+        </if>
+        <if test="subCount != null">
+            and `sub_count` = #{subCount,jdbcType=INTEGER}
+        </if>
+        <if test="orderCount != null">
+            and `order_count` = #{orderCount,jdbcType=INTEGER}
+        </if>
+        <if test="isShowBanner != null">
+            and `is_show_banner` = #{isShowBanner,jdbcType=BIT}
+        </if>
+        <if test="endTime != null">
+            and `end_time` = #{endTime,jdbcType=TIMESTAMP}
+        </if>
+    </sql>
+
+    <select id="listByEntity" parameterType="cn.zhishimao.core.vke.entity.VkeRecommend" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from vke_recommend
+        <where>
+            <include refid="Base_Condition"/>
+        </where>
+        ORDER  BY created_time
+    </select>
+</mapper>

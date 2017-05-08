@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhishimao.core.course.dao.VkeCourseAuditLogMapper">
+  <resultMap id="BaseResultMap" type="cn.zhishimao.core.course.entity.VkeCourseAuditLog">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="course_id" jdbcType="BIGINT" property="courseId" />
+    <result column="audit_status" jdbcType="VARCHAR" property="auditStatus" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="edit_time" jdbcType="TIMESTAMP" property="editTime" />
+    <result column="version" jdbcType="BIGINT" property="version" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    `id`, `course_id`, `audit_status`, `created_time`, `creator`, `edit_time`, `version`, 
+    `remark`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from `vke_course_audit_log`
+    where `id` = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from `vke_course_audit_log`
+    where `id` = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert"   useGeneratedKeys="true" keyProperty="id" parameterType="cn.zhishimao.core.course.entity.VkeCourseAuditLog">
+    insert into `vke_course_audit_log` (`id`, `course_id`, `audit_status`, 
+      `created_time`, `creator`, `edit_time`, 
+      `version`, `remark`)
+    values (#{id,jdbcType=BIGINT}, #{courseId,jdbcType=BIGINT}, #{auditStatus,jdbcType=VARCHAR}, 
+      #{createdTime,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR}, #{editTime,jdbcType=TIMESTAMP}, 
+      #{version,jdbcType=BIGINT}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective"   useGeneratedKeys="true" keyProperty="id" parameterType="cn.zhishimao.core.course.entity.VkeCourseAuditLog">
+    insert into `vke_course_audit_log`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        `id`,
+      </if>
+      <if test="courseId != null">
+        `course_id`,
+      </if>
+      <if test="auditStatus != null">
+        `audit_status`,
+      </if>
+      <if test="createdTime != null">
+        `created_time`,
+      </if>
+      <if test="creator != null">
+        `creator`,
+      </if>
+      <if test="editTime != null">
+        `edit_time`,
+      </if>
+      <if test="version != null">
+        `version`,
+      </if>
+      <if test="remark != null">
+        `remark`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="courseId != null">
+        #{courseId,jdbcType=BIGINT},
+      </if>
+      <if test="auditStatus != null">
+        #{auditStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="editTime != null">
+        #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.zhishimao.core.course.entity.VkeCourseAuditLog">
+    update `vke_course_audit_log`
+    <set>
+      <if test="courseId != null">
+        `course_id` = #{courseId,jdbcType=BIGINT},
+      </if>
+      <if test="auditStatus != null">
+        `audit_status` = #{auditStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        `creator` = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="editTime != null">
+        `edit_time` = #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        `version` = #{version,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null">
+        `remark` = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.zhishimao.core.course.entity.VkeCourseAuditLog">
+    update `vke_course_audit_log`
+    set `course_id` = #{courseId,jdbcType=BIGINT},
+      `audit_status` = #{auditStatus,jdbcType=VARCHAR},
+      `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+      `creator` = #{creator,jdbcType=VARCHAR},
+      `edit_time` = #{editTime,jdbcType=TIMESTAMP},
+      `version` = #{version,jdbcType=BIGINT},
+      `remark` = #{remark,jdbcType=VARCHAR}
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

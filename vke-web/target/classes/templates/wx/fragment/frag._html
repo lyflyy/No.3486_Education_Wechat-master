@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="common_header(title,links)">
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <title th:replace="${title}">知识猫</title>
+    <!-- build:css css/base.min.css -->
+    <link rel="stylesheet" href="../../../static/public/wx/css/jquery-weui.css"/>
+    <link href="../../../static/public/wx/css/app.css" rel="stylesheet">
+    <!-- endbuild -->
+    <!--<link href="/public/wx/css/jquery-weui.css" rel="stylesheet">-->
+    <th:block th:replace="${links}"/>
+</head>
+<body>
+
+<div th:fragment="pageFooter" class="page__fd">
+    <div class="weui-tabbar">
+        <a href="/wx/view/" th:class="${cnav eq 'home'}?'weui-tabbar\_\_item weui-bar\_\_item_on':'weui-tabbar\_\_item'">
+                            <span class="weui-tabbar__icon">
+      <i class="vke-icon-home"></i>
+      </span>
+            <p class="weui-tabbar__label">主页</p>
+        </a>
+        <a href="/wx/view/lecturer/center"
+           th:class="${cnav eq 'center'}?'weui-tabbar\_\_item weui-bar\_\_item_on':'weui-tabbar\_\_item'">
+      <span class="weui-tabbar__icon">
+      <i class="vke-icon-book"></i>
+      </span>
+            <p class="weui-tabbar__label">讲师中心</p>
+        </a>
+        <a href="/wx/view/user/me" th:class="${cnav eq 'me'}?'weui-tabbar\_\_item weui-bar\_\_item_on':'weui-tabbar\_\_item'">
+                        <span class="weui-tabbar__icon">
+                           <i class="vke-icon-me"></i>
+                        </span>
+            <p class="weui-tabbar__label">我</p>
+        </a>
+    </div>
+</div>
+
+<div th:fragment="commonScript">
+    <div id="back-to-top"><img src="static/images/up.png"/></div>
+    <script type="text/javascript" src="//res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <!--<script src="js/example.js"></script>-->
+    <!-- build:js js/base.js -->
+    <script src="../../../static/public/wx/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../static/public/wx/js/jquery-weui.js" type="text/javascript" charset="utf-8"></script>
+    <!-- endbuild -->
+
+</div>
+
+</body>
+</html>

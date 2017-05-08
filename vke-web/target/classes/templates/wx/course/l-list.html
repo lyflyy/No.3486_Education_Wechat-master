@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head></head>
+<body>
+
+<div class="weui-tab__panel">
+
+    <div class="weui-panel weui-panel_access" th:each="course: ${pageData.list}">
+        <div class="weui-panel__bd">
+            <a th:href="@{/wx/view/course/{id}(id=${course.id})}" class="weui-media-box weui-media-box_appmsg ">
+                <div class="weui-media-box__hd">
+                    <img class="weui-media-box__thumb" th:src="'http://vke2016-10071423.image.myqcloud.com/' + ${course.avatar} + '?imageView2/1/w/180/h/180'"/>
+                    <span class="doing">	<img
+                            th:src="@{/public/wx/images/{img}(img=${'status_'+course.status+'.png'})}"/></span>
+                </div>
+
+                <div class="weui-media-box__bd">
+                    <h4 class="weui-media-box__title" th:text="${course.name}"></h4>
+                    <p class="weui-media-box__desc">
+                        <span th:text="${course.sigup_count}"></span>人报名
+                    </p>
+                    <p class="weui-media-box__desc">
+                        <span th:text="${course.nick_name}"></span> | <span th:text="${course?.title}"></span>
+                    </p>
+                </div>
+            </a>
+        </div>
+
+        <div th:if="${(course.lecturer_id eq lecturer.id) and (course.lecturer_id eq session.vkeu.id)}" class="weui-panel__ft op">
+            <div class="weui-cell ">
+                <ul class="weui-media-box__info">
+                    <li class="weui-media-box__info__meta"><a th:href="@{/wx/view/live/{id}(id=${course.id})}">进入课堂</a>
+                        &nbsp;&nbsp;|&nbsp;&nbsp; </li>
+                    <li class="weui-media-box__info__meta"><a
+                            th:href="@{/wx/view/course/{id}(id=${course.id})}">查看介绍</a>
+                        &nbsp;&nbsp;|&nbsp;&nbsp; </li>
+                    <li class="weui-media-box__info__meta"><a
+                            th:href="@{/wx/view/course/edit?id={id}(id=${course.id})}">编辑课程</a>
+                    </li>
+                    <li th:if="${(course.audit_count + course.sigup_count) &lt; 1}" class="weui-media-box__info__meta">&nbsp;&nbsp;|&nbsp;&nbsp;<a
+                            th:href="@{/wx/view/course/{id}/del(id=${course.id})}" >删除课程</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="weui-msg" th:if="${#lists.isEmpty(pageData.list)}">
+        <div class="weui-msg__icon-area"><i class="weui-icon-warn weui-icon_msg-primary"></i></div>
+        <div class="weui-msg__text-area">
+            <p class="weui-msg__desc">暂时没有课程</p>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
+

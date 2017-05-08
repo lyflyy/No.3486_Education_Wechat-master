@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head></head>
+<body>
+<!--讨论内容列表-->
+<div th:each="forum: ${pageData.list}"  class="weui-media-box weui-media-box_appmsg">
+    <div class="weui-media-box__hd">
+        <img class="weui-media-box__thumb"
+             th:src="${forum.avatar}"
+             alt="">
+    </div>
+    <div class="weui-media-box__bd">
+        <ul class="weui-media-box__info">
+            <li class="weui-media-box__info__meta"><span th:text="${forum.nick_name}"></span>&nbsp;| &nbsp;
+                <span th:text="${forum.user_type eq 1} ?'讲师':'学员'"></span>
+            </li>
+            <li class="weui-media-box__info__meta" th:text="${#dates.format(forum.created_time, 'MM/dd HH:mm:ss')}">10/09 17:49:41</li>
+        </ul>
+        <p class="weui-media-box__desc" th:text="${forum.content}"></p>
+        <div class="weui-media-box__bar">
+            <span class="weui-media-box__bar__btn del" th:attr="data-id=${forum.id}">删除</span>
+            <span class="weui-media-box__bar__btn " th:attr="data-id=${forum.id}">禁言</span>
+            <span class="weui-media-box__bar__btn towall" th:attr="data-id=${forum.id}">上墙</span>
+        </div>
+    </div>
+</div>
+
+<div class="weui-msg" th:if="${#lists.isEmpty(pageData.list)}">
+    <div class="weui-msg__icon-area"><i class="weui-icon-warn weui-icon_msg-primary"></i></div>
+    <div class="weui-msg__text-area">
+        <p class="weui-msg__desc">暂时还没有讨论内容噢！快发起讨论吧</p>
+    </div>
+</div>
+
+</body>
+</html>
+
+
+<div  class="weui-media-box weui-media-box_appmsg">
+    <div class="weui-media-box__hd">
+        <img class="weui-media-box__thumb" src="{avatar}" alt="">
+    </div>
+    <div class="weui-media-box__bd">
+        <ul class="weui-media-box__info">
+            <li class="weui-media-box__info__meta"><span >{nick_name}</span>&nbsp;| &nbsp;
+                <span>{userType}</span>
+            </li>
+            <li class="weui-media-box__info__meta" >{create_time}</li>
+        </ul>
+        <p class="weui-media-box__desc" >{content}</p>
+        <div class="weui-media-box__bar">
+            <span class="weui-media-box__bar__btn del" data-id="{id}">删除</span>
+            <span class="weui-media-box__bar__btn " data-id="{id}">禁言</span>
+            <span class="weui-media-box__bar__btn towall" data-id="${id}">上墙</span>
+        </div>
+    </div>
+</div>

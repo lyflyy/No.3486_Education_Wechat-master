@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!--导入属性配置 -->
+    <properties resource="generator.properties"></properties>
+    <!--指定特定数据库的jdbc驱动jar包的位置 -->
+    <classPathEntry location="/Users/hz/dev/evn/maven/repo/m2/mysql/mysql-connector-java/5.1.9/mysql-connector-java-5.1.9.jar"/>
+
+    <context id="default" targetRuntime="MyBatis3"  defaultModelType="flat">
+        <!-- 防止部分IDE，在进行代码生成器过程中，自定义注释部分 中文乱码 -->
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <!-- 由于beginningDelimiter和endingDelimiter的默认值为双引号(")，
+        在Mysql中不能这么写，所以还要将这两个默认值改为**反单引号(`)**，配置如下：  -->
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+        <!-- generate entity时，生成serialVersionUID
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />-->
+        <!-- optional，旨在创建class时，对注释进行控制 -->
+        <commentGenerator>
+            <property name="suppressDate" value="true" /> <!-- 是否取消注释 -->
+            <property name="suppressAllComments" value="true" /> <!-- 是否生成注释代时间戳-->
+        </commentGenerator>
+
+
+
+        <jdbcConnection driverClass="${jdbc.driverClass}" connectionURL="${jdbc.connectionURL}" userId="${jdbc.username}" password="${jdbc.password}">
+        </jdbcConnection>
+
+
+        <!--
+            true：使用BigDecimal对应DECIMAL和 NUMERIC数据类型
+            false：默认,
+                scale>0;length>18：使用BigDecimal;
+                scale=0;length[10,18]：使用Long；
+                scale=0;length[5,9]：使用Integer；
+                scale=0;length<5：使用Short；
+         -->
+        <javaTypeResolver >
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+
+        <javaModelGenerator targetPackage="cn.zhishimao.core.vke.entity" targetProject="src/main/java">
+            <property name="constructorBased" value="false"/>
+            <!--如果true，MBG会根据catalog和schema来生成子包。如果false就会直接用targetPackage属性。默认为false。 -->
+            <property name="enableSubPackages" value="false"/>
+            <!-- 该属性用来配置实体类属性是否可变，如果设置为true，那么constructorBased不管设置成什么，
+            都会使用构造方法入参，并且不会生成setter方法。如果为false，实体类属性就可以改变。默认为false。-->
+            <property name="immutable" value="false"/>
+
+            <!-- trimStrings:是否对数据库查询结果进行trim操作，如果设置为true就会生成类似这样
+            public void setUsername(String username) {this.username = username == null ? null : username.trim();}的setter方法。默认值为false。-->
+            <property name="trimStrings" value="true"/>
+
+            <!--rootClass:设置所有实体类的基类。如果设置，需要使用类的全限定名称。并且如果MBG能够加载rootClass，
+            那么MBG不会覆盖和父类中完全匹配的属性。匹配规则：
+                    属性名完全相同
+                    属性类型相同
+                    属性有getter方法
+                    属性有setter方法-->
+            <property name="rootClass" value="cn.zhishimao.core.common.entity.BaseEntity"/>
+        </javaModelGenerator>
+
+
+        <sqlMapGenerator targetPackage="vke" targetProject="src/main/resources/mybatis/mapper/">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+
+        <javaClientGenerator targetPackage="cn.zhishimao.core.vke.dao" targetProject="src/main/java" type="XMLMAPPER">
+            <property name="enableSubPackages" value=""/>
+
+            <property name="exampleMethodVisibility" value=""/>
+
+            <property name="methodNameCalculator" value=""/>
+
+            <property name="rootInterface" value="cn.zhishimao.core.common.dao.BaseMapper"/>
+
+        </javaClientGenerator>
+
+        <!--<table enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableSelectByExample="false" tableName="pms_menu" delimitIdentifiers="true" delimitAllColumns="true">-->
+            <!--&lt;!&ndash;<generatedKey column="id" sqlStatement="MySql"></generatedKey>&ndash;&gt;-->
+            <!--<columnOverride column="id" javaType="java.lang.Long"/>-->
+            <!--&lt;!&ndash;<columnOverride column="user_id" javaType="java.lang.Long"/>&ndash;&gt;-->
+        <!--</table>-->
+        <!--<table enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableSelectByExample="false" tableName="pms_menu_role" delimitIdentifiers="true" delimitAllColumns="true">-->
+            <!--&lt;!&ndash;<generatedKey column="id" sqlStatement="MySql"></generatedKey>&ndash;&gt;-->
+            <!--<columnOverride column="id" javaType="java.lang.Long"/>-->
+            <!--&lt;!&ndash;<columnOverride column="user_id" javaType="java.lang.Long"/>&ndash;&gt;-->
+        <!--</table>-->
+        <!--<table enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableSelectByExample="false" tableName="pms_operator" delimitIdentifiers="true" delimitAllColumns="true">-->
+            <!--&lt;!&ndash;<generatedKey column="id" sqlStatement="MySql"></generatedKey>&ndash;&gt;-->
+            <!--<columnOverride column="id" javaType="java.lang.Long"/>-->
+            <!--&lt;!&ndash;<columnOverride column="user_id" javaType="java.lang.Long"/>&ndash;&gt;-->
+        <!--</table>-->
+        <!--<table enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableSelectByExample="false" tableName="pms_operator_log" delimitIdentifiers="true" delimitAllColumns="true">-->
+            <!--&lt;!&ndash;<generatedKey column="id" sqlStatement="MySql"></generatedKey>&ndash;&gt;-->
+            <!--<columnOverride column="id" javaType="java.lang.Long"/>-->
+            <!--&lt;!&ndash;<columnOverride column="user_id" javaType="java.lang.Long"/>&ndash;&gt;-->
+        <!--</table>-->
+        <!--<table enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableSelectByExample="false" tableName="pms_permission" delimitIdentifiers="true" delimitAllColumns="true">-->
+            <!--&lt;!&ndash;<generatedKey column="id" sqlStatement="MySql"></generatedKey>&ndash;&gt;-->
+            <!--<columnOverride column="id" javaType="java.lang.Long"/>-->
+            <!--&lt;!&ndash;<columnOverride column="user_id" javaType="java.lang.Long"/>&ndash;&gt;-->
+        <!--</table>-->
+        <!--<table enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableSelectByExample="false" tableName="pms_role" delimitIdentifiers="true" delimitAllColumns="true">-->
+            <!--&lt;!&ndash;<generatedKey column="id" sqlStatement="MySql"></generatedKey>&ndash;&gt;-->
+            <!--<columnOverride column="id" javaType="java.lang.Long"/>-->
+            <!--&lt;!&ndash;<columnOverride column="user_id" javaType="java.lang.Long"/>&ndash;&gt;-->
+        <!--</table>-->
+        <!--<table enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableSelectByExample="false" tableName="pms_role_operator" delimitIdentifiers="true" delimitAllColumns="true">-->
+            <!--&lt;!&ndash;<generatedKey column="id" sqlStatement="MySql"></generatedKey>&ndash;&gt;-->
+            <!--<columnOverride column="id" javaType="java.lang.Long"/>-->
+            <!--&lt;!&ndash;<columnOverride column="user_id" javaType="java.lang.Long"/>&ndash;&gt;-->
+        <!--</table>-->
+        <!--<table enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableSelectByExample="false" tableName="pms_role_permission" delimitIdentifiers="true" delimitAllColumns="true">-->
+            <!--&lt;!&ndash;<generatedKey column="id" sqlStatement="MySql"></generatedKey>&ndash;&gt;-->
+            <!--<columnOverride column="id" javaType="java.lang.Long"/>-->
+            <!--&lt;!&ndash;<columnOverride column="user_id" javaType="java.lang.Long"/>&ndash;&gt;-->
+        <!--</table>-->
+
+
+        <table enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false"
+               enableSelectByExample="false" tableName="vke_msg_redpacket" delimitIdentifiers="true" delimitAllColumns="true">
+            <!--<generatedKey column="id" sqlStatement="MySql"></generatedKey>-->
+            <columnOverride column="id" javaType="java.lang.Long"/>
+            <!--<columnOverride column="user_id" javaType="java.lang.Long"/>-->
+
+        </table>
+    </context>
+</generatorConfiguration>

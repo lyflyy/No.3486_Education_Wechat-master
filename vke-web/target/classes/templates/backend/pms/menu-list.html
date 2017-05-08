@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="backend/fragment/frag :: common_header(~{::title},_)">
+    <title>知识猫 - 运营系统</title>
+</head>
+<body class="gray-bg">
+
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>所有权限资源</h5>
+                    <!--<div class="ibox-tools">
+                        <a th:href="@{/backend/menu/addUi}" class="btn btn-primary btn-xs">添加权限资源</a>
+                    </div>-->
+                </div>
+                <div class="ibox-content">
+
+                    <div class="project-list">
+                        <table id="exampleTableToolbar" data-mobile-responsive="true" class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th style="" data-field="name">
+                                    <div class="th-inner ">名称</div>
+                                </th>
+                                <th style="" data-field="url">
+                                    <div class="th-inner ">链接</div>
+                                </th>
+                                <th style="" data-field="type">
+                                    <div class="th-inner ">类别</div>
+                                </th>
+                                <th style="" data-field="patentId">
+                                    <div class="th-inner ">父级id</div>
+                                </th>
+                                <th style="" data-field="isLeaf">
+                                    <div class="th-inner ">是否叶子节点</div>
+                                </th>
+                                <th style="" data-field="code">
+                                    <div class="th-inner ">添加时间</div>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:if="${not #lists.isEmpty(pageData.list)}"  th:each="item : ${pageData.list}">
+                                    <td th:text="${item.name}"></td>
+                                    <td th:text="${item.url}"></td>
+                                    <td th:text="${item.type==1?'菜单':'按钮'}"></td>
+                                    <td th:text="${item.parentId}"></td>
+                                    <td th:text="${item.isLeaf==true?'是':'否'}"></td>
+                                    <td th:text="${item.createdTime==0?'':#dates.format(item.createdTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+                                </tr>
+                                <tr class="no-records-found" th:if="${#lists.isEmpty(pageData.list)}">
+                                    <td colspan="8">没有找到匹配的记录</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div th:replace="backend/fragment/frag :: pagination"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

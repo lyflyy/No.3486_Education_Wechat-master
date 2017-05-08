@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="wx/fragment/frag :: common_header(~{::title},_)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>全部课程</title>
+</head>
+<body class="vke">
+<div class="container" id="app">
+    <div class="weui-tab">
+
+    <div class="page course">
+        <div class="page__bd" >
+
+            <div class="weui-tab">
+                <div class="weui-navbar">
+                    <a data-pjax href="/wx/view/course/all"
+                       th:class="${status == null}?'weui-navbar\_\_item weui-bar\_\_item_on':'weui-navbar\_\_item'">
+                        全部课程
+                    </a>
+                    <a data-pjax href="/wx/view/course/all?status=2"
+                       th:class="${status eq 2}?'weui-navbar\_\_item weui-bar\_\_item_on':'weui-navbar\_\_item'">
+                        直播中
+                    </a>
+                    <a data-pjax href="/wx/view/course/all?status=1"
+                       th:class="${status eq 1}?'weui-navbar\_\_item weui-bar\_\_item_on':'weui-navbar\_\_item'">
+                        报名中
+                    </a>
+                    <a data-pjax href="/wx/view/course/all?status=3"
+                       th:class="${status eq 3}?'weui-navbar\_\_item weui-bar\_\_item_on':'weui-navbar\_\_item'">
+                        已结束
+                    </a>
+                </div>
+
+                <div class="weui-tab__panel">
+                    <div class="weui-panel weui-panel_access" id="pjax-container">
+                        <div class="weui-panel__bd" th:replace="wx/course/list">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <div th:replace="wx/fragment/frag::pageFooter"></div>
+    </div>
+</div>
+
+<div th:include="wx/fragment/frag::commonScript"></div>
+<script src="/public/js/jquery.pjax.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    $(function () {
+        $(document).pjax('a[data-pjax]', '#pjax-container', {
+            timeout: 3000
+        });
+        $(document).on('pjax:send', function () {
+//            alert("start");
+        })
+        $(document).on('pjax:complete', function () {
+//            alert("end");
+        })
+    })
+</script>
+</body>
+</html>

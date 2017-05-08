@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="wx/fragment/frag :: common_header(~{::title},_)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>知识猫</title>
+</head>
+<body class="vke">
+<div class="container" id="app">
+    <div class="page">
+        <div class="page__bd">
+            <form id="form" method="POST" th:action="@{/wx/view/lecturer/{userId}/register(userId=${session.vkeu.id})}">
+                <div class="weui-cells weui-cells_form" style="margin-top:0">
+                    <div class="weui-cell weui-cell_select weui-cell_select-after">
+                        <div class="weui-cell__hd">
+                            <label for="select" class="weui-label">国家/地区</label>
+                        </div>
+                        <div class="weui-cell__bd">
+                            <select class="weui-select" id="select" name="select2">
+                                <option value="+86">中国</option>
+                                <option value="2">美国</option>
+                                <option value="3">英国</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="weui-cell weui-cell_vcode">
+                        <div class="weui-cell__hd">
+                            <label class="weui-label" for="phone">手机号</label>
+                        </div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" name="phone" id="phone" required="true" type="tel" placeholder="请输入手机号">
+                        </div>
+                        <div class="weui-cell__ft">
+                            <a href="#" id="sendPhoneCode" class="weui-vcode-btn">
+                                <span id="codeTimer"></span><span id="sendcode-text">获取验证码</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label class="weui-label">验证码</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" name="phoneCode" required="true" type="number"
+                                   placeholder="请输入验证码">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="weui-cells weui-cells_form">
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label for="relname" class="weui-label">真实姓名</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" name="realName" id="relname" type="text" required="true" placeholder="填写真实姓名，以后不可更改">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label class="weui-label" for="title">头衔</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" name="title" required="true" id="title" maxlength="20" minlength="3"
+                                   type="text"
+                                   placeholder="填写从事的职业，最多20个字">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label class="weui-label" for="intro">讲师介绍</label></div>
+                        <div class="weui-cell__bd">
+                        <textarea class="weui-textarea" name="intro" required="true" id="intro" minlength="20"
+                                  placeholder="填写讲师的基本情况，最多100个字"
+                                  rows="3"></textarea>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="weui-btn-area">
+                    <input type="submit" class="weui-btn weui-btn_primary" value="申请"/>
+                    <a href="/wx/view/" class="weui-btn weui-btn_default">以后再说</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="toast" class="toast-text">
+    <div class="weui-mask_transparent"></div>
+    <div class="weui-toast">
+        <p class="weui-toast__content"></p>
+    </div>
+</div>
+
+<div th:include="wx/fragment/frag::commonScript"></div>
+<script src="/public/js/jquery-html5Validate.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    //    $.toast.prototype.defaults.duration = 2000*60;
+    $(function () {
+        var telRegExp = new RegExp("^1\\d{10}$", 'i');
+        var timer = 59;
+        var sid = null;
+        var doing = false;
+        var doTimer = function () {
+            sid = setInterval(function () {
+                doing = true;
+                $("#codeTimer").show();
+                if (timer > 0) {
+                    timer -= 1;
+                    $("#codeTimer").text(timer);
+                    $("#sendcode-text").text("秒后重新发送");
+                } else {
+                    $("#codeTimer").hide();
+                    $("#sendcode-text").text("重新发送");
+                    clearInterval(sid);
+                    doing = false;
+                    timer = 59;
+                }
+            }, 1000);
+        };
+
+        $('#sendPhoneCode').on('click', function (e) {
+            if (doing) {
+                return false;
+            }
+            //发送短信验证码
+            var phone = $('input[name="phone"]').val();
+            if (telRegExp.test(phone)) {
+                $.post("/api/sms/send", {phone: phone}, function (res) {
+                    if (res.success) {
+                        $.toast("短信验证码已发送,请查收", 'text');
+                        doTimer();
+                    } else {
+                        $.toast(res.msg, 'text');
+                    }
+                })
+                return false;
+            } else {
+                $.toast('电话号码格式不正确', 'text');
+            }
+
+            e.preventDefault();
+        });
+
+
+        $("#form").html5Validate(function () {
+            // 全部验证通过，该干嘛干嘛~~
+            this.submit();
+        }, {
+            // novalidate: false,
+            labelDrive: true
+        });
+
+    });
+</script>
+</body>
+</html>

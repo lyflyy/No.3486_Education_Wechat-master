@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhishimao.core.user.dao.VkeLecturerMapper">
+    <resultMap id="BaseResultMap" type="cn.zhishimao.core.user.entity.VkeLecturer">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="is_high_quality" jdbcType="BIT" property="isHighQuality"/>
+        <result column="verfiy_time" jdbcType="TIMESTAMP" property="verfiyTime"/>
+        <result column="subscibe_count" jdbcType="INTEGER" property="subscibeCount"/>
+        <result column="created_time" jdbcType="TIMESTAMP" property="createdTime"/>
+        <result column="edit_time" jdbcType="TIMESTAMP" property="editTime"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="version" jdbcType="BIGINT" property="version"/>
+        <result column="is_recommend" jdbcType="BIT" property="isRecommend"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    `id`, `user_id`, `title`, `is_high_quality`, `verfiy_time`, `subscibe_count`, `created_time`, 
+    `edit_time`, `remark`, `version`, `is_recommend`
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `vke_lecturer`
+        where `id` = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from `vke_lecturer`
+    where `id` = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"
+            parameterType="cn.zhishimao.core.user.entity.VkeLecturer">
+    insert into `vke_lecturer` (`id`, `user_id`, `title`, 
+      `is_high_quality`, `verfiy_time`, `subscibe_count`, 
+      `created_time`, `edit_time`, `remark`, 
+      `version`, `is_recommend`)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, 
+      #{isHighQuality,jdbcType=BIT}, #{verfiyTime,jdbcType=TIMESTAMP}, #{subscibeCount,jdbcType=INTEGER}, 
+      #{createdTime,jdbcType=TIMESTAMP}, #{editTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, 
+      #{version,jdbcType=BIGINT}, #{isRecommend,jdbcType=BIT})
+  </insert>
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id"
+            parameterType="cn.zhishimao.core.user.entity.VkeLecturer">
+        insert into `vke_lecturer`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                `id`,
+            </if>
+            <if test="userId != null">
+                `user_id`,
+            </if>
+            <if test="title != null">
+                `title`,
+            </if>
+            <if test="isHighQuality != null">
+                `is_high_quality`,
+            </if>
+            <if test="verfiyTime != null">
+                `verfiy_time`,
+            </if>
+            <if test="subscibeCount != null">
+                `subscibe_count`,
+            </if>
+            <if test="createdTime != null">
+                `created_time`,
+            </if>
+            <if test="editTime != null">
+                `edit_time`,
+            </if>
+            <if test="remark != null">
+                `remark`,
+            </if>
+            <if test="version != null">
+                `version`,
+            </if>
+            <if test="isRecommend != null">
+                `is_recommend`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="isHighQuality != null">
+                #{isHighQuality,jdbcType=BIT},
+            </if>
+            <if test="verfiyTime != null">
+                #{verfiyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="subscibeCount != null">
+                #{subscibeCount,jdbcType=INTEGER},
+            </if>
+            <if test="createdTime != null">
+                #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="editTime != null">
+                #{editTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=BIGINT},
+            </if>
+            <if test="isRecommend != null">
+                #{isRecommend,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="cn.zhishimao.core.user.entity.VkeLecturer">
+        update `vke_lecturer`
+        <set>
+            <if test="userId != null">
+                `user_id` = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="title != null">
+                `title` = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="isHighQuality != null">
+                `is_high_quality` = #{isHighQuality,jdbcType=BIT},
+            </if>
+            <if test="verfiyTime != null">
+                `verfiy_time` = #{verfiyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="subscibeCount != null">
+                `subscibe_count` = #{subscibeCount,jdbcType=INTEGER},
+            </if>
+            <if test="createdTime != null">
+                `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="editTime != null">
+                `edit_time` = #{editTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                `remark` = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                `version` = #{version,jdbcType=BIGINT},
+            </if>
+            <if test="isRecommend != null">
+                `is_recommend` = #{isRecommend,jdbcType=BIT},
+            </if>
+        </set>
+        where `id` = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByUserIdSelective" parameterType="cn.zhishimao.core.user.entity.VkeLecturer">
+        update `vke_lecturer`
+        <set>
+            <if test="title != null">
+                `title` = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="isHighQuality != null">
+                `is_high_quality` = #{isHighQuality,jdbcType=BIT},
+            </if>
+            <if test="verfiyTime != null">
+                `verfiy_time` = #{verfiyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="subscibeCount != null">
+                `subscibe_count` = #{subscibeCount,jdbcType=INTEGER},
+            </if>
+            <if test="createdTime != null">
+                `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="editTime != null">
+                `edit_time` = #{editTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                `remark` = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                `version` = #{version,jdbcType=BIGINT},
+            </if>
+            <if test="isRecommend != null">
+                `is_recommend` = #{isRecommend,jdbcType=BIT},
+            </if>
+        </set>
+        where `user_id` = #{userId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.zhishimao.core.user.entity.VkeLecturer">
+    update `vke_lecturer`
+    set `user_id` = #{userId,jdbcType=BIGINT},
+      `title` = #{title,jdbcType=VARCHAR},
+      `is_high_quality` = #{isHighQuality,jdbcType=BIT},
+      `verfiy_time` = #{verfiyTime,jdbcType=TIMESTAMP},
+      `subscibe_count` = #{subscibeCount,jdbcType=INTEGER},
+      `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+      `edit_time` = #{editTime,jdbcType=TIMESTAMP},
+      `remark` = #{remark,jdbcType=VARCHAR},
+      `version` = #{version,jdbcType=BIGINT},
+      `is_recommend` = #{isRecommend,jdbcType=BIT}
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+    <sql id="Base_Condition">
+        <if test="id != null">
+            and `id` = #{id,jdbcType=VARCHAR}
+        </if>
+        <if test="title != null">
+            and `title` = #{title,jdbcType=VARCHAR}
+        </if>
+        <if test="isHighQuality != null">
+            and `is_high_quality` = #{isHighQuality,jdbcType=BIT}
+        </if>
+        <if test="verfiyTime != null">
+            and `verfiy_time` = #{verfiyTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="subscibeCount != null">
+            and `subscibe_count` = #{subscibeCount,jdbcType=INTEGER}
+        </if>
+        <if test="createdTime != null">
+            and `created_time` = #{createdTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="editTime != null">
+            and `edit_time` = #{editTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="remark != null">
+            and `remark` = #{remark,jdbcType=VARCHAR}
+        </if>
+        <if test="version != null">
+            and `version` = #{version,jdbcType=BIGINT}
+        </if>
+        <if test="userId != null">
+            and `user_id` = #{userId,jdbcType=BIGINT}
+        </if>
+        <if test="isRecommend != null">
+            and `is_recommend` = #{isRecommend,jdbcType=BIGINT}
+        </if>
+    </sql>
+
+    <select id="listByEntity" parameterType="cn.zhishimao.core.user.entity.VkeLecturer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from vke_lecturer
+        where 1=1
+        <include refid="Base_Condition"/>
+        order by created_time desc
+    </select>
+
+    <update id="increaseSubscibeCount" parameterType="java.lang.Long">
+    update vke_lecturer set subscibe_count = subscibe_count+1
+    where user_id =  #{lecturerId,jdbcType=BIGINT}
+  </update>
+
+    <update id="decreaseSubscibeCount" parameterType="java.lang.Long">
+    update vke_lecturer set subscibe_count = subscibe_count-1
+    where user_id =  #{lecturerId,jdbcType=BIGINT}
+  </update>
+
+    <select id="selectAll" parameterType="java.lang.Boolean" resultType="java.util.HashMap">
+        select
+        vkel.`id`,
+        vkel.`user_id`,
+        vu.`avatar`,
+        vu.`nick_name`,
+        vu.`intro`,
+        vkel.`title`,
+        vkel.`is_high_quality`,
+        vkel.`verfiy_time`,
+        vkel.`subscibe_count`,
+        vkel.`created_time`,
+        vkel.`is_recommend`
+        from vke_lecturer vkel
+        left join vke_user vu on vu.`id` = vkel.`user_id`
+        <where>
+            <if test="_parameter!=null and _parameter!='' ">
+                and vkel.`is_high_quality` = #{_parameter,jdbcType=BIT}
+            </if>
+        </where>
+        ORDER BY vkel.`is_recommend` DESC, vkel.`is_high_quality` DESC, vkel.`created_time` DESC
+
+    </select>
+    <select id="selectAllSubscibe" parameterType="java.lang.Long" resultType="java.util.HashMap">
+        select
+        vls.id,
+        vls.`lecturer_id`,
+        vu.`avatar`,
+        vu.`nick_name`,
+        vl.`title`,
+        vl.`is_high_quality`,
+        vl.`verfiy_time`,
+        vl.`subscibe_count`,
+        vl.`created_time`,
+        vl.`is_recommend`,
+        vls.`created_time` subscibeTime
+        from vke_lecturer_subscibe vls
+        left join vke_lecturer vl on vl.user_id = vls.lecturer_id
+        left join vke_user vu on vu.id = vl.user_id
+        WHERE vls.student_id = #{userId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectLectureInfo" parameterType="java.lang.Long" resultType="java.util.HashMap">
+    select  vkeUser.id userId ,vkeUser.nick_name nickName,vkeUser.sex,vkeUser.phone,vkeUser.avatar
+    vkeLecture.title,vkeUser.intro,vkeLecture.is_recommend isRecommend
+    from vke_user vkeUser,vke_lecturer vkeLecture
+    where vkeLecture.user_id = vkeUser.id and vkeUser.id = #{userId,jdbcType=BIGINT}
+  </select>
+
+    <select id="selectByUserId" resultType="java.util.HashMap">
+    select
+    vkeu.*,
+    vkel.title,
+    vkel.`is_high_quality`,
+    vkel.`verfiy_time`,
+    vkel.`subscibe_count`,
+    vkel.`created_time`,
+    vkel.`is_recommend`
+    from vke_lecturer vkel
+    left join vke_user vkeu on vkeu.id = vkel.user_id
+    where vkel.`user_id` = #{_parameter,jdbcType=BIGINT}
+  </select>
+
+
+    <select id="selectLectureInfoList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        select vkeUser.id userId,vkeUser.nick_name nickName ,vkeUser.real_name realName,vkeUser.phone,vkeUser.sex
+        ,vkeUser.intro,
+        vkeUser.country,vkeUser.city,vkeUser.province,vkeUser.status,vkeUser.avatar,vkeUser.user_type
+        userType,vkeUser.regist_ip registIp,
+        vkeUser.regist_agents registAgents,vkeUser.regist_device_num,vkeUser.subscribe_time
+        subscribeTime,vkeUser.isSubscribe,
+        vkeUser.created_time userCreateTime ,vkeLecturer.id lecturerId,vkeLecturer.title ,vkeLecturer.is_high_quality
+        isHighQuality,
+        vkeLecturer.verfiy_time verfiyTime,vkeLecturer.subscibe_count subscibeCount ,vkeLecturer.created_time
+        lecturerCreateTime,
+        vkeLecturer.is_recommend isRecommend
+        from vke_user vkeUser
+        left join vke_lecturer vkeLecturer on vkeLecturer.user_id = vkeUser.id
+        where vkeUser.user_type = #{userType,jdbcType=INTEGER}
+        <if test="searchKey != null and searchKey!=''">
+            and vkeUser.`nick_name`  like CONCAT('',#{searchKey},'%')
+        </if>
+        <if test="isRecommend != null">
+            and vkeLecturer.`is_recommend` = #{isRecommend,jdbcType=TINYINT}
+        </if>
+        order by vkeLecturer.created_time desc
+    </select>
+
+    <select id="selectApplyHighQualityLectureInfoList" resultType="java.util.HashMap">
+        select vkeUser.id userId,vkeUser.nick_name nickName,vkeUser.real_name realName,vkeUser.phone,vkeUser.created_time registTime,vkeLecturer.title ,
+        vkeLectureVerifyLog.created_time applyTime,vkeLectureVerifyLog.operator_id operatorId,vkeLectureVerifyLog.reason ,vkeLectureVerifyLog.is_pass isPass,vkeLectureVerifyLog.status,
+        vkeLectureVerifyLog.pass_time passTime,pmsOperator.login_name loginName,pmsOperator.id operatorId,vkeLecturer.id lecturerId,vkeLectureVerifyLog.id verifyId
+        from vke_lecturer_verfiy_log vkeLectureVerifyLog
+        left join vke_user vkeUser on vkeUser.id = vkeLectureVerifyLog.user_id
+        left join vke_lecturer vkeLecturer on vkeLecturer.user_id = vkeUser.id
+        left join pms_operator pmsOperator on pmsOperator.id = vkeLectureVerifyLog.operator_id
+        order by  vkeLectureVerifyLog.created_time desc
+    </select>
+</mapper>

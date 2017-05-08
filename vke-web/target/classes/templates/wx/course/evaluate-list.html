@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="wx/fragment/frag :: common_header(~{::title},~{::link})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>查看评论</title>
+    <link rel="stylesheet" href="/public/wx/raty/lib/jquery.raty.css"/>
+</head>
+<body class="vke">
+<div class="container" id="app">
+    <div class="page course">
+        <div class="page__bd">
+            <div class="weui-panel">
+                <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg ">
+                    <div class="weui-media-box__hd">
+                        <img class="weui-media-box__thumb" th:src="'http://vke2016-10071423.image.myqcloud.com/' + ${course.avatar}  +'?imageView2/1/w/180/h/180'"/>
+                        <span class="doing">	<img
+                                th:src="@{/public/wx/images/{img}(img=${'status_'+course.status+'.png'})}"/></span>
+                    </div>
+                    <div class="weui-media-box__bd">
+                        <h4 class="weui-media-box__desc cm_font_title" th:text="${course.name}"></h4>
+                        <p class="cm_info_extra ">课程：<span class="cm_star" title="regular"> <i th:each="i : ${#numbers.sequence( 1, 5)}"
+                                                                                               data-alt="1"
+                                                                                               th:class="${i le evaluateInfo.courseRate}?'star-on-png':'star-off-png'"
+                                                                                               title="regular"></i>&nbsp;</span>讲师：<span class="cm_star" title="regular"><i th:each="i : ${#numbers.sequence( 1, 5)}"
+                                                                                                                                                                            data-alt="1"
+                                                                                                                                                                            th:class="${i le evaluateInfo.lecturerRate}?'star-on-png':'star-off-png'"
+                                                                                                                                                                            title="regular"></i>&nbsp;</span></p>
+                        <p class="cm_info_extra">Andy | 互联网非资深产品,本项目负责人</p>
+                    </div>
+                </a>
+            </div>
+            <div class="weui-panel comment">
+                <div class="weui-panel__bd" th:if="${not #lists.isEmpty(pageData.list)}"
+                     th:each="comment: ${pageData.list}">
+                    <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg ">
+                        <div class="weui-media-box__hd">
+                            <img class="weui-media-box__thumb avatar" th:src="${comment.avatar}" alt="">
+                        </div>
+                        <div class="weui-media-box__bd info">
+                            <h4 class="weui-media-box__title " th:text="${comment.nick_name}"></h4>
+                            <p class="cm_info_extra ">
+                                课程：<span class="cm_star" title="regular"> <i th:each="i : ${#numbers.sequence( 1, 5)}"
+                                                                             data-alt="1"
+                                                                             th:class="${i le comment.courseRate}?'star-on-png':'star-off-png'"
+                                                                             title="regular"></i>&nbsp;</span>
+                                讲师：<span class="cm_star" title="regular"><i th:each="i : ${#numbers.sequence( 1, 5)}"
+                                                                            data-alt="1"
+                                                                            th:class="${i le comment.lecturerRate}?'star-on-png':'star-off-png'"
+                                                                            title="regular"></i>&nbsp;</span>
+                            </p>
+                            </p>
+                        </div>
+                        <div class="cm_bd_time">
+                            <p class="cm_info_extra timeago"
+                               th:attr="datetime=${#dates.format(comment.created_time, 'yyyy-MM-dd HH:mm:ss')}"
+                               th:text="${#dates.format(comment.created_time, 'yyyy-MM-dd HH:mm')}">今天 12:30</p>
+                        </div>
+                    </a>
+                    <article class="weui-article cm_text">
+                        <section>
+                            <p th:text="${comment.content}"></p>
+                        </section>
+                    </article>
+                </div>
+                <div class="weui-msg" th:if="${#lists.isEmpty(pageData.list)}">
+                    <div class="weui-msg__icon-area"><i class="weui-icon-warn weui-icon_msg-primary"></i></div>
+                    <div class="weui-msg__text-area">
+                        <p class="weui-msg__desc">还没有人评噢!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:include="wx/fragment/frag::commonScript"></div>
+<script src="/public/js/timeago.js" type="text/javascript" charset="utf-8"></script>
+<script src="/public/js/timeago.locales.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    $(function () {
+        var timeagoInstance = new timeago();
+        timeagoInstance.render(document.querySelectorAll('.timeago'), 'zh_CN');
+    })
+</script>
+</body>
+</html>

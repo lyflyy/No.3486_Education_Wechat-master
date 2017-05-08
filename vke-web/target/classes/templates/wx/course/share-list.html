@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="wx/fragment/frag :: common_header(~{::title},_)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>分享榜</title>
+</head>
+<body class="vke">
+<img style="height: 0;width: 0;" class="weui-media-box__thumb avatar" th:src="'http://vke2016-10071423.image.myqcloud.com/' + ${course.avatar}  +''" th:alt="${course.name}"/>
+<div class="container" id="app">
+    <div class="page course share">
+        <div class="page__bd">
+            <div class="cm_share_notice">注意：分享要遵守互联网秩序，将有价值的课程分享给朋友吧～</div>
+            <div class="weui-panel" th:if="${session.vkeu}">
+                <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg ">
+                    <div class="weui-media-box__hd cm_avator">
+                        <img class="weui-media-box__thumb avatar"
+                             th:src="${session.vkeu.avatar}" alt="">
+                    </div>
+                    <div class="weui-media-box__bd cm_flex">
+                        <h4 class="weui-media-box__title " th:text="${session.vkeu.nickName + '(我)'}"></h4>
+                        <p th:if="${shareInfo}" class="cm_info_extra tuijian">推荐<i th:text="${shareInfo.total}">0</i>个朋友报名课程</p>
+                        <p th:unless="${shareInfo}" class="cm_info_extra tuijian">推荐<i>0</i>个朋友报名课程</p>
+                        <input id="courseId" type="hidden" th:value="${course.id}">
+                    </div>
+                    <div class="weui-media-box__bd text-right">
+                        <span class="cm_dingyue" th:onclick="'javascript:shareCourse(\''+ ${course.id} + '\');'" id="showIOSDialog2">分享课程</span>
+                    </div>
+                </a>
+            </div>
+            <div class="weui-panel weui-panel_access  lecturer-panel">
+                <div class="weui-panel__bd" th:if="${not #lists.isEmpty(pageData.list)}">
+                    <a th:each="item : ${pageData.list}" href="javascript:void(0);" th:unless="${(session.vkeu!=null and session.vkeu.id eq item.user_id)}" class="weui-media-box weui-media-box_appmsg ">
+                        <div class="weui-media-box__hd">
+                            <img class="weui-media-box__thumb avatar"
+                                 th:src="${item[user_avatar]}">
+                            <!--<span class="quality vke-icon-you"></span>-->
+                        </div>
+
+                        <div class="weui-media-box__bd">
+                            <h5 class="weui-media-box__title">昵称 <span th:text="${item[user_nick_name]}"></span></h5>
+                            <p class="weui-media-box__desc">
+                                分享带来的用户数 <span th:text="${item[total]}"></span>
+                            </p>
+                        </div>
+                        <div class="weui-media-box__bd text-right">
+                            <p class="weui-media-box__desc">
+                                分享查看次数 <span th:text="${item[view_count]}"></span>
+                            </p>
+                        </div>
+                    </a>
+                </div>
+                <div class="weui-msg" th:if="${#lists.isEmpty(pageData.list)}">
+                    <div class="weui-msg__icon-area"><i class="weui-icon-warn weui-icon_msg-primary"></i></div>
+                    <div class="weui-msg__text-area">
+                        <p class="weui-msg__desc">暂时没有记录</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:include="wx/fragment/frag::commonScript"></div>
+<script type="text/javascript">
+
+    function shareCourse(courseId) {
+        //$.alert("请点击微信右上角按钮分享","提示");
+        $.modal({
+            title: "已为您生成专属的分享链接，点击右上角发送给指定的朋友或朋友圈!！",
+//            text: "",
+            autoClose: true,
+            buttons: [
+                {
+                    text: "知道了", className: "default", onClick: function () {
+                    $.closeModal();
+                }
+                },
+            ]
+        });
+    }
+
+    $(function () {
+        var courseId = $('#courseId').val();
+        $.post("/wx/view/course/share/" + courseId, {}, function (data) {
+            if (data.success) {
+
+                var param =  $.parseJSON(data.data);
+                param.imgUrl = 'http://vke2016-10071423.image.myqcloud.com/' + param.imgUrl + "?imageView2/1/w/300/h/300";
+                window.shareData = param;
+//                alert(shareData.imgUrl);
+                wx.config({
+                    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                    appId: param.appid, // 和获取Ticke的必须一样------必填，公众号的唯一标识
+                    timestamp: param.timestamp, // 必填，生成签名的时间戳
+                    nonceStr: param.noncestr, // 必填，生成签名的随机串
+                    signature: param.signature,// 必填，签名，见附录1
+                    jsApiList: [
+                        'onMenuShareTimeline',
+                        'onMenuShareAppMessage','hideMenuItems'
+                    ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+                });
+            }
+        });
+
+        wx.ready(function () {
+            wx.hideMenuItems({
+                menuList: ['menuItem:share:qq', 'menuItem:share:weiboApp', 'menuItem:share:facebook', 'menuItem:share:QZone'] // 要隐藏的菜单项，只能隐藏“传播类”和“保护类”按钮，所有menu项见附录3
+            });
+
+            wx.onMenuShareTimeline({
+                title: shareData.title, // 分享标题param.title
+                link: shareData.shareUrl + '?shareid=' + shareData.shareid, // 分享链接
+                imgUrl: shareData.imgUrl, // 分享图标
+                success: function (res) {
+                    //alert('success');
+                },
+                cancel: function (res) {
+                    //alert('cancle');
+                },
+                fail: function (res) {
+                    $.toast("分享失败，请重新尝试", "cancel");
+                }
+            });
+
+            wx.onMenuShareAppMessage({
+                title: shareData.title, // 分享标题
+                desc: shareData.desc, // 分享描述
+                link: shareData.shareUrl + '?shareid=' + shareData.shareid, // 商品购买地址
+                imgUrl: shareData.imgUrl, // 分享的图标
+                fail: function (res) {
+                    $.toast("分享失败，请重新尝试", "cancel");
+                }
+            });
+        });
+
+    });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="wx/fragment/frag :: common_header(~{::title},_)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>知识猫</title>
+</head>
+<body class="vke">
+<div class="container" id="app">
+    <div class="page msg_warn js_show">
+        <div class="weui-msg">
+            <div class="weui-msg__icon-area">
+                <i th:if="${level eq 'warn-primary'}" class="weui-icon-warn weui-icon_msg-primary"></i>
+                <i th:if="${level eq 'success'}" class="weui-icon-success weui-icon_msg"></i>
+                <i th:if="${level eq 'info'}" class="weui-icon-info weui-icon_msg"></i>
+                <i th:if="${level eq 'warn'}" class="weui-icon-warn weui-icon_msg"></i>
+                <i th:if="${level eq 'waiting'}" class="weui-icon-waiting weui-icon_msg"></i>
+            </div>
+            <div class="weui-msg__text-area">
+                <p class="weui-msg__desc" th:text="${msg}"></p>
+            </div>
+            <div class="weui-msg__opr-area">
+                <p class="weui-btn-area">
+                    <a href="/wx/view" class="weui-btn weui-btn_primary">去主页</a>
+                    <a href="javascript:history.back();" class="weui-btn weui-btn_default">返回</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="wx/fragment/frag::commonScript"></div>
+</body>
+</html>

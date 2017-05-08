@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhishimao.core.account.dao.VkeAccountHistoryMapper">
+  <resultMap id="BaseResultMap" type="cn.zhishimao.core.account.entity.VkeAccountHistory">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="course_id" jdbcType="BIGINT" property="courseId" />
+    <result column="account_id" jdbcType="BIGINT" property="accountId" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="balance" jdbcType="DECIMAL" property="balance" />
+    <result column="fund_direction" jdbcType="VARCHAR" property="fundDirection" />
+    <result column="is_allow_sett" jdbcType="TINYINT" property="isAllowSett" />
+    <result column="is_complete_sett" jdbcType="TINYINT" property="isCompleteSett" />
+    <result column="trx_type" jdbcType="VARCHAR" property="trxType" />
+    <result column="transaction_id" jdbcType="VARCHAR" property="transactionId" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="edit_time" jdbcType="TIMESTAMP" property="editTime" />
+    <result column="version" jdbcType="BIGINT" property="version" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    `id`, `user_id`, `account_id`, `remark`, `amount`, `balance`, `fund_direction`, `is_allow_sett`, 
+    `is_complete_sett`, `trx_type`, `transaction_id`, `created_time`, `edit_time`, `version`,`course_id`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from `vke_account_history`
+    where `id` = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from `vke_account_history`
+    where `id` = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.zhishimao.core.account.entity.VkeAccountHistory"  keyProperty="id"  useGeneratedKeys="true">
+    insert into `vke_account_history` (`id`, `user_id`, `account_id`, 
+      `remark`, `amount`, `balance`, 
+      `fund_direction`, `is_allow_sett`, `is_complete_sett`, 
+      `trx_type`, `transaction_id`, `created_time`,`course_id`,
+      `edit_time`, `version`)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{accountId,jdbcType=BIGINT}, 
+      #{remark,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}, #{balance,jdbcType=DECIMAL}, 
+      #{fundDirection,jdbcType=VARCHAR}, #{isAllowSett,jdbcType=TINYINT}, #{isCompleteSett,jdbcType=TINYINT}, 
+      #{trxType,jdbcType=VARCHAR}, #{transactionId,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP},#{courseId,jdbcType=BIGINT},
+      #{editTime,jdbcType=TIMESTAMP}, #{version,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.zhishimao.core.account.entity.VkeAccountHistory"  keyProperty="id"  useGeneratedKeys="true">
+    insert into `vke_account_history`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        `id`,
+      </if>
+      <if test="userId != null">
+        `user_id`,
+      </if>
+      <if test="accountId != null">
+        `account_id`,
+      </if>
+      <if test="remark != null">
+        `remark`,
+      </if>
+      <if test="amount != null">
+        `amount`,
+      </if>
+      <if test="balance != null">
+        `balance`,
+      </if>
+      <if test="fundDirection != null">
+        `fund_direction`,
+      </if>
+      <if test="isAllowSett != null">
+        `is_allow_sett`,
+      </if>
+      <if test="isCompleteSett != null">
+        `is_complete_sett`,
+      </if>
+      <if test="trxType != null">
+        `trx_type`,
+      </if>
+      <if test="transactionId != null">
+        `transaction_id`,
+      </if>
+      <if test="createdTime != null">
+        `created_time`,
+      </if>
+      <if test="editTime != null">
+        `edit_time`,
+      </if>
+      <if test="version != null">
+        `version`,
+      </if>
+      <if test="courseId!= null">
+        `course_id`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="accountId != null">
+        #{accountId,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="balance != null">
+        #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test="fundDirection != null">
+        #{fundDirection,jdbcType=VARCHAR},
+      </if>
+      <if test="isAllowSett != null">
+        #{isAllowSett,jdbcType=TINYINT},
+      </if>
+      <if test="isCompleteSett != null">
+        #{isCompleteSett,jdbcType=TINYINT},
+      </if>
+      <if test="trxType != null">
+        #{trxType,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionId != null">
+        #{transactionId,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editTime != null">
+        #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=BIGINT},
+      </if>
+      <if test="courseId!= null">
+        #{courseId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.zhishimao.core.account.entity.VkeAccountHistory">
+    update `vke_account_history`
+    <set>
+      <if test="userId != null">
+        `user_id` = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="accountId != null">
+        `account_id` = #{accountId,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null">
+        `remark` = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        `amount` = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="balance != null">
+        `balance` = #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test="fundDirection != null">
+        `fund_direction` = #{fundDirection,jdbcType=VARCHAR},
+      </if>
+      <if test="isAllowSett != null">
+        `is_allow_sett` = #{isAllowSett,jdbcType=TINYINT},
+      </if>
+      <if test="isCompleteSett != null">
+        `is_complete_sett` = #{isCompleteSett,jdbcType=TINYINT},
+      </if>
+      <if test="trxType != null">
+        `trx_type` = #{trxType,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionId != null">
+        `transaction_id` = #{transactionId,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editTime != null">
+        `edit_time` = #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        `version` = #{version,jdbcType=BIGINT},
+      </if>
+      <if test="courseId!= null">
+        `version` = #{courseId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.zhishimao.core.account.entity.VkeAccountHistory">
+    update `vke_account_history`
+    set `user_id` = #{userId,jdbcType=BIGINT},
+      `account_id` = #{accountId,jdbcType=BIGINT},
+      `remark` = #{remark,jdbcType=VARCHAR},
+      `amount` = #{amount,jdbcType=DECIMAL},
+      `balance` = #{balance,jdbcType=DECIMAL},
+      `fund_direction` = #{fundDirection,jdbcType=VARCHAR},
+      `is_allow_sett` = #{isAllowSett,jdbcType=TINYINT},
+      `is_complete_sett` = #{isCompleteSett,jdbcType=TINYINT},
+      `trx_type` = #{trxType,jdbcType=VARCHAR},
+      `transaction_id` = #{transactionId,jdbcType=VARCHAR},
+      `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+      `edit_time` = #{editTime,jdbcType=TIMESTAMP},
+      `version` = #{version,jdbcType=BIGINT},
+      `course_id` = #{courseId,jdbcType=BIGINT}
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+  <sql id="Base_Condition">
+    <if test="id != null">
+      and `id` = #{id,jdbcType=BIGINT}
+    </if>
+    <if test="userId != null">
+      and `user_id` = #{userId,jdbcType=BIGINT}
+    </if>
+    <if test="accountId != null">
+      and `account_id` = #{accountId,jdbcType=BIGINT}
+    </if>
+    <if test="remark != null">
+      and `remark` = #{remark,jdbcType=VARCHAR}
+    </if>
+    <if test="amount != null">
+      and `amount` = #{amount,jdbcType=DECIMAL}
+    </if>
+    <if test="balance != null">
+      and `balance` = #{balance,jdbcType=DECIMAL}
+    </if>
+    <if test="fundDirection != null">
+      and `fund_direction` = #{fundDirection,jdbcType=VARCHAR}
+    </if>
+    <if test="isAllowSett != null">
+      and `is_allow_sett` = #{isAllowSett,jdbcType=TINYINT}
+    </if>
+    <if test="isCompleteSett != null">
+      and `is_complete_sett` = #{isCompleteSett,jdbcType=TINYINT}
+    </if>
+    <if test="trxType != null">
+      and `trx_type` = #{trxType,jdbcType=VARCHAR}
+    </if>
+    <if test="transactionId != null">
+      and `transaction_id` = #{transactionId,jdbcType=VARCHAR}
+    </if>
+    <if test="createdTime != null">
+      and `created_time` = #{createdTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="editTime != null">
+      and `edit_time` = #{editTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="version != null">
+      and `version` = #{version,jdbcType=BIGINT}
+    </if>
+
+    <if test="courseId != null">
+      and `course_id` = #{course_id,jdbcType=BIGINT}
+    </if>
+
+  </sql>
+
+  <select id="listByEntity" parameterType="cn.zhishimao.core.account.entity.VkeAccountHistory" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from vke_account_history
+    where 1=1
+    <include refid="Base_Condition" />
+  </select>
+
+  <select id="findAccountHistoryByUser" parameterType="java.lang.Long" resultType="java.util.HashMap">
+    select vu.id userId,vu.nick_name nickName,va.id accountId,vch.amount,vch.balance,vch.created_time createdTime,vch.fund_direction fundDirection
+    from vke_account_history vch,vke_account va,vke_user vu
+    where vu.id = va.user_id and va.id = vch.account_id and vu.id = vch.user_id
+    and vu.id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="findAccountHistoryByUserIdAndDirection" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from vke_account_history
+    where user_id = #{userId,jdbcType=BIGINT} and fund_direction = #{fundDirection,jdbcType=VARCHAR}
+    order by created_time desc
+  </select>
+
+  <select id="findHistoryByAccount" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from vke_account_history
+    where account_id = #{accountId,jdbcType=BIGINT}
+  </select>
+</mapper>

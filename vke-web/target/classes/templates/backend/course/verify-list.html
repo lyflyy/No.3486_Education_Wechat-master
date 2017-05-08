@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="backend/fragment/frag :: common_header(~{::title},_)">
+    <title>知识猫 - 运营系统</title>
+</head>
+<body class="gray-bg">
+
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>待审核的课程</h5>
+                    <div class="ibox-tools">
+                        <!--<a href="projects.html" class="btn btn-primary btn-xs">添加管理员</a>-->
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="project-list">
+
+                        <table id="exampleTableToolbar" data-mobile-responsive="true" class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th style="" data-field="name">
+                                    <div class="th-inner ">名称</div>
+                                    <div class="fht-cell"></div>
+                                </th>
+                                <th style="" data-field="star">
+                                    <div class="th-inner ">状态</div>
+                                    <div class="fht-cell"></div>
+                                </th>
+                                <th style="" data-field="star">
+                                    <div class="th-inner ">价格</div>
+                                    <div class="fht-cell"></div>
+                                </th>
+                                <th style="" data-field="star">
+                                    <div class="th-inner ">开课时间</div>
+                                    <div class="fht-cell"></div>
+                                </th>
+                                <th style="" data-field="license">
+                                    <div class="th-inner ">时长</div>
+                                    <div class="fht-cell"></div>
+                                </th>
+                                <th style="" data-field="license">
+                                    <div class="th-inner ">报名人数</div>
+                                    <div class="fht-cell"></div>
+                                </th>
+
+                                <th style="" data-field="description">
+                                    <div class="th-inner ">创建时间</div>
+                                    <div class="fht-cell"></div>
+                                </th>
+                                <th style="" data-field="description">
+                                    <div class="th-inner ">操作</div>
+                                    <div class="fht-cell"></div>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:if="${not #lists.isEmpty(pageData.list)}" th:each="item : ${pageData.list}">
+                                <td>
+                                    <a
+                                            th:href="@{/backend/course/info/{courseId}(courseId=${item.id})}"><span
+                                            th:text="${item.name}"></span></a>
+                                </td>
+                                <td><span class="label label-primary" th:switch="${item.status}">
+                                            <i th:case="0">待审核</i>
+                                            <i th:case="1">报名中</i>
+                                            <i th:case="2">正在直播</i>
+                                            <i th:case="3">已经结束</i>
+                                            <i th:case="4">审核未通过</i>
+                                            <i th:case="5">已关闭</i>
+                                            <i th:case="6">已删除</i>
+                                        </span></td>
+                                <td th:text="${item.price}"></td>
+                                <td th:text="${item.startTime==0?'':#dates.format(item.startTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+                                <td th:text="${item.duration}"></td>
+                                <td th:text="${item.sigupCount}"></td>
+                                <td th:text="${item.createdTime==0?'':#dates.format(item.createdTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+                                <td class="project-actions">
+                                    <a th:href="@{/backend/course/audit/{courseId}(courseId=${item.id})}"
+                                       class="btn btn-white btn-sm"><i class="fa fa-folder"></i> 审核 </a>
+                                </td>
+                            </tr>
+                            <tr class="no-records-found" th:if="${#lists.isEmpty(pageData.list)}">
+                                <td colspan="7">没有找到匹配的记录</td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <div th:replace="backend/fragment/frag :: pagination"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+<script src="js/content.min.js?v=1.0.0"></script>
+<script src="/public/js/admin-common.js?v=2.1.4"></script>
+<script>
+    $(document).ready(function () {
+        $("#loading-example-btn").click(function () {
+            btn = $(this);
+            simpleLoad(btn, true);
+            simpleLoad(btn, false)
+        })
+    });
+    function simpleLoad(btn, state) {
+        if (state) {
+            btn.children().addClass("fa-spin");
+            btn.contents().last().replaceWith(" Loading")
+        } else {
+            setTimeout(function () {
+                btn.children().removeClass("fa-spin");
+                btn.contents().last().replaceWith(" Refresh")
+            }, 2000)
+        }
+    }
+    ;
+</script>
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/projects.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:44 GMT -->
+
+</body>
+</html>
+
+
+

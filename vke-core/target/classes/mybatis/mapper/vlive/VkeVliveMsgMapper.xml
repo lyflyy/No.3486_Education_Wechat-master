@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhishimao.core.vlive.dao.VkeVliveMsgMapper">
+  <resultMap id="BaseResultMap" type="cn.zhishimao.core.vlive.entity.VkeVliveMsg">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="lecturer_id" jdbcType="BIGINT" property="lecturerId" />
+    <result column="course_id" jdbcType="BIGINT" property="courseId" />
+    <result column="vlive_id" jdbcType="BIGINT" property="vliveId" />
+    <result column="from_account" jdbcType="BIGINT" property="fromAccount" />
+    <result column="to_account" jdbcType="BIGINT" property="toAccount" />
+    <result column="msg" jdbcType="VARCHAR" property="msg" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="version" jdbcType="BIGINT" property="version" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    `id`, `lecturer_id`, `course_id`, `vlive_id`, `from_account`, `to_account`, `msg`, 
+    `created_time`, `version`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from `vke_vlive_msg`
+    where `id` = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from `vke_vlive_msg`
+    where `id` = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.zhishimao.core.vlive.entity.VkeVliveMsg">
+    insert into `vke_vlive_msg` (`id`, `lecturer_id`, `course_id`, 
+      `vlive_id`, `from_account`, `to_account`, 
+      `msg`, `created_time`, `version`
+      )
+    values (#{id,jdbcType=BIGINT}, #{lecturerId,jdbcType=BIGINT}, #{courseId,jdbcType=BIGINT}, 
+      #{vliveId,jdbcType=BIGINT}, #{fromAccount,jdbcType=BIGINT}, #{toAccount,jdbcType=BIGINT}, 
+      #{msg,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{version,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.zhishimao.core.vlive.entity.VkeVliveMsg">
+    insert into `vke_vlive_msg`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        `id`,
+      </if>
+      <if test="lecturerId != null">
+        `lecturer_id`,
+      </if>
+      <if test="courseId != null">
+        `course_id`,
+      </if>
+      <if test="vliveId != null">
+        `vlive_id`,
+      </if>
+      <if test="fromAccount != null">
+        `from_account`,
+      </if>
+      <if test="toAccount != null">
+        `to_account`,
+      </if>
+      <if test="msg != null">
+        `msg`,
+      </if>
+      <if test="createdTime != null">
+        `created_time`,
+      </if>
+      <if test="version != null">
+        `version`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="lecturerId != null">
+        #{lecturerId,jdbcType=BIGINT},
+      </if>
+      <if test="courseId != null">
+        #{courseId,jdbcType=BIGINT},
+      </if>
+      <if test="vliveId != null">
+        #{vliveId,jdbcType=BIGINT},
+      </if>
+      <if test="fromAccount != null">
+        #{fromAccount,jdbcType=BIGINT},
+      </if>
+      <if test="toAccount != null">
+        #{toAccount,jdbcType=BIGINT},
+      </if>
+      <if test="msg != null">
+        #{msg,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.zhishimao.core.vlive.entity.VkeVliveMsg">
+    update `vke_vlive_msg`
+    <set>
+      <if test="lecturerId != null">
+        `lecturer_id` = #{lecturerId,jdbcType=BIGINT},
+      </if>
+      <if test="courseId != null">
+        `course_id` = #{courseId,jdbcType=BIGINT},
+      </if>
+      <if test="vliveId != null">
+        `vlive_id` = #{vliveId,jdbcType=BIGINT},
+      </if>
+      <if test="fromAccount != null">
+        `from_account` = #{fromAccount,jdbcType=BIGINT},
+      </if>
+      <if test="toAccount != null">
+        `to_account` = #{toAccount,jdbcType=BIGINT},
+      </if>
+      <if test="msg != null">
+        `msg` = #{msg,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        `version` = #{version,jdbcType=BIGINT},
+      </if>
+    </set>
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.zhishimao.core.vlive.entity.VkeVliveMsg">
+    update `vke_vlive_msg`
+    set `lecturer_id` = #{lecturerId,jdbcType=BIGINT},
+      `course_id` = #{courseId,jdbcType=BIGINT},
+      `vlive_id` = #{vliveId,jdbcType=BIGINT},
+      `from_account` = #{fromAccount,jdbcType=BIGINT},
+      `to_account` = #{toAccount,jdbcType=BIGINT},
+      `msg` = #{msg,jdbcType=VARCHAR},
+      `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+      `version` = #{version,jdbcType=BIGINT}
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

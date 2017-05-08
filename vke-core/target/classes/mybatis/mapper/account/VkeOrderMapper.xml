@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhishimao.core.account.dao.VkeOrderMapper">
+  <resultMap id="BaseResultMap" type="cn.zhishimao.core.account.entity.VkeOrder">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="order_num" jdbcType="VARCHAR" property="orderNum" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="obj_id" jdbcType="BIGINT" property="objId" />
+    <result column="obj_type" jdbcType="VARCHAR" property="objType" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="pay_type" jdbcType="VARCHAR" property="payType" />
+    <result column="transaction_id" jdbcType="VARCHAR" property="transactionId" />
+    <result column="is_completed" jdbcType="BIT" property="isCompleted" />
+    <result column="account_history_id" jdbcType="BIGINT" property="accountHistoryId" />
+    <result column="completed_time" jdbcType="TIMESTAMP" property="completedTime" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="edit_time" jdbcType="TIMESTAMP" property="editTime" />
+    <result column="version" jdbcType="BIGINT" property="version" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    `id`, `order_num`, `user_id`, `obj_id`, `obj_type`, `amount`, `status`, `remark`, 
+    `pay_type`, `transaction_id`, `is_completed`, `account_history_id`, `completed_time`, 
+    `created_time`, `edit_time`, `version`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from `vke_order`
+    where `id` = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from `vke_order`
+    where `id` = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="cn.zhishimao.core.account.entity.VkeOrder">
+    insert into `vke_order` (`id`, `order_num`, `user_id`, 
+      `obj_id`, `obj_type`, `amount`, 
+      `status`, `remark`, `pay_type`, 
+      `transaction_id`, `is_completed`, `account_history_id`, 
+      `completed_time`, `created_time`, `edit_time`, 
+      `version`)
+    values (#{id,jdbcType=BIGINT}, #{orderNum,jdbcType=VARCHAR}, #{userId,jdbcType=BIGINT}, 
+      #{objId,jdbcType=BIGINT}, #{objType,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}, 
+      #{status,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{payType,jdbcType=VARCHAR}, 
+      #{transactionId,jdbcType=VARCHAR}, #{isCompleted,jdbcType=BIT}, #{accountHistoryId,jdbcType=BIGINT}, 
+      #{completedTime,jdbcType=TIMESTAMP}, #{createdTime,jdbcType=TIMESTAMP}, #{editTime,jdbcType=TIMESTAMP}, 
+      #{version,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="cn.zhishimao.core.account.entity.VkeOrder">
+    insert into `vke_order`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        `id`,
+      </if>
+      <if test="orderNum != null">
+        `order_num`,
+      </if>
+      <if test="userId != null">
+        `user_id`,
+      </if>
+      <if test="objId != null">
+        `obj_id`,
+      </if>
+      <if test="objType != null">
+        `obj_type`,
+      </if>
+      <if test="amount != null">
+        `amount`,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="remark != null">
+        `remark`,
+      </if>
+      <if test="payType != null">
+        `pay_type`,
+      </if>
+      <if test="transactionId != null">
+        `transaction_id`,
+      </if>
+      <if test="isCompleted != null">
+        `is_completed`,
+      </if>
+      <if test="accountHistoryId != null">
+        `account_history_id`,
+      </if>
+      <if test="completedTime != null">
+        `completed_time`,
+      </if>
+      <if test="createdTime != null">
+        `created_time`,
+      </if>
+      <if test="editTime != null">
+        `edit_time`,
+      </if>
+      <if test="version != null">
+        `version`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orderNum != null">
+        #{orderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="objId != null">
+        #{objId,jdbcType=BIGINT},
+      </if>
+      <if test="objType != null">
+        #{objType,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null">
+        #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionId != null">
+        #{transactionId,jdbcType=VARCHAR},
+      </if>
+      <if test="isCompleted != null">
+        #{isCompleted,jdbcType=BIT},
+      </if>
+      <if test="accountHistoryId != null">
+        #{accountHistoryId,jdbcType=BIGINT},
+      </if>
+      <if test="completedTime != null">
+        #{completedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editTime != null">
+        #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.zhishimao.core.account.entity.VkeOrder">
+    update `vke_order`
+    <set>
+      <if test="orderNum != null">
+        `order_num` = #{orderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        `user_id` = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="objId != null">
+        `obj_id` = #{objId,jdbcType=BIGINT},
+      </if>
+      <if test="objType != null">
+        `obj_type` = #{objType,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        `amount` = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        `remark` = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null">
+        `pay_type` = #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionId != null">
+        `transaction_id` = #{transactionId,jdbcType=VARCHAR},
+      </if>
+      <if test="isCompleted != null">
+        `is_completed` = #{isCompleted,jdbcType=BIT},
+      </if>
+      <if test="accountHistoryId != null">
+        `account_history_id` = #{accountHistoryId,jdbcType=BIGINT},
+      </if>
+      <if test="completedTime != null">
+        `completed_time` = #{completedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdTime != null">
+        `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editTime != null">
+        `edit_time` = #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        `version` = #{version,jdbcType=BIGINT},
+      </if>
+    </set>
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.zhishimao.core.account.entity.VkeOrder">
+    update `vke_order`
+    set `order_num` = #{orderNum,jdbcType=VARCHAR},
+      `user_id` = #{userId,jdbcType=BIGINT},
+      `obj_id` = #{objId,jdbcType=BIGINT},
+      `obj_type` = #{objType,jdbcType=VARCHAR},
+      `amount` = #{amount,jdbcType=DECIMAL},
+      `status` = #{status,jdbcType=INTEGER},
+      `remark` = #{remark,jdbcType=VARCHAR},
+      `pay_type` = #{payType,jdbcType=VARCHAR},
+      `transaction_id` = #{transactionId,jdbcType=VARCHAR},
+      `is_completed` = #{isCompleted,jdbcType=BIT},
+      `account_history_id` = #{accountHistoryId,jdbcType=BIGINT},
+      `completed_time` = #{completedTime,jdbcType=TIMESTAMP},
+      `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+      `edit_time` = #{editTime,jdbcType=TIMESTAMP},
+      `version` = #{version,jdbcType=BIGINT}
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findAllBills" resultType="java.util.HashMap">
+    select vkeUser.id userId ,vkeUser.nick_name nickName,vkeOrder.order_num orderNum,
+    vkeOrder.obj_id objId,vkeOrder.obj_type objType,vkeOrder.amount,vkeOrder.status,vkeOrder.remark,
+    vkeOrder.pay_type payType,vkeOrder.transaction_id transactionId,vkeOrder.created_time createdTime
+    from vke_user vkeUser ,vke_order vkeOrder
+    where vkeUser.id = vkeOrder.user_id
+    <if test="objType != null">
+      <![CDATA[
+      ,and vkeOrder.obj_type = #{objType,jdbcType=BIGINT}
+      ]]>
+    </if>
+    <if test="startTime != null">
+      <![CDATA[
+        ,and vkeOrder.created_time >= #{startTime,jdbcType=BIGINT}
+      ]]>
+    </if>
+    <if test="endTime != null">
+      <![CDATA[
+        ,and vkeOrder.created_time <= #{endTime,jdbcType=BIGINT}
+      ]]>
+    </if>
+  </select>
+
+  <select id="findOrderByOrderNoAndStatus" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from vke_order where order_num = #{orderNum,jdbcType=VARCHAR} and status = #{status,jdbcType=INTEGER}
+  </select>
+
+  <select id="findAllOrderOfCourse" resultType="java.util.HashMap">
+    select vo.amount,vo.completed_time,vo.obj_type,vu.nick_name,vu.id userId
+    from vke_order vo,vke_user vu
+    where vo.user_id = vu.id  and vo.`status` in (1,3) and vo.obj_id = #{courseId,jdbcType=BIGINT}
+    order by vo.created_time desc
+  </select>
+
+  <select id="sumCourseFeeByRegion" resultType="java.math.BigDecimal">
+      select sum(amount)
+      from vke_order
+      where status = 1 and obj_type in ('course_interact','course_audit','course_upgrade')
+      <![CDATA[
+  	 			and created_time > #{startDate}
+  	 		]]>
+        <![CDATA[
+  	 			and created_time <= #{endDate}
+  	 		]]>
+  </select>
+
+</mapper>

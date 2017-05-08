@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="backend/fragment/frag :: common_header(~{::title},_)">
+    <title>知识猫 - 运营系统</title>
+</head>
+<body>
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>交易记录</h5>
+                    <div class="ibox-tools">
+                        <!--<a href="projects.html" class="btn btn-primary btn-xs">添加管理员</a>-->
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="project-list">
+                        <table id="exampleTableToolbar" data-mobile-responsive="true" class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>
+                                    用户名称
+                                </th>
+                                <th>
+                                    账户状态
+                                </th>
+                                <th>
+                                    账户余额
+                                </th>
+                                <th>
+                                    总收入
+                                </th>
+                                <th>
+                                    总消费
+                                </th>
+                                <th>
+                                    总提现
+                                </th>
+                                <th>
+                                    待结算总额
+                                </th>
+                                <th>
+                                    备注
+                                </th>
+                                <th>
+                                    创建时间
+                                </th>
+                                <th>
+                                    操作
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr   th:if="${not #lists.isEmpty(pageData.list)}" th:each="item : ${pageData.list}">
+                                    <td>
+                                        <a  th:href="@{/backend/user/info/{userId}(userId=${item[userId]})}"><span th:text="${item[nickName]}"></span></a>
+                                    </td>
+                                    <td>
+                                        <span th:switch="${item[status]}">
+                                            <i th:case="1">正常</i>
+                                            <i th:case="2">禁用</i>
+                                        </span>
+
+                                    </td>
+                                    <td  th:text="${item[balance]}"></td>
+                                    <td  th:text="${item[totalIncome]}"></td>
+                                    <td  th:text="${item[totalExpend]}"></td>
+                                    <td  th:text="${item[totalWithdraw]}"></td>
+                                    <td  th:text="${item[settAmount]}"></td>
+                                    <td  th:text="${item[remark]}"></td>
+                                    <td  th:text="${item[createdTime]==0?'':#dates.format(item[createdTime],'yyyy-MM-dd HH:mm:ss')}"></td>
+                                    <td>
+                                        <a  th:href="@{/backend/bills/accountHistory/{accountId}(accountId=${item[accountId]})}"  class="btn btn-white btn-sm"><i class="fa fa-folder"></i> 账户历史流水 </a>
+                                    </td>
+                                </tr>
+                                <tr class="no-records-found" th:if="${#lists.isEmpty(pageData.list)}">
+                                    <td colspan="8">没有找到匹配的记录</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div th:replace="backend/fragment/frag :: pagination"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="wx/fragment/frag :: common_header(~{::title},_)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>讲师中心</title>
+</head>
+<body class="vke">
+<div class="container" id="app">
+    <div class="weui-tab">
+        <div class="page lecturer-profile">
+
+            <div class="page__hd">
+                <div class="weui-panel weui-panel_access lecturer-panel">
+                    <div class="weui-panel__bd">
+                        <div class="weui-media-box weui-media-box_appmsg ">
+                            <div class="weui-media-box__hd">
+                                <img class="weui-media-box__thumb avatar" th:src="${session.vkeu.avatar}" alt="">
+                                <span th:if="${lecturer.is_high_quality eq true}"
+                                      class="quality vke-icon-you"></span>
+                                <input type="hidden" id="userId" th:value="${lecturer.id}">
+                            </div>
+                            <div class="weui-media-box__bd cm_flex cm_flex_te">
+                                <h4 class="weui-media-box__title " th:text="${lecturer.nick_name}"></h4>
+                                <p class="weui-media-box__desc"><span class="txt-blck"
+                                                                      th:text="${lecturer.subscibe_count}"></span>订阅 |
+                                    <span
+                                            class="txt-blck" th:text="${rate}">4.8</span>星评</p>
+                            </div>
+                            <div class="weui-media-box__bd text-right">
+                                <a href="/wx/view/lecturer/profile"
+                                   class="weui-btn weui-btn_mini weui-btn_plain-primary">修改资料</a>
+                            </div>
+                        </div>
+                        <div class="weui-media-box weui-media-box_text">
+                            <h3><b th:text="${lecturer?.title}"></b></h3>
+                            <p class="intro" th:text="${lecturer.intro}"></p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="page__bd">
+                <div class="weui-panel mtm">
+                    <div class="weui-flex  btn-tab">
+                        <div class="weui-flex__item">
+                            <a href="/wx/view/course/edit"
+                               th:class="${lecturer.is_high_quality eq true}?'weui-btn weui-btn_primary':'weui-btn weui-btn_m weui-btn_primary'">创建课程</a>
+                        </div>
+                        <div th:if="${lecturer.is_high_quality eq false}" class="weui-flex__item">
+                            <a href="javascript:;" id="doVerfiy"
+                               th:unless="${(verfiyLog!=null) and (verfiyLog.status == 0)}"
+                               class="weui-btn weui-btn_m weui-btn_primary">申请优秀讲师</a>
+                            <a href="javascript:;" th:if="${(verfiyLog!=null) and (verfiyLog.status == 0) }"
+                               class="weui-btn weui-btn_disabled weui-btn_m weui-btn_primary">优秀讲师(审核中)</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="weui-panel">
+
+
+                    <div class="weui-tab">
+                        <div class="weui-navbar">
+                            <a data-pjax href="/wx/view/lecturer/center"
+                               th:class="${status == null}?'weui-navbar\_\_item weui-bar\_\_item_on':'weui-navbar\_\_item'">
+                                全部课程
+                            </a>
+                            <a data-pjax href="/wx/view/lecturer/center?status=2"
+                               th:class="${status eq 2}?'weui-navbar\_\_item weui-bar\_\_item_on':'weui-navbar\_\_item'">
+                                直播中
+                            </a>
+                            <a data-pjax href="/wx/view/lecturer/center?status=1"
+                               th:class="${status eq 1}?'weui-navbar\_\_item weui-bar\_\_item_on':'weui-navbar\_\_item'">
+                                报名中
+                            </a>
+                            <a data-pjax href="/wx/view/lecturer/center?status=3"
+                               th:class="${status eq 3}?'weui-navbar\_\_item weui-bar\_\_item_on':'weui-navbar\_\_item'">
+                                已结束
+                            </a>
+                        </div>
+
+                        <div class="weui-tab__panel" th:replace="wx/course/l-list">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <div th:replace="wx/fragment/frag::pageFooter"></div>
+    </div>
+</div>
+<script type="text/tpl" id="shenqing-d">
+            <div class="weui-cells weui-cells_form">
+            <div class="weui-cell cm_bd_bg">
+            <textarea class="weui-textarea " id="verfiyReason" placeholder="请填写申请优质的理由" rows="5"></textarea>
+            </div>
+            </div>
+            <p class="cm_info_extra">申请成功后，系统会为您推广课程</p>
+
+</script>
+<!--END dialog2-->
+<script type="text/tpl" id="shenqing-r" th:if="${(verfiyLog!=null) and (verfiyLog.status eq 1) and !verfiyLog.isPass}">
+   <div th:text="${verfiyLog.remark}"></div>
+
+
+</script>
+<div th:include="wx/fragment/frag::commonScript"></div>
+<script src="/public/wx/js/main.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+
+    $(function () {
+        if ($("#shenqing-r").length > 0) {
+            $.modal({
+                title: $("#shenqing-r").text(),
+                buttons: [
+                    {
+                        text: "知道了",
+                    }
+                ]
+            });
+        }
+        $('#doVerfiy').on('click', function () {
+            $.modal({
+                title: "申请优质讲师",
+                text: $('#shenqing-d').html(),
+                buttons: [
+                    {
+                        text: "取消",
+                        className: "default"
+                    },
+                    {
+                        text: "申请",
+                        onClick: function () {
+
+                            //申请讲师
+                            var data = {userId: $('#userId').val(), reason: $('#verfiyReason').val()}
+                            if (!$.trim(data.reason)) {
+                                return false;
+                            }
+                            $.post('/wx/view/lecturer/verfiy', data, function (res) {
+                                if (res.success === true) {
+                                    $.modal({
+                                        title: "您已经申请了优质讲师，管理员正在积极审核，需要1-3个工作日",
+                                        buttons: [
+                                            {
+                                                text: "知道了", onClick: function () {
+                                            }
+                                            }
+                                        ]
+                                    });
+                                    $('#doVerfiy').addClass('weui-btn_disabled').text("优秀讲师(审核中)");
+                                    $('#doVerfiy').unbind("click");
+                                }
+                            });
+                        }
+                    }
+                ]
+            }, function (dialog) {
+                this.addClass('dialog-wrap');
+            });
+        });
+    });
+</script>
+</body>
+</html>

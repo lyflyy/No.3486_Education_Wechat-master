@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="common_header(title,links)">
+    <title th:replace="${title}">知识猫</title>
+    <meta charset="utf-8"> </meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> </meta>
+    <link rel="shortcut icon" href="favicon.ico"> </link>
+    <link href="/public/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet"> </link>
+    <link href="/public/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet"> </link>
+
+    <link href="/public/css/animate.min.css" rel="stylesheet"> </link>
+    <link href="/public/css/style.min862f.css?v=4.1.0" rel="stylesheet"> </link>
+    <link href="/public/css/plugins/iCheck/custom.css?v=4.1.0" rel="stylesheet"> </link>
+    <style type="text/css">
+        .ibox-content{
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+    </style>
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html" > </link>
+    <![endif]-->
+    <th:block th:replace="${links}" />
+</head>
+<body>
+
+<div th:fragment="footer" class="footer">
+    <div class="pull-right">&copy; 2016 知识猫</div>
+</div>
+
+<div class="mtl mbml clearfix" th:fragment="pagination">
+    <nav class="pull-right">
+        <form class="form-inline">
+           <span class="mrm">共<span th:text="${pageData.total}"></span>条数据,<span th:text="${pageData.pages}"></span>页,每页<span
+                                            th:text="${pageData.pageSize}"></span></span>
+            <ul class="pagination pagination" style="vertical-align: middle; " th:if="${pageData.pages &gt; 1}">
+                <li th:if="${not pageData.isFirstPage}"><a
+                        th:href="@{?pageIndex={pageIndex}(pageIndex=${pageData.prePage},pageSize=${param.pageSize})}"
+                        aria-label="Previous"><span
+                        aria-hidden="true">前一页</span></a></li>
+
+                <li th:each="n: ${pageData.navigatepageNums}"
+                    th:class="${pageData.pageNum == n?'active':''}">
+
+                    <a th:if="${pageData.pageNum != n}"
+                       th:href="@{?pageIndex={pageIndex}(pageIndex=${n},pageSize=${param.pageSize})}"
+                       th:text="${n}"></a>
+                    <span th:if="${pageData.pageNum == n}" th:text="${n}"></span>
+                </li>
+                <li th:if="${not pageData.isLastPage}"><a
+                        th:href="@{?pageIndex={pageIndex}(pageIndex=${pageData.nextPage},pageSize=${param.pageSize})}"
+                        aria-label="Next"><span aria-hidden="true">后一页</span></a>
+                </li>
+            </ul>
+            <div class="form-group" th:if="${pageData.pages &gt; 1}">
+                <input type="text" name="pageIndex" class="form-control" style="width: 54px;" placeholder="页码"/>
+                <input type="hidden" name="pageSize" th:value="${param.pageSize}">
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm" th:if="${pageData.pages &gt; 1}">GO</button>
+        </form>
+    </nav>
+</div>
+
+<div th:fragment="commonScript">
+    <script src="/public/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/public/js/bootstrap.min.js?v=3.3.6"></script>
+</div>
+
+</body>
+</html>

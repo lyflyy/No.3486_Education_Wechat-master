@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head></head>
+<body>
+<!--素材列表-->
+<a th:each="ma: ${pageData.list}"  class="weui-media-box weui-media-box_appmsg toSend" href="javascript:void(0);">
+    <div class="weui-media-box__bd">
+        <p class="weui-media-box__desc" th:text="${ma.content}">
+            作为一名名声在外的台湾人，梁文道先生的基本素养一定是有的。而且作为70年代出生的香港人，后转入台湾...
+        </p>
+    </div>
+</a>
+
+<div class="weui-msg" th:if="${#lists.isEmpty(pageData.list)}">
+    <div class="weui-msg__icon-area"><i class="weui-icon-warn weui-icon_msg-primary"></i></div>
+    <div class="weui-msg__text-area">
+        <p class="weui-msg__desc">暂时还没有素材噢！快点儿添加点儿吧!</p>
+    </div>
+</div>
+
+</body>
+</html>
+

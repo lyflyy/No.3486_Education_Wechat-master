@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhishimao.core.user.dao.VkeUserOperatorLogMapper">
+  <resultMap id="BaseResultMap" type="cn.zhishimao.core.user.entity.VkeUserOperatorLog">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="version" jdbcType="BIGINT" property="version" />
+    <result column="creater" jdbcType="VARCHAR" property="creater" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="editor" jdbcType="VARCHAR" property="editor" />
+    <result column="edit_time" jdbcType="TIMESTAMP" property="editTime" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="operator_id" jdbcType="BIGINT" property="operatorId" />
+    <result column="operator_name" jdbcType="VARCHAR" property="operatorName" />
+    <result column="operate_type" jdbcType="VARCHAR" property="operateType" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    `id`, `version`, `creater`, `created_time`, `editor`, `edit_time`, `status`, `remark`, 
+    `operator_id`, `operator_name`, `operate_type`, `ip`, `content`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from `vke_user_operator_log`
+    where `id` = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from `vke_user_operator_log`
+    where `id` = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.zhishimao.core.user.entity.VkeUserOperatorLog">
+    insert into `vke_user_operator_log` (`id`, `version`, `creater`, 
+      `created_time`, `editor`, `edit_time`, 
+      `status`, `remark`, `operator_id`, 
+      `operator_name`, `operate_type`, `ip`, 
+      `content`)
+    values (#{id,jdbcType=BIGINT}, #{version,jdbcType=BIGINT}, #{creater,jdbcType=VARCHAR}, 
+      #{createdTime,jdbcType=TIMESTAMP}, #{editor,jdbcType=VARCHAR}, #{editTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{operatorId,jdbcType=BIGINT}, 
+      #{operatorName,jdbcType=VARCHAR}, #{operateType,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, 
+      #{content,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.zhishimao.core.user.entity.VkeUserOperatorLog">
+    insert into `vke_user_operator_log`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        `id`,
+      </if>
+      <if test="version != null">
+        `version`,
+      </if>
+      <if test="creater != null">
+        `creater`,
+      </if>
+      <if test="createdTime != null">
+        `created_time`,
+      </if>
+      <if test="editor != null">
+        `editor`,
+      </if>
+      <if test="editTime != null">
+        `edit_time`,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="remark != null">
+        `remark`,
+      </if>
+      <if test="operatorId != null">
+        `operator_id`,
+      </if>
+      <if test="operatorName != null">
+        `operator_name`,
+      </if>
+      <if test="operateType != null">
+        `operate_type`,
+      </if>
+      <if test="ip != null">
+        `ip`,
+      </if>
+      <if test="content != null">
+        `content`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=BIGINT},
+      </if>
+      <if test="creater != null">
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editor != null">
+        #{editor,jdbcType=VARCHAR},
+      </if>
+      <if test="editTime != null">
+        #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorId != null">
+        #{operatorId,jdbcType=BIGINT},
+      </if>
+      <if test="operatorName != null">
+        #{operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="operateType != null">
+        #{operateType,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null">
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.zhishimao.core.user.entity.VkeUserOperatorLog">
+    update `vke_user_operator_log`
+    <set>
+      <if test="version != null">
+        `version` = #{version,jdbcType=BIGINT},
+      </if>
+      <if test="creater != null">
+        `creater` = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editor != null">
+        `editor` = #{editor,jdbcType=VARCHAR},
+      </if>
+      <if test="editTime != null">
+        `edit_time` = #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        `remark` = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorId != null">
+        `operator_id` = #{operatorId,jdbcType=BIGINT},
+      </if>
+      <if test="operatorName != null">
+        `operator_name` = #{operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="operateType != null">
+        `operate_type` = #{operateType,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null">
+        `ip` = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        `content` = #{content,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.zhishimao.core.user.entity.VkeUserOperatorLog">
+    update `vke_user_operator_log`
+    set `version` = #{version,jdbcType=BIGINT},
+      `creater` = #{creater,jdbcType=VARCHAR},
+      `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+      `editor` = #{editor,jdbcType=VARCHAR},
+      `edit_time` = #{editTime,jdbcType=TIMESTAMP},
+      `status` = #{status,jdbcType=VARCHAR},
+      `remark` = #{remark,jdbcType=VARCHAR},
+      `operator_id` = #{operatorId,jdbcType=BIGINT},
+      `operator_name` = #{operatorName,jdbcType=VARCHAR},
+      `operate_type` = #{operateType,jdbcType=VARCHAR},
+      `ip` = #{ip,jdbcType=VARCHAR},
+      `content` = #{content,jdbcType=VARCHAR}
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+  <sql id="Base_Condition">
+    <if test="id != null">
+      and `id` = #{id,jdbcType=BIGINT}
+    </if>
+    <if test="version != null">
+      and `version` = #{version,jdbcType=BIGINT}
+    </if>
+    <if test="creater != null">
+      and  `creater` = #{creater,jdbcType=VARCHAR}
+    </if>
+    <if test="createdTime != null">
+      and `created_time` = #{createdTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="editor != null">
+      and `editor` = #{editor,jdbcType=VARCHAR}
+    </if>
+    <if test="editTime != null">
+      and `edit_time` = #{editTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="status != null">
+      and `status` = #{status,jdbcType=VARCHAR}
+    </if>
+    <if test="remark != null">
+      and `remark` = #{remark,jdbcType=VARCHAR}
+    </if>
+    <if test="operatorId != null">
+      and `operator_id` = #{operatorId,jdbcType=BIGINT}
+    </if>
+    <if test="operatorName != null">
+      and `operator_name` = #{operatorName,jdbcType=VARCHAR}
+    </if>
+    <if test="operateType != null">
+      and `operate_type` = #{operateType,jdbcType=VARCHAR}
+    </if>
+    <if test="ip != null">
+      and `ip` = #{ip,jdbcType=VARCHAR}
+    </if>
+    <if test="content != null">
+      and `content` = #{content,jdbcType=VARCHAR}
+    </if>
+  </sql>
+  <select id="listByEntity" parameterType="cn.zhishimao.core.user.entity.VkeUserOperatorLog" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from vke_user_operator_log
+    where 1=1
+    <include refid="Base_Condition" />
+  </select>
+</mapper>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="backend/fragment/frag :: common_header(~{::title},_)">
+    <title>知识猫 - 运营系统</title>
+</head>
+<body>
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="row animated fadeInRight">
+        <div class="col-sm-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>账户详情</h5>
+                </div>
+                <div>
+                    <div class="ibox-content no-padding border-left-right">
+                        <img alt="image" class="img-responsive" src="/public/img/profile_big.jpg">
+                    </div>
+                    <div class="ibox-content profile-content">
+                        <h4><strong>坎坎坷坷</strong>(性别)</h4>
+                        <p><i class="fa fa-map-marker"></i> 电话:.....</p>
+                        <p><i class="fa fa-map-marker"></i> 地址:.....</p>
+                        <p><i class="fa fa-map-marker"></i> 注册时间:.....</p>
+                        <p><i class="fa fa-map-marker"></i> 注册ip:.....</p>
+                        <p><i class="fa fa-map-marker"></i> 设备信息:.....</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-9">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>账户动态</h5>
+                </div>
+                <div class="ibox-content">
+
+                    <div class="row m-b-sm m-t-sm">
+                        <div class="col-md-11 form-inline">
+                            <div class="form-group">
+                                <input type="text" class="form-control"  placeholder="开始时间">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control"  placeholder="结束时间">
+                            </div>
+                            <button type="submit" class="btn btn-primary">查询</button>
+                        </div>
+                    </div>
+
+                    <div class="project-list">
+
+                        <table id="exampleTableToolbar" data-mobile-responsive="true" class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>
+                                    编号
+                                </th>
+                                <th>
+                                    用户名称
+                                </th>
+                                <th>
+                                    交易金额
+                                </th>
+                                <th>
+                                    账户余额
+                                </th>
+                                <th>
+                                    资金流向
+                                </th>
+                                <th>
+                                    业务类型
+                                </th>
+                                <th>
+                                    创建时间
+                                </th>
+                                <th >
+                                    操作
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

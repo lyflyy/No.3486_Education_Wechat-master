@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="backend/fragment/frag :: common_header(~{::title},_)">
+    <title>知识猫 - 运营系统</title>
+</head>
+<script src="/public/js/jquery.min.js?v=2.1.4"></script>
+<script src="/public/js/plugins/layer/layer.min.js?v=1.1"></script>
+<link href="/public/plugins/pickList/queryTemplate.css" rel="stylesheet"> </link>
+<link href="/public/plugins/ztree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet"> </link>
+<script src="/public/plugins/ztree/js/jquery.ztree.core.js"></script>
+<script src="/public/plugins/ztree/js/jquery.ztree.excheck.js"></script>
+<script type="text/javascript">
+    $(function(){
+        var ztree;
+        var roleId = $("#roleId").val();
+        $.ajax({
+            type:"post",//提交方式
+            url:'/backend/menu/findResourceTree.html',//服务端加载类
+            dataType: 'json',
+            data:{'roleId':roleId},
+            async:false,
+            success: function (data) {
+                var setting = {
+                    view: {
+                        dblClickExpand: true,    //双击节点时，是否自动展开父节点的标识
+                        expandSpeed: "fast"     //zTree 节点展开、折叠时的动画速度,("slow", "normal", or "fast")
+                    },
+                    data: {
+                        simpleData: {
+                            enable: true
+                        }
+                    },
+                    check: {
+                        enable: true,
+                        chkboxType: { "Y" : "ps", "N" : "s"}
+                    }
+                };
+                zTree = $.fn.zTree.init($("#permissionTree"), setting, data);
+                zTree.expandAll(true);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {//请求失败处理函数
+                layer.alert("请求失败，无法获取数据");
+            }
+        });
+
+
+        $("#getSelected").click(function(){
+            var roleId = $("#roleId").val();
+
+            var permissionIds = "";
+            var zTree = $.fn.zTree.getZTreeObj("permissionTree");
+            var nodes = zTree.getCheckedNodes(true);
+            if(nodes.length>0){
+                nodes.forEach(function(node){
+                    permissionIds += node.id+",";
+                });
+                permissionIds = permissionIds.substr(0,permissionIds.length-1);
+            }
+
+            $.ajax({
+                url : "/backend/role/roleGrantPermission.html",
+                type : "POST",
+                dataType : "json",
+                data : {
+                    "roleId" : roleId,
+                    "permissionIds":permissionIds
+                },
+                async : false,
+                success : function(data) {
+                    if(data){
+                        layer.alert("操作成功！",function () {
+                            window.location.href="/backend/role/list";
+                        });
+                    }else{
+                        layer.alert("操作失败！");
+                    }
+
+                },
+                error : function() {
+                    alert("操作错误，请联系管理员！");
+                }
+            });
+        });
+    })
+</script>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>角色赋予权限</h5>
+                </div>
+            </div>
+            <div style=" padding-top: 30px;background-color: white;">
+                <ul>
+                    <input type="hidden" id="roleId" th:value="${roleId}"/>
+                    <div id="permissionTree" class="ztree"></div>
+                </ul>
+            </div>
+            <div class="popdiv_btn">
+                <a class="btnblue bodrad5" href="javascript:void(0)" id="getSelected">确定</a>
+                <a class="btnblue bodrad5" href="javascript:history.go(-1)" >返回</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

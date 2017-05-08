@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhishimao.core.course.dao.VkeCourseEvaluateMapper">
+  <resultMap id="BaseResultMap" type="cn.zhishimao.core.course.entity.VkeCourseEvaluate">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="course_id" jdbcType="BIGINT" property="courseId" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="pid" jdbcType="BIGINT" property="pid" />
+    <result column="course" jdbcType="INTEGER" property="course" />
+    <result column="lecturer" jdbcType="INTEGER" property="lecturer" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="tags" jdbcType="VARCHAR" property="tags" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="edit_time" jdbcType="TIMESTAMP" property="editTime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="version" jdbcType="BIGINT" property="version" />
+    <collection property="children" column="id" javaType="arrayList" ofType="cn.zhishimao.core.user.entity.VkeCourseEvaluate" select="findChildrenByPid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    `id`, `course_id`, `user_id`, `pid`, `course`, `lecturer`, `content`, `tags`, `created_time`, 
+    `edit_time`, `remark`, `version`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from `vke_course_evaluate`
+    where `id` = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="findChildrenByPid" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from vke_course_evaluate
+    where pid = #{pid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from `vke_course_evaluate`
+    where `id` = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert"   useGeneratedKeys="true" keyProperty="id" parameterType="cn.zhishimao.core.course.entity.VkeCourseEvaluate">
+    insert into `vke_course_evaluate` (`id`, `course_id`, `user_id`, 
+      `pid`, `course`, `lecturer`, 
+      `content`, `tags`, `created_time`, 
+      `edit_time`, `remark`, `version`
+      )
+    values (#{id,jdbcType=BIGINT}, #{courseId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, 
+      #{pid,jdbcType=BIGINT}, #{course,jdbcType=INTEGER}, #{lecturer,jdbcType=INTEGER}, 
+      #{content,jdbcType=VARCHAR}, #{tags,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, 
+      #{editTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, #{version,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective"   useGeneratedKeys="true" keyProperty="id" parameterType="cn.zhishimao.core.course.entity.VkeCourseEvaluate">
+    insert into `vke_course_evaluate`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        `id`,
+      </if>
+      <if test="courseId != null">
+        `course_id`,
+      </if>
+      <if test="userId != null">
+        `user_id`,
+      </if>
+      <if test="pid != null">
+        `pid`,
+      </if>
+      <if test="course != null">
+        `course`,
+      </if>
+      <if test="lecturer != null">
+        `lecturer`,
+      </if>
+      <if test="content != null">
+        `content`,
+      </if>
+      <if test="tags != null">
+        `tags`,
+      </if>
+      <if test="createdTime != null">
+        `created_time`,
+      </if>
+      <if test="editTime != null">
+        `edit_time`,
+      </if>
+      <if test="remark != null">
+        `remark`,
+      </if>
+      <if test="version != null">
+        `version`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="courseId != null">
+        #{courseId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="pid != null">
+        #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="course != null">
+        #{course,jdbcType=INTEGER},
+      </if>
+      <if test="lecturer != null">
+        #{lecturer,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="tags != null">
+        #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editTime != null">
+        #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.zhishimao.core.course.entity.VkeCourseEvaluate">
+    update `vke_course_evaluate`
+    <set>
+      <if test="courseId != null">
+        `course_id` = #{courseId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        `user_id` = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="pid != null">
+        `pid` = #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="course != null">
+        `course` = #{course,jdbcType=INTEGER},
+      </if>
+      <if test="lecturer != null">
+        `lecturer` = #{lecturer,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        `content` = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="tags != null">
+        `tags` = #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editTime != null">
+        `edit_time` = #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        `remark` = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        `version` = #{version,jdbcType=BIGINT},
+      </if>
+    </set>
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.zhishimao.core.course.entity.VkeCourseEvaluate">
+    update `vke_course_evaluate`
+    set `course_id` = #{courseId,jdbcType=BIGINT},
+      `user_id` = #{userId,jdbcType=BIGINT},
+      `pid` = #{pid,jdbcType=BIGINT},
+      `course` = #{course,jdbcType=INTEGER},
+      `lecturer` = #{lecturer,jdbcType=INTEGER},
+      `content` = #{content,jdbcType=VARCHAR},
+      `tags` = #{tags,jdbcType=VARCHAR},
+      `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+      `edit_time` = #{editTime,jdbcType=TIMESTAMP},
+      `remark` = #{remark,jdbcType=VARCHAR},
+      `version` = #{version,jdbcType=BIGINT}
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+  <sql id="Base_Condition">
+    <if test="id != null">
+      and id = #{id,jdbcType=BIGINT}
+    </if>
+    <if test="courseId != null">
+      and course_id = #{courseId,jdbcType=BIGINT}
+    </if>
+    <if test="userId != null">
+      and user_id = #{userId,jdbcType=BIGINT}
+    </if>
+    <if test="pid != null">
+      and pid = #{pid,jdbcType=BIGINT}
+    </if>
+    <if test="course != null">
+      and course = #{course,jdbcType=INTEGER}
+    </if>
+    <if test="lecturer != null">
+      and lecturer = #{lecturer,jdbcType=INTEGER}
+    </if>
+    <if test="content != null">
+      and content = #{content,jdbcType=VARCHAR}
+    </if>
+    <if test="tags != null">
+      and tags = #{tags,jdbcType=VARCHAR}
+    </if>
+    <if test="createdTime != null">
+      and created_time = #{createdTime,jdbcType=TIMESTAMP}
+    </if>
+  </sql>
+
+  <select id="listBy" parameterType="cn.zhishimao.core.course.entity.VkeCourseEvaluate" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from vke_course_evaluate
+    where 1=1
+    <include refid="Base_Condition" />
+  </select>
+  <select id="listByForTree" parameterType="cn.zhishimao.core.course.entity.VkeCourseEvaluate" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from vke_course_evaluate
+    where 1=1
+    <include refid="Base_Condition" />
+    and pid is null
+  </select>
+
+  <select id="selectAllByCourseId"  resultType="java.util.HashMap">
+    select vce.id, vce.course as courseRate, vce.lecturer as lecturerRate, vce.content,
+    vce.tags, vu.nick_name, vu.avatar, vce.created_time
+    from vke_course_evaluate vce
+    left join vke_user vu on vu.id = vce.user_id
+    where vce.course_id =  #{_parameter,jdbcType=BIGINT}
+    ORDER BY course desc ,lecturer desc,created_time desc
+  </select>
+
+  <select id="selectRateByCourseId" resultType="java.util.HashMap">
+    select sum(course) as courseRate,sum(lecturer) as lecturerRate from vke_course_evaluate
+    where course_id =  #{_parameter,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectRateByLecturerId" resultType="java.lang.Long">
+    select sum(vce.lecturer) as lecturerRate
+    from vke_course_evaluate vce
+    left join vke_course vc on vc.id =  vce.course_id
+    where vc.lecturer_id = #{_parameter,jdbcType=BIGINT}
+  </select>
+
+  <select id="countByLecturerId" resultType="java.lang.Long">
+    select count(vc.id) as lecturerRate
+    from vke_course_evaluate vce
+    left join vke_course vc on vc.id = vce.course_id
+    where vc.lecturer_id = #{_parameter,jdbcType=BIGINT}
+  </select>
+
+  <select id="findAllEvaluates" resultType="java.util.HashMap">
+    select vce.created_time,vu.nick_name ,vce.content,vu.id userId
+    from vke_course_evaluate vce , vke_course vc ,vke_user vu
+    where vce.course_id = vc.id and vce.user_id = vu.id and vc.id = #{courseId,jdbcType=BIGINT}
+    ORDER  by vce.created_time desc
+  </select>
+
+</mapper>

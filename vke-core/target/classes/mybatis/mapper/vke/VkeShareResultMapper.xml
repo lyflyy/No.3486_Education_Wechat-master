@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhishimao.core.vke.dao.VkeShareResultMapper">
+  <resultMap id="BaseResultMap" type="cn.zhishimao.core.vke.entity.VkeShareResult">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="referer_user_id" jdbcType="BIGINT" property="refererUserId" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="share_id" jdbcType="BIGINT" property="shareId" />
+    <result column="account_history_id" jdbcType="BIGINT" property="accountHistoryId" />
+    <result column="earnings_amount" jdbcType="DECIMAL" property="earningsAmount" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="edit_time" jdbcType="TIMESTAMP" property="editTime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="version" jdbcType="BIGINT" property="version" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    `id`, `referer_user_id`, `user_id`, `share_id`, `account_history_id`, `earnings_amount`, 
+    `created_time`, `edit_time`, `remark`, `version`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from `vke_share_result`
+    where `id` = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from `vke_share_result`
+    where `id` = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.zhishimao.core.vke.entity.VkeShareResult">
+    insert into `vke_share_result` (`id`, `referer_user_id`, `user_id`, 
+      `share_id`, `account_history_id`, `earnings_amount`, 
+      `created_time`, `edit_time`, `remark`, 
+      `version`)
+    values (#{id,jdbcType=BIGINT}, #{refererUserId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, 
+      #{shareId,jdbcType=BIGINT}, #{accountHistoryId,jdbcType=BIGINT}, #{earningsAmount,jdbcType=DECIMAL}, 
+      #{createdTime,jdbcType=TIMESTAMP}, #{editTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, 
+      #{version,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.zhishimao.core.vke.entity.VkeShareResult">
+    insert into `vke_share_result`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        `id`,
+      </if>
+      <if test="refererUserId != null">
+        `referer_user_id`,
+      </if>
+      <if test="userId != null">
+        `user_id`,
+      </if>
+      <if test="shareId != null">
+        `share_id`,
+      </if>
+      <if test="accountHistoryId != null">
+        `account_history_id`,
+      </if>
+      <if test="earningsAmount != null">
+        `earnings_amount`,
+      </if>
+      <if test="createdTime != null">
+        `created_time`,
+      </if>
+      <if test="editTime != null">
+        `edit_time`,
+      </if>
+      <if test="remark != null">
+        `remark`,
+      </if>
+      <if test="version != null">
+        `version`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="refererUserId != null">
+        #{refererUserId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="shareId != null">
+        #{shareId,jdbcType=BIGINT},
+      </if>
+      <if test="accountHistoryId != null">
+        #{accountHistoryId,jdbcType=BIGINT},
+      </if>
+      <if test="earningsAmount != null">
+        #{earningsAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editTime != null">
+        #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.zhishimao.core.vke.entity.VkeShareResult">
+    update `vke_share_result`
+    <set>
+      <if test="refererUserId != null">
+        `referer_user_id` = #{refererUserId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        `user_id` = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="shareId != null">
+        `share_id` = #{shareId,jdbcType=BIGINT},
+      </if>
+      <if test="accountHistoryId != null">
+        `account_history_id` = #{accountHistoryId,jdbcType=BIGINT},
+      </if>
+      <if test="earningsAmount != null">
+        `earnings_amount` = #{earningsAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="createdTime != null">
+        `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editTime != null">
+        `edit_time` = #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        `remark` = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        `version` = #{version,jdbcType=BIGINT},
+      </if>
+    </set>
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.zhishimao.core.vke.entity.VkeShareResult">
+    update `vke_share_result`
+    set `referer_user_id` = #{refererUserId,jdbcType=BIGINT},
+      `user_id` = #{userId,jdbcType=BIGINT},
+      `share_id` = #{shareId,jdbcType=BIGINT},
+      `account_history_id` = #{accountHistoryId,jdbcType=BIGINT},
+      `earnings_amount` = #{earningsAmount,jdbcType=DECIMAL},
+      `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+      `edit_time` = #{editTime,jdbcType=TIMESTAMP},
+      `remark` = #{remark,jdbcType=VARCHAR},
+      `version` = #{version,jdbcType=BIGINT}
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+  <sql id="Base_Condition">
+    <if test="id != null">
+      and `id` = #{id,jdbcType=BIGINT}
+    </if>
+    <if test="refererUserId != null">
+      and `referer_user_id` = #{refererUserId,jdbcType=BIGINT}
+    </if>
+    <if test="userId != null">
+      and `user_id` = #{userId,jdbcType=BIGINT}
+    </if>
+    <if test="shareId != null">
+      and `share_id` = #{shareId,jdbcType=BIGINT}
+    </if>
+    <if test="accountHistoryId != null">
+      and `account_history_id` = #{accountHistoryId,jdbcType=BIGINT}
+    </if>
+    <if test="earningsAmount != null">
+      and `earnings_amount` = #{earningsAmount,jdbcType=DECIMAL}
+    </if>
+    <if test="createdTime != null">
+      and `created_time` = #{createdTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="editTime != null">
+      and `edit_time` = #{editTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="remark != null">
+      and `remark` = #{remark,jdbcType=VARCHAR}
+    </if>
+    <if test="version != null">
+      and `version` = #{version,jdbcType=BIGINT}
+    </if>
+  </sql>
+  <select id="queryByCondition" parameterType="cn.zhishimao.core.vke.entity.VkeShareResult" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from vke_share_result
+    where 1=1
+    <include refid="Base_Condition" />
+  </select>
+
+  <select id="findByUserIdAndShareId" resultMap="BaseResultMap">
+    <include refid="Base_Column_List" />
+    from vke_share_result
+    where user_id =  = #{userId,jdbcType=BIGINT} and share_id = #{shareId,jdbcType=BIGINT}
+  </select>
+
+
+  <select id="findByUserId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from vke_share_result
+    where user_id =#{userId,jdbcType=BIGINT}
+  </select>
+
+  <select id="findShareResultList" resultType="java.util.HashMap">
+    select vu.nick_name new_user,vu.id new_id,vuu.nick_name share_user,vuu.id share_user_id,
+    vc.`name` course_name,vc.id course_id,vsr.created_time,vsr.earnings_amount
+    from vke_share_result vsr
+    LEFT JOIN vke_user vu on vsr.user_id = vu.id
+    LEFT JOIN vke_user vuu on vsr.referer_user_id = vuu.id
+    LEFT JOIN vke_share vs on vsr.share_id = vs.id
+    LEFT JOIN vke_course vc on vs.obj_id = vc.id
+  </select>
+</mapper>

@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhishimao.core.pms.dao.PmsMenuMapper">
+  <resultMap id="BaseResultMap" type="cn.zhishimao.core.pms.entity.PmsMenu">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="version" jdbcType="BIGINT" property="version" />
+    <result column="creater" jdbcType="VARCHAR" property="creater" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="editor" jdbcType="VARCHAR" property="editor" />
+    <result column="edit_time" jdbcType="TIMESTAMP" property="editTime" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="is_leaf" jdbcType="VARCHAR" property="isLeaf" />
+    <result column="level" jdbcType="SMALLINT" property="level" />
+    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="target_name" jdbcType="VARCHAR" property="targetName" />
+    <result column="number" jdbcType="VARCHAR" property="number" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="image" jdbcType="VARCHAR" property="image" />
+    <collection property="children" column="id" javaType="arrayList" ofType="cn.zhishimao.core.pms.entity.PmsMenu" select="selectByPid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    `id`, `version`, `creater`, `created_time`, `editor`, `edit_time`, `status`, `remark`, 
+    `is_leaf`, `level`, `parent_id`, `target_name`, `number`, `name`, `url`, `type`, 
+    `code`,`image`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from `pms_menu`
+    where `id` = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from `pms_menu`
+    where `id` = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.zhishimao.core.pms.entity.PmsMenu">
+    insert into `pms_menu` (`id`, `version`, `creater`, 
+      `created_time`, `editor`, `edit_time`, 
+      `status`, `remark`, `is_leaf`, 
+      `level`, `parent_id`, `target_name`, 
+      `number`, `name`, `url`, 
+      `type`, `code`,`image`)
+    values (#{id,jdbcType=BIGINT}, #{version,jdbcType=BIGINT}, #{creater,jdbcType=VARCHAR}, 
+      #{createdTime,jdbcType=TIMESTAMP}, #{editor,jdbcType=VARCHAR}, #{editTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{isLeaf,jdbcType=VARCHAR}, 
+      #{level,jdbcType=SMALLINT}, #{parentId,jdbcType=BIGINT}, #{targetName,jdbcType=VARCHAR}, 
+      #{number,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR},#{image,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.zhishimao.core.pms.entity.PmsMenu">
+    insert into `pms_menu`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        `id`,
+      </if>
+      <if test="version != null">
+        `version`,
+      </if>
+      <if test="creater != null">
+        `creater`,
+      </if>
+      <if test="createdTime != null">
+        `created_time`,
+      </if>
+      <if test="editor != null">
+        `editor`,
+      </if>
+      <if test="editTime != null">
+        `edit_time`,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="remark != null">
+        `remark`,
+      </if>
+      <if test="isLeaf != null">
+        `is_leaf`,
+      </if>
+      <if test="level != null">
+        `level`,
+      </if>
+      <if test="parentId != null">
+        `parent_id`,
+      </if>
+      <if test="targetName != null">
+        `target_name`,
+      </if>
+      <if test="number != null">
+        `number`,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="url != null">
+        `url`,
+      </if>
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="code != null">
+      `code`,
+    </if>
+      <if test="image != null">
+        `image`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=BIGINT},
+      </if>
+      <if test="creater != null">
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editor != null">
+        #{editor,jdbcType=VARCHAR},
+      </if>
+      <if test="editTime != null">
+        #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="isLeaf != null">
+        #{isLeaf,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null">
+        #{level,jdbcType=SMALLINT},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="targetName != null">
+        #{targetName,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null">
+        #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null">
+        #{image,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.zhishimao.core.pms.entity.PmsMenu">
+    update `pms_menu`
+    <set>
+      <if test="version != null">
+        `version` = #{version,jdbcType=BIGINT},
+      </if>
+      <if test="creater != null">
+        `creater` = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editor != null">
+        `editor` = #{editor,jdbcType=VARCHAR},
+      </if>
+      <if test="editTime != null">
+        `edit_time` = #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        `remark` = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="isLeaf != null">
+        `is_leaf` = #{isLeaf,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null">
+        `level` = #{level,jdbcType=SMALLINT},
+      </if>
+      <if test="parentId != null">
+        `parent_id` = #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="targetName != null">
+        `target_name` = #{targetName,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null">
+        `number` = #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        `url` = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        `type` = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        `code` = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null">
+        `image` = #{image,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.zhishimao.core.pms.entity.PmsMenu">
+    update `pms_menu`
+    set `version` = #{version,jdbcType=BIGINT},
+      `creater` = #{creater,jdbcType=VARCHAR},
+      `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+      `editor` = #{editor,jdbcType=VARCHAR},
+      `edit_time` = #{editTime,jdbcType=TIMESTAMP},
+      `status` = #{status,jdbcType=VARCHAR},
+      `remark` = #{remark,jdbcType=VARCHAR},
+      `is_leaf` = #{isLeaf,jdbcType=VARCHAR},
+      `level` = #{level,jdbcType=SMALLINT},
+      `parent_id` = #{parentId,jdbcType=BIGINT},
+      `target_name` = #{targetName,jdbcType=VARCHAR},
+      `number` = #{number,jdbcType=VARCHAR},
+      `name` = #{name,jdbcType=VARCHAR},
+      `url` = #{url,jdbcType=VARCHAR},
+      `type` = #{type,jdbcType=VARCHAR},
+      `code` = #{code,jdbcType=VARCHAR},
+      `image` = #{image,jdbcType=VARCHAR}
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+  <sql id="Base_Condition">
+    <if test="version != null">
+      and `version` = #{version,jdbcType=BIGINT}
+    </if>
+    <if test="creater != null">
+      and `creater` = #{creater,jdbcType=VARCHAR}
+    </if>
+    <if test="createdTime != null">
+      and `created_time` = #{createdTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="editor != null">
+      and `editor` = #{editor,jdbcType=VARCHAR}
+    </if>
+    <if test="editTime != null">
+      and `edit_time` = #{editTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="status != null">
+      and `status` = #{status,jdbcType=VARCHAR}
+    </if>
+    <if test="remark != null">
+      and `remark` = #{remark,jdbcType=VARCHAR}
+    </if>
+    <if test="isLeaf != null">
+      and `is_leaf` = #{isLeaf,jdbcType=VARCHAR}
+    </if>
+    <if test="level != null">
+      and `level` = #{level,jdbcType=SMALLINT}
+    </if>
+    <if test="parentId != null">
+      and `parent_id` = #{parentId,jdbcType=BIGINT}
+    </if>
+    <if test="targetName != null">
+      and `target_name` = #{targetName,jdbcType=VARCHAR}
+    </if>
+    <if test="number != null">
+      and `number` = #{number,jdbcType=VARCHAR}
+    </if>
+    <if test="name != null">
+      and `name` = #{name,jdbcType=VARCHAR}
+    </if>
+    <if test="url != null">
+      and `url` = #{url,jdbcType=VARCHAR}
+    </if>
+    <if test="code != null">
+      and `code` = #{code,jdbcType=VARCHAR}
+    </if>
+    <if test="name != null">
+      and `name` = #{name,jdbcType=VARCHAR}
+    </if>
+    <if test="image != null">
+      and `image` = #{image,jdbcType=VARCHAR}
+    </if>
+  </sql>
+
+
+  <select id="listBy" parameterType="cn.zhishimao.core.pms.entity.PmsMenu" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from `pms_menu`
+    where 1=1
+    <include refid="Base_Condition" />
+    order by created_time desc
+  </select>
+
+  <select id="findAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from `pms_menu`
+  </select>
+
+  <select id="selectByPid" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from pms_menu
+    where parent_id = #{parent_id,jdbcType=VARCHAR} order by level ,created_time
+  </select>
+
+  <select id="findPermissionByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select pmsMenu.id,pmsMenu.version, pmsMenu.creater, pmsMenu.created_time, pmsMenu.editor, pmsMenu.edit_time, pmsMenu.status, pmsMenu.remark,
+    pmsMenu.is_leaf, pmsMenu.level, pmsMenu.parent_id, pmsMenu.target_name, pmsMenu.number, pmsMenu.name, pmsMenu.url, pmsMenu.type,
+    pmsMenu.code,pmsMenu.image
+    from pms_role_operator pmsRoleOperator,pms_menu_role pmsRoleMenu,pms_menu pmsMenu
+    where pmsRoleOperator.role_id = pmsRoleMenu.role_id and pmsRoleMenu.menu_id = pmsMenu.id
+    and pmsRoleOperator.operator_id = #{userId,jdbcType=BIGINT}
+  </select>
+
+
+  <select id="findPermissionByRoleId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select pmsMenu.id,pmsMenu.version, pmsMenu.creater, pmsMenu.created_time, pmsMenu.editor, pmsMenu.edit_time, pmsMenu.status, pmsMenu.remark,
+    pmsMenu.is_leaf, pmsMenu.level, pmsMenu.parent_id, pmsMenu.target_name, pmsMenu.number, pmsMenu.name, pmsMenu.url, pmsMenu.type,
+    pmsMenu.code,pmsMenu.image
+    from pms_menu_role pmsRoleMenu,pms_menu pmsMenu
+    where  pmsRoleMenu.menu_id = pmsMenu.id
+    and pmsRoleMenu.role_id = #{roleId,jdbcType=BIGINT}
+  </select>
+  
+  <select id="findPMenusByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select DISTINCT(pmsMenu.id),pmsMenu.version, pmsMenu.creater, pmsMenu.created_time, pmsMenu.editor, pmsMenu.edit_time, pmsMenu.status, pmsMenu.remark,
+    pmsMenu.is_leaf, pmsMenu.level, pmsMenu.parent_id, pmsMenu.target_name, pmsMenu.number, pmsMenu.name, pmsMenu.url, pmsMenu.type,
+    pmsMenu.code,pmsMenu.image
+    from pms_role_operator pmsRoleOperator,pms_menu_role pmsRoleMenu,pms_menu pmsMenu
+    where pmsRoleOperator.role_id = pmsRoleMenu.role_id and pmsRoleMenu.menu_id = pmsMenu.id
+    and pmsMenu.parent_id = 1 and pmsMenu.type = '1' and pmsRoleOperator.operator_id = #{userId,jdbcType=BIGINT}
+    order by pmsMenu.level,pmsMenu.created_time
+  </select>
+
+  <select id="findByPermissionCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+      select <include refid="Base_Column_List" /> from pms_menu where code = #{code,jdbcType=BIGINT}
+  </select>
+</mapper>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="backend/fragment/frag :: common_header(~{::title},_)">
+    <title>知识猫 - 运营系统</title>
+</head>
+<body>
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>联想词</h5>
+                    <div class="ibox-tools">
+                        <!--<a href="projects.html" class="btn btn-primary btn-xs">添加管理员</a>-->
+                    </div>
+                </div>
+                <div class="ibox-content">
+
+
+                    <div class="project-list">
+
+                        <table id="exampleTableToolbar" data-mobile-responsive="true" class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>
+                                    订单编号
+                                </th>
+                                <th>
+                                    用户名称
+                                </th>
+                                <th>
+                                    订单类型
+                                </th>
+                                <th>
+                                    交易金额
+                                </th>
+                                <th>
+                                    状态
+                                </th>
+                                <th>
+                                    备注
+                                </th>
+                                <th>
+                                    创建时间
+                                </th>
+                                <th >
+                                    操作
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr  th:if="${not #lists.isEmpty(pageData.list)}" th:each="item : ${pageData.list}">
+
+                            </tr>
+                            <tr class="no-records-found" th:if="${#lists.isEmpty(pageData.list)}">
+                                <td colspan="8">没有找到匹配的记录</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div th:replace="backend/fragment/frag :: pagination"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

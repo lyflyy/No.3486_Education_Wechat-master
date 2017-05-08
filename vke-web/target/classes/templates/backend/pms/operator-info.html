@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="backend/fragment/frag :: common_header(~{::title},_)">
+    <title>知识猫 - 运营系统</title>
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+    <div class="row animated fadeInRight">
+        <div class="col-sm-4">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>个人资料</h5>
+                </div>
+                <div>
+                    <div class="ibox-content no-padding border-left-right">
+                        <img alt="image" class="img-responsive" src="/public/img/profile_big.jpg">
+                    </div>
+                    <div class="ibox-content profile-content">
+                        <h4><strong th:text="${operator.loginName}"></strong></h4>
+                        <p><i class="fa fa-map-marker"></i> <span th:text="${operator.createdTime==0?'':#dates.format(operator.createdTime,'yyyy-MM-dd HH:mm:ss')}"></span></p>
+                        <h5>
+                            备注
+                        </h5>
+                        <p>
+                            <span th:text="${operator.remark}"></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>系统动态</h5>
+                </div>
+                <div class="ibox-content">
+
+                    <div class="project-list">
+
+                        <table id="exampleTableToolbar" data-mobile-responsive="true" class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th style="" data-field="name">
+                                    <div class="th-inner ">操作名称</div>
+                                </th>
+                                <th style="" data-field="star">
+                                    <div class="th-inner ">ip</div>
+                                </th>
+                                <th style="" data-field="star">
+                                    <div class="th-inner ">操作内容</div>
+                                </th>
+                                <th style="" data-field="star">
+                                    <div class="th-inner ">时间</div>
+                                </th>
+                                <th style="" data-field="star">
+                                    <div class="th-inner ">备注</div>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>
+                                    管理员
+                                </td>
+                                <td>12.89.90.2</td>
+                                <td>
+                                    admin
+                                </td>
+                                <td>2016-12-01 16:56:09</td>
+                                <td>最高角色</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="backend/fragment/frag :: common_header(~{::title},_)">
+    <title>知识猫 - 运营系统</title>
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+    <div class="row animated fadeInRight">
+
+        <div class="col-sm-6">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>课程设置</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-12 b-r">
+                            <form role="form" th:action="@{/backend/sys/setting/saveSysSetting}" method="post">
+                                <div class="form-group">
+                                    <label>课程旁听生人数</label>
+                                    <input type="text" name="c_audit_count" placeholder="课程旁听生人数" class="form-control" th:value="${sysVo[c_audit_count]==null?'':sysVo[c_audit_count]}" required/>
+                                </div>
+                                <div class="form-group">
+                                    <label>课程互动生人数</label>
+                                    <input type="text" placeholder="课程互动生人数" name="c_interact_count" class="form-control" th:value="${sysVo[c_interact_count]==null?'':sysVo[c_interact_count]}" required/>
+                                </div>
+                                <div class="form-group">
+                                    <label>红包赞分成比例(用户)</label>
+                                    <input type="text" placeholder="红包赞分成比例" name="c_redpacked_precent" class="form-control" th:value="${sysVo[c_redpacked_precent]==null?'':sysVo[c_redpacked_precent]}" required/>
+                                </div>
+                                <div class="form-group">
+                                    <label>分享收益是否分成</label>
+                                    <select class="form-control m-b" name="c_share_earn_switch" th:value="${sysVo[c_share_earn_switch]}" required>
+                                        <option value="">请选择...</option>
+                                        <option value="1" th:selected="${sysVo[c_share_earn_switch] eq '1'}">是</option>
+                                        <option value="2" th:selected="${sysVo[c_share_earn_switch] eq '2'}">否</option>
+                                        <!--<option value="1" th:if="${sysVo[c_share_earn_switch] eq '1'}" th:selected="selected">是</option>
+                                        <option value="2"  th:if="${sysVo[c_share_earn_switch] eq '2'}" th:selected="selected">否</option>-->
+                                    </select>
+                                    <!--<input type="text" placeholder="分享收益是否分成" name="c_share_earn_switch" class="form-control" th:value="${sysVo[c_share_earn_switch]==null?'':sysVo[c_share_earn_switch]}"/>-->
+                                </div>
+                                <div class="form-group">
+                                    <label>分享返现比例(用户)</label>
+                                    <input type="text" placeholder="分享返现比例" name="c_share_precent" class="form-control" th:value="${sysVo[c_share_precent]==null?'':sysVo[c_share_precent]}" required/>
+                                </div>
+                                <div class="form-group">
+                                    <label>课程版权</label>
+                                    <input type="text" placeholder="课程版权" name="c_copyright" class="form-control" th:value="${sysVo[c_copyright]==null?'':sysVo[c_copyright]}" required/>
+                                </div>
+                                <div class="form-group">
+                                    <label>旁听课程价格</label>
+                                    <input type="text" placeholder="旁听课程价格" name="c_audit_price" class="form-control"th:value="${sysVo[c_audit_price]==null?'':sysVo[c_audit_price]}"  required/>
+                                </div>
+                                <div>
+                                    <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit">
+                                        <strong>保存</strong></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-sm-6">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>系统设置</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-12 b-r">
+                            <form role="form"  th:action="@{/backend/sys/setting/saveSysSetting}" method="post">
+                                <div class="form-group">
+                                    <label>系统账户</label>
+                                    <input type="text" disabled="disabled" name="sys_account" placeholder="系统账户" class="form-control" th:value="${sysVo[sys_account]==null?'':sysVo[sys_account]}"/>
+                                </div>
+                                <div class="form-group">
+                                    <label>网站标题</label>
+                                    <input type="text" placeholder="网站标题" name="sys_title" class="form-control" th:value="${sysVo[sys_title]==null?'':sysVo[sys_title]}" required/>
+                                </div>
+                                <div class="form-group">
+                                    <label>网站描述</label>
+                                    <textarea  placeholder="网站描述" name="sys_desc" class="form-control" th:text="${sysVo[sys_desc]==null?'':sysVo[sys_desc]}" required></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>网站关键词</label>
+                                    <textarea  placeholder="网站关键词" name="sys_keywords" class="form-control" th:text="${sysVo[sys_keywords]==null?'':sysVo[sys_keywords]}" required></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>网站版权</label>
+                                    <textarea  placeholder="网站版权" name="sys_copyright" class="form-control" th:text="${sysVo[sys_copyright]==null?'':sysVo[sys_copyright]}" required></textarea>
+                                </div>
+                                <div>
+                                    <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit">
+                                        <strong>保存</strong></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-sm-6">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>微信设置</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-12 b-r">
+                            <form role="form"   th:action="@{/backend/sys/setting/saveSysSetting}" method="post">
+                                <div class="form-group">
+                                    <label>公众号欢迎语</label>
+                                    <textarea name="wx_hello" placeholder="公众号关注欢迎语" class="form-control" th:text="${sysVo[wx_hello]==null?'':sysVo[wx_hello]}">
+
+                                    </textarea>
+                                </div>
+                                <div>
+                                    <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit">
+                                        <strong>保存</strong></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

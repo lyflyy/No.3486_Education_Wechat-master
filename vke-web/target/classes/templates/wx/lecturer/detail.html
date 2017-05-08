@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="wx/fragment/frag :: common_header(~{::title},_)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title th:text="${lecturer.nick_name} + '-知识猫讲师'">讲师详情</title>
+</head>
+<body class="vke">
+<div class="container" id="app">
+    <div class="weui-tab">
+
+        <div class="page lecturer-profile">
+            <div class="page__hd">
+                <div class="weui-panel weui-panel_access lecturer-panel">
+                    <div class="weui-panel__bd">
+                        <div class="weui-media-box weui-media-box_appmsg ">
+                            <div class="weui-media-box__hd">
+                                <img class="weui-media-box__thumb avatar" th:src="${lecturer.avatar}" alt="">
+                                <span th:if="${lecturer.is_high_quality eq true}"
+                                      class="quality vke-icon-you"></span>
+                            </div>
+                            <div class="weui-media-box__bd">
+                                <h4 class="weui-media-box__title " th:text="${lecturer.nick_name}"></h4>
+                                <p class="weui-media-box__desc"><span class="txt-blck"
+                                                                      th:text="${lecturer.subscibe_count}"></span>&nbsp;订阅
+                                    | <span class="txt-blck" th:text="${rate}">4.8</span>&nbsp;星评</p>
+                            </div>
+                            <div class="weui-media-box__bd text-right">
+                                <a href="#" th:unless="${isSubscibed}"
+                                   class="weui-btn weui-btn_mini weui-btn_plain-primary"
+                                   th:onclick="'javascript:subscibeCourse(\''+ ${lecturer.id} + '\');'">订阅</a>
+                                <!--<a href="#"  th:if="${isSubscibed}" class="weui-btn weui-btn_mini weui-btn_plain-default weui-btn_plain-disabled">已订阅</a>-->
+                                <a href="#" th:if="${isSubscibed}" class="weui-btn weui-btn_mini weui-btn_plain-primary"
+                                   th:onclick="'javascript:cancleSubscibe(\''+ ${lecturer.id} + '\');'">取消订阅</a>
+                            </div>
+                        </div>
+                        <div class="weui-media-box weui-media-box_text">
+                            <h3><b th:text="${lecturer?.title}"></b></h3>
+                            <p class="intro" th:text="${lecturer.intro}"></p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="page__bd mtm">
+                <div class="weui-panel">
+
+                    <div class="weui-tab">
+                        <div class="weui-navbar">
+                            <a data-pjax th:href="@{/wx/view/lecturer/{id}(id=${lecturer.id})}"
+                               th:class="${status == null}?'weui-navbar\_\_item weui-bar\_\_item_on':'weui-navbar\_\_item'">
+                                全部课程
+                            </a>
+                            <a data-pjax th:href="@{/wx/view/lecturer/{id}(id=${lecturer.id},status=2)}"
+                               th:class="${status eq 2}?'weui-navbar\_\_item weui-bar\_\_item_on':'weui-navbar\_\_item'">
+                                直播中
+                            </a>
+                            <a data-pjax th:href="@{/wx/view/lecturer/{id}(id=${lecturer.id},status=1)}"
+                               th:class="${status eq 1}?'weui-navbar\_\_item weui-bar\_\_item_on':'weui-navbar\_\_item'">
+                                报名中
+                            </a>
+                            <a data-pjax th:href="@{/wx/view/lecturer/{id}(id=${lecturer.id},status=3)}"
+                               th:class="${status eq 3}?'weui-navbar\_\_item weui-bar\_\_item_on':'weui-navbar\_\_item'">
+                                已结束
+                            </a>
+                        </div>
+
+                        <div class="weui-tab__panel" th:replace="wx/course/l-list">
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div th:replace="wx/fragment/frag::pageFooter"></div>
+
+    </div>
+</div>
+
+<div th:include="wx/fragment/frag::commonScript"></div>
+<script src="/public/wx/js/main.js" type="text/javascript" charset="utf-8"></script>
+
+<script type="text/javascript">
+    function subscibeCourse(courseId) {
+        $.post("/wx/view/lecturer/subscibe/" + courseId, {}, function (data) {
+            if (data.success) {
+                $.toast(data.msg);
+                window.location.reload();
+            } else {
+                $.toast(data.msg, "text");
+            }
+        })
+    }
+
+    function cancleSubscibe(courseId) {
+        $.post("/wx/view/lecturer/subscibe/cancle/" + courseId, {}, function (data) {
+            if (data.success) {
+                $.toast(data.msg);
+                window.location.reload();
+            } else {
+                $.toast(data.msg, "text");
+            }
+        })
+    }
+
+</script>
+</body>
+</html>

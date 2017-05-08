@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhishimao.core.vke.dao.VkeFileMapper">
+  <resultMap id="BaseResultMap" type="cn.zhishimao.core.vke.entity.VkeFile">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="edit_time" jdbcType="TIMESTAMP" property="editTime" />
+    <result column="version" jdbcType="BIGINT" property="version" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="download_url" jdbcType="VARCHAR" property="downloadUrl" />
+    <result column="file_id" jdbcType="VARCHAR" property="fileId" />
+    <result column="width" jdbcType="INTEGER" property="width" />
+    <result column="height" jdbcType="INTEGER" property="height" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="obj_id" jdbcType="BIGINT" property="objId" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    `id`, `created_time`, `edit_time`, `version`, `remark`, `url`, `download_url`, `file_id`, 
+    `width`, `height`, `type`, `obj_id`,`user_id`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from `vke_file`
+    where `id` = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from `vke_file`
+    where `id` = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.zhishimao.core.vke.entity.VkeFile">
+    insert into `vke_file` (`id`, `created_time`, `edit_time`, 
+      `version`, `remark`, `url`, 
+      `download_url`, `file_id`, `width`, 
+      `height`, `type`, `obj_id`,`user_id`)
+    values (#{id,jdbcType=BIGINT}, #{createdTime,jdbcType=TIMESTAMP}, #{editTime,jdbcType=TIMESTAMP}, 
+      #{version,jdbcType=BIGINT}, #{remark,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{downloadUrl,jdbcType=VARCHAR}, #{fileId,jdbcType=VARCHAR}, #{width,jdbcType=INTEGER}, 
+      #{height,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{objId,jdbcType=BIGINT},#{userId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.zhishimao.core.vke.entity.VkeFile">
+    insert into `vke_file`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        `id`,
+      </if>
+      <if test="createdTime != null">
+        `created_time`,
+      </if>
+      <if test="editTime != null">
+        `edit_time`,
+      </if>
+      <if test="version != null">
+        `version`,
+      </if>
+      <if test="remark != null">
+        `remark`,
+      </if>
+      <if test="url != null">
+        `url`,
+      </if>
+      <if test="downloadUrl != null">
+        `download_url`,
+      </if>
+      <if test="fileId != null">
+        `file_id`,
+      </if>
+      <if test="width != null">
+        `width`,
+      </if>
+      <if test="height != null">
+        `height`,
+      </if>
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="objId != null">
+        `obj_id`,
+      </if>
+      <if test="userId != null">
+        `user_id`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editTime != null">
+        #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="downloadUrl != null">
+        #{downloadUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="fileId != null">
+        #{fileId,jdbcType=VARCHAR},
+      </if>
+      <if test="width != null">
+        #{width,jdbcType=INTEGER},
+      </if>
+      <if test="height != null">
+        #{height,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="objId != null">
+        #{objId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.zhishimao.core.vke.entity.VkeFile">
+    update `vke_file`
+    <set>
+      <if test="createdTime != null">
+        `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editTime != null">
+        `edit_time` = #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        `version` = #{version,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null">
+        `remark` = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        `url` = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="downloadUrl != null">
+        `download_url` = #{downloadUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="fileId != null">
+        `file_id` = #{fileId,jdbcType=VARCHAR},
+      </if>
+      <if test="width != null">
+        `width` = #{width,jdbcType=INTEGER},
+      </if>
+      <if test="height != null">
+        `height` = #{height,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        `type` = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="objId != null">
+        `obj_id` = #{objId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        `user_id` = #{userId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.zhishimao.core.vke.entity.VkeFile">
+    update `vke_file`
+    set `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+      `edit_time` = #{editTime,jdbcType=TIMESTAMP},
+      `version` = #{version,jdbcType=BIGINT},
+      `remark` = #{remark,jdbcType=VARCHAR},
+      `url` = #{url,jdbcType=VARCHAR},
+      `download_url` = #{downloadUrl,jdbcType=VARCHAR},
+      `file_id` = #{fileId,jdbcType=VARCHAR},
+      `width` = #{width,jdbcType=INTEGER},
+      `height` = #{height,jdbcType=INTEGER},
+      `type` = #{type,jdbcType=VARCHAR},
+      `obj_id` = #{objId,jdbcType=BIGINT}
+      `user_id` = #{userId,jdbcType=BIGINT}
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByFileId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from `vke_file`
+    where `file_id` = #{fileId,jdbcType=BIGINT}
+    limit 0,1
+  </select>
+</mapper>

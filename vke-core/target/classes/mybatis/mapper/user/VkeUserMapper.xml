@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhishimao.core.user.dao.VkeUserMapper">
+    <resultMap id="BaseResultMap" type="cn.zhishimao.core.user.entity.VkeUser">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="nick_name" jdbcType="VARCHAR" property="nickName"/>
+        <result column="real_name" jdbcType="VARCHAR" property="realName"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="wx_unionid" jdbcType="VARCHAR" property="wxUnionid"/>
+        <result column="wx_openid" jdbcType="VARCHAR" property="wxOpenid"/>
+        <result column="sex" jdbcType="VARCHAR" property="sex"/>
+        <result column="intro" jdbcType="VARCHAR" property="intro"/>
+        <result column="city" jdbcType="VARCHAR" property="city"/>
+        <result column="province" jdbcType="VARCHAR" property="province"/>
+        <result column="country" jdbcType="VARCHAR" property="country"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
+        <result column="user_type" jdbcType="INTEGER" property="userType"/>
+        <result column="regist_ip" jdbcType="VARCHAR" property="registIp"/>
+        <result column="regist_agents" jdbcType="VARCHAR" property="registAgents"/>
+        <result column="regist_device_num" jdbcType="VARCHAR" property="registDeviceNum"/>
+        <result column="wx_user_tag" jdbcType="VARCHAR" property="wxUserTag"/>
+        <result column="wx_remark" jdbcType="VARCHAR" property="wxRemark"/>
+        <result column="wx_groupid" jdbcType="VARCHAR" property="wxGroupid"/>
+        <result column="wx_latitude" jdbcType="VARCHAR" property="wxLatitude"/>
+        <result column="wx_longitude" jdbcType="VARCHAR" property="wxLongitude"/>
+        <result column="wx_precision" jdbcType="VARCHAR" property="wxPrecision"/>
+        <result column="subscribe_time" jdbcType="BIGINT" property="subscribeTime"/>
+        <result column="isSubscribe" jdbcType="INTEGER" property="issubscribe"/>
+        <result column="created_time" jdbcType="TIMESTAMP" property="createdTime"/>
+        <result column="edit_time" jdbcType="TIMESTAMP" property="editTime"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="version" jdbcType="BIGINT" property="version"/>
+        <result column="is_deleted" jdbcType="VARCHAR" property="isDeleted"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    `id`, `nick_name`, `real_name`, `phone`, `wx_unionid`, `wx_openid`, `sex`, `intro`, 
+    `city`, `province`, `country`, `status`, `avatar`, `user_type`, `regist_ip`, `regist_agents`, 
+    `regist_device_num`, `wx_user_tag`, `wx_remark`, `wx_groupid`, `wx_latitude`, `wx_longitude`, 
+    `wx_precision`, `subscribe_time`, `isSubscribe`, `created_time`, `edit_time`, `remark`, 
+    `version`, `is_deleted`
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `vke_user`
+        where `id` = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from `vke_user`
+    where `id` = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert"   useGeneratedKeys="true" keyProperty="id" parameterType="cn.zhishimao.core.user.entity.VkeUser">
+    insert into `vke_user` (`id`, `nick_name`, `real_name`, 
+      `phone`, `wx_unionid`, `wx_openid`, 
+      `sex`, `intro`, `city`, `province`, 
+      `country`, `status`, `avatar`, 
+      `user_type`, `regist_ip`, `regist_agents`, 
+      `regist_device_num`, `wx_user_tag`, `wx_remark`, 
+      `wx_groupid`, `wx_latitude`, `wx_longitude`, 
+      `wx_precision`, `subscribe_time`, `isSubscribe`, 
+      `created_time`, `edit_time`, `remark`, 
+      `version`, `is_deleted`)
+    values (#{id,jdbcType=BIGINT}, #{nickName,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{wxUnionid,jdbcType=VARCHAR}, #{wxOpenid,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=VARCHAR}, #{intro,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, 
+      #{country,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{avatar,jdbcType=VARCHAR}, 
+      #{userType,jdbcType=INTEGER}, #{registIp,jdbcType=VARCHAR}, #{registAgents,jdbcType=VARCHAR}, 
+      #{registDeviceNum,jdbcType=VARCHAR}, #{wxUserTag,jdbcType=VARCHAR}, #{wxRemark,jdbcType=VARCHAR}, 
+      #{wxGroupid,jdbcType=VARCHAR}, #{wxLatitude,jdbcType=VARCHAR}, #{wxLongitude,jdbcType=VARCHAR}, 
+      #{wxPrecision,jdbcType=VARCHAR}, #{subscribeTime,jdbcType=BIGINT}, #{issubscribe,jdbcType=INTEGER}, 
+      #{createdTime,jdbcType=TIMESTAMP}, #{editTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, 
+      #{version,jdbcType=BIGINT}, #{isDeleted,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective"   useGeneratedKeys="true" keyProperty="id" parameterType="cn.zhishimao.core.user.entity.VkeUser">
+        insert into `vke_user`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                `id`,
+            </if>
+            <if test="nickName != null">
+                `nick_name`,
+            </if>
+            <if test="realName != null">
+                `real_name`,
+            </if>
+            <if test="phone != null">
+                `phone`,
+            </if>
+            <if test="wxUnionid != null">
+                `wx_unionid`,
+            </if>
+            <if test="wxOpenid != null">
+                `wx_openid`,
+            </if>
+            <if test="sex != null">
+                `sex`,
+            </if>
+            <if test="intro != null">
+                `intro`,
+            </if>
+            <if test="city != null">
+                `city`,
+            </if>
+            <if test="province != null">
+                `province`,
+            </if>
+            <if test="country != null">
+                `country`,
+            </if>
+            <if test="status != null">
+                `status`,
+            </if>
+            <if test="avatar != null">
+                `avatar`,
+            </if>
+            <if test="userType != null">
+                `user_type`,
+            </if>
+            <if test="registIp != null">
+                `regist_ip`,
+            </if>
+            <if test="registAgents != null">
+                `regist_agents`,
+            </if>
+            <if test="registDeviceNum != null">
+                `regist_device_num`,
+            </if>
+            <if test="wxUserTag != null">
+                `wx_user_tag`,
+            </if>
+            <if test="wxRemark != null">
+                `wx_remark`,
+            </if>
+            <if test="wxGroupid != null">
+                `wx_groupid`,
+            </if>
+            <if test="wxLatitude != null">
+                `wx_latitude`,
+            </if>
+            <if test="wxLongitude != null">
+                `wx_longitude`,
+            </if>
+            <if test="wxPrecision != null">
+                `wx_precision`,
+            </if>
+            <if test="subscribeTime != null">
+                `subscribe_time`,
+            </if>
+            <if test="issubscribe != null">
+                `isSubscribe`,
+            </if>
+            <if test="createdTime != null">
+                `created_time`,
+            </if>
+            <if test="editTime != null">
+                `edit_time`,
+            </if>
+            <if test="remark != null">
+                `remark`,
+            </if>
+            <if test="version != null">
+                `version`,
+            </if>
+            <if test="isDeleted != null">
+                `is_deleted`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="nickName != null">
+                #{nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="realName != null">
+                #{realName,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="wxUnionid != null">
+                #{wxUnionid,jdbcType=VARCHAR},
+            </if>
+            <if test="wxOpenid != null">
+                #{wxOpenid,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="intro != null">
+                #{intro,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null">
+                #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="province != null">
+                #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="country != null">
+                #{country,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="avatar != null">
+                #{avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="userType != null">
+                #{userType,jdbcType=INTEGER},
+            </if>
+            <if test="registIp != null">
+                #{registIp,jdbcType=VARCHAR},
+            </if>
+            <if test="registAgents != null">
+                #{registAgents,jdbcType=VARCHAR},
+            </if>
+            <if test="registDeviceNum != null">
+                #{registDeviceNum,jdbcType=VARCHAR},
+            </if>
+            <if test="wxUserTag != null">
+                #{wxUserTag,jdbcType=VARCHAR},
+            </if>
+            <if test="wxRemark != null">
+                #{wxRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="wxGroupid != null">
+                #{wxGroupid,jdbcType=VARCHAR},
+            </if>
+            <if test="wxLatitude != null">
+                #{wxLatitude,jdbcType=VARCHAR},
+            </if>
+            <if test="wxLongitude != null">
+                #{wxLongitude,jdbcType=VARCHAR},
+            </if>
+            <if test="wxPrecision != null">
+                #{wxPrecision,jdbcType=VARCHAR},
+            </if>
+            <if test="subscribeTime != null">
+                #{subscribeTime,jdbcType=BIGINT},
+            </if>
+            <if test="issubscribe != null">
+                #{issubscribe,jdbcType=INTEGER},
+            </if>
+            <if test="createdTime != null">
+                #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="editTime != null">
+                #{editTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=BIGINT},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.zhishimao.core.user.entity.VkeUser">
+        update `vke_user`
+        <set>
+            <if test="nickName != null">
+                `nick_name` = #{nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="realName != null">
+                `real_name` = #{realName,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                `phone` = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="wxUnionid != null">
+                `wx_unionid` = #{wxUnionid,jdbcType=VARCHAR},
+            </if>
+            <if test="wxOpenid != null">
+                `wx_openid` = #{wxOpenid,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                `sex` = #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="intro != null">
+                `intro` = #{intro,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null">
+                `city` = #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="province != null">
+                `province` = #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="country != null">
+                `country` = #{country,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                `status` = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="avatar != null">
+                `avatar` = #{avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="userType != null">
+                `user_type` = #{userType,jdbcType=INTEGER},
+            </if>
+            <if test="registIp != null">
+                `regist_ip` = #{registIp,jdbcType=VARCHAR},
+            </if>
+            <if test="registAgents != null">
+                `regist_agents` = #{registAgents,jdbcType=VARCHAR},
+            </if>
+            <if test="registDeviceNum != null">
+                `regist_device_num` = #{registDeviceNum,jdbcType=VARCHAR},
+            </if>
+            <if test="wxUserTag != null">
+                `wx_user_tag` = #{wxUserTag,jdbcType=VARCHAR},
+            </if>
+            <if test="wxRemark != null">
+                `wx_remark` = #{wxRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="wxGroupid != null">
+                `wx_groupid` = #{wxGroupid,jdbcType=VARCHAR},
+            </if>
+            <if test="wxLatitude != null">
+                `wx_latitude` = #{wxLatitude,jdbcType=VARCHAR},
+            </if>
+            <if test="wxLongitude != null">
+                `wx_longitude` = #{wxLongitude,jdbcType=VARCHAR},
+            </if>
+            <if test="wxPrecision != null">
+                `wx_precision` = #{wxPrecision,jdbcType=VARCHAR},
+            </if>
+            <if test="subscribeTime != null">
+                `subscribe_time` = #{subscribeTime,jdbcType=BIGINT},
+            </if>
+            <if test="issubscribe != null">
+                `isSubscribe` = #{issubscribe,jdbcType=INTEGER},
+            </if>
+            <if test="createdTime != null">
+                `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="editTime != null">
+                `edit_time` = #{editTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                `remark` = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                `version` = #{version,jdbcType=BIGINT},
+            </if>
+            <if test="isDeleted != null">
+                `is_deleted` = #{isDeleted,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where `id` = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.zhishimao.core.user.entity.VkeUser">
+    update `vke_user`
+    set `nick_name` = #{nickName,jdbcType=VARCHAR},
+      `real_name` = #{realName,jdbcType=VARCHAR},
+      `phone` = #{phone,jdbcType=VARCHAR},
+      `wx_unionid` = #{wxUnionid,jdbcType=VARCHAR},
+      `wx_openid` = #{wxOpenid,jdbcType=VARCHAR},
+      `sex` = #{sex,jdbcType=VARCHAR},
+      `intro` = #{intro,jdbcType=VARCHAR},
+      `city` = #{city,jdbcType=VARCHAR},
+      `province` = #{province,jdbcType=VARCHAR},
+      `country` = #{country,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=INTEGER},
+      `avatar` = #{avatar,jdbcType=VARCHAR},
+      `user_type` = #{userType,jdbcType=INTEGER},
+      `regist_ip` = #{registIp,jdbcType=VARCHAR},
+      `regist_agents` = #{registAgents,jdbcType=VARCHAR},
+      `regist_device_num` = #{registDeviceNum,jdbcType=VARCHAR},
+      `wx_user_tag` = #{wxUserTag,jdbcType=VARCHAR},
+      `wx_remark` = #{wxRemark,jdbcType=VARCHAR},
+      `wx_groupid` = #{wxGroupid,jdbcType=VARCHAR},
+      `wx_latitude` = #{wxLatitude,jdbcType=VARCHAR},
+      `wx_longitude` = #{wxLongitude,jdbcType=VARCHAR},
+      `wx_precision` = #{wxPrecision,jdbcType=VARCHAR},
+      `subscribe_time` = #{subscribeTime,jdbcType=BIGINT},
+      `isSubscribe` = #{issubscribe,jdbcType=INTEGER},
+      `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+      `edit_time` = #{editTime,jdbcType=TIMESTAMP},
+      `remark` = #{remark,jdbcType=VARCHAR},
+      `version` = #{version,jdbcType=BIGINT},
+      `is_deleted` = #{isDeleted,jdbcType=VARCHAR}
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+    <sql id="Base_Condition">
+        <if test="id != null">
+            and `id` = #{id,jdbcType=VARCHAR}
+        </if>
+        <if test="nickName != null">
+            and `nick_name` = #{nickName,jdbcType=VARCHAR}
+        </if>
+        <if test="realName != null">
+            and `real_name` = #{realName,jdbcType=VARCHAR}
+        </if>
+        <if test="phone != null">
+            and `phone` = #{phone,jdbcType=VARCHAR}
+        </if>
+        <if test="wxUnionid != null">
+            and `wx_unionid` = #{wxUnionid,jdbcType=VARCHAR}
+        </if>
+        <if test="wxOpenid != null">
+            and `wx_openid` = #{wxOpenid,jdbcType=VARCHAR}
+        </if>
+        <if test="sex != null">
+            and `sex` = #{sex,jdbcType=VARCHAR}
+        </if>
+        <if test="intro != null">
+            and `intro` = #{intro,jdbcType=VARCHAR}
+        </if>
+        <if test="city != null">
+            and `city` = #{city,jdbcType=VARCHAR}
+        </if>
+        <if test="province != null">
+            and `province` = #{province,jdbcType=VARCHAR}
+        </if>
+        <if test="country != null">
+            and `country` = #{country,jdbcType=VARCHAR}
+        </if>
+        <if test="status != null">
+            and `status` = #{status,jdbcType=INTEGER}
+        </if>
+        <if test="avatar != null">
+            and `avatar` = #{avatar,jdbcType=VARCHAR}
+        </if>
+        <if test="userType != null">
+            and `user_type` = #{userType,jdbcType=INTEGER}
+        </if>
+        <if test="registIp != null">
+            and `regist_ip` = #{registIp,jdbcType=VARCHAR}
+        </if>
+        <if test="registAgents != null">
+            and `regist_agents` = #{registAgents,jdbcType=VARCHAR}
+        </if>
+        <if test="registDeviceNum != null">
+            and `regist_device_num` = #{registDeviceNum,jdbcType=VARCHAR}
+        </if>
+        <if test="wxUserTag != null">
+            and `wx_user_tag` = #{wxUserTag,jdbcType=VARCHAR}
+        </if>
+        <if test="wxRemark != null">
+            and `wx_remark` = #{wxRemark,jdbcType=VARCHAR}
+        </if>
+        <if test="wxGroupid != null">
+            and `wx_groupid` = #{wxGroupid,jdbcType=VARCHAR}
+        </if>
+        <if test="wxLatitude != null">
+            and `wx_latitude` = #{wxLatitude,jdbcType=VARCHAR}
+        </if>
+        <if test="wxLongitude != null">
+            and `wx_longitude` = #{wxLongitude,jdbcType=VARCHAR}
+        </if>
+        <if test="wxPrecision != null">
+            and `wx_precision` = #{wxPrecision,jdbcType=VARCHAR}
+        </if>
+        <if test="subscribeTime != null">
+            and `subscribe_time` = #{subscribeTime,jdbcType=BIGINT}
+        </if>
+        <if test="issubscribe != null">
+            and `isSubscribe` = #{issubscribe,jdbcType=INTEGER}
+        </if>
+        <if test="createdTime != null">
+            and `created_time` = #{createdTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="editTime != null">
+            and `edit_time` = #{editTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="remark != null">
+            and `remark` = #{remark,jdbcType=VARCHAR}
+        </if>
+        <if test="version != null">
+            and `version` = #{version,jdbcType=BIGINT}
+        </if>
+        <if test="isDeleted != null">
+            and `is_deleted` = #{isDeleted,jdbcType=VARCHAR}
+        </if>
+    </sql>
+    <select id="listByEntity" parameterType="cn.zhishimao.core.user.entity.VkeUser" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from vke_user
+        where 1=1
+        <include refid="Base_Condition"/>
+    </select>
+
+    <select id="selectByOpenId" parameterType="cn.zhishimao.core.user.entity.VkeUser" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from vke_user
+        <where>
+            <include refid="Base_Condition"/>
+        </where>
+    </select>
+
+    <select id="countSingUpCourse" parameterType="java.lang.Long" resultType="java.lang.Long">
+      select count(id) from vke_course_user  where student_id=#{userId,jdbcType=BIGINT}
+    </select>
+
+    <select id="countCollectCourse" parameterType="java.lang.Long" resultType="java.lang.Long">
+      select count(id) from vke_collect  where user_id=#{userId,jdbcType=BIGINT}
+    </select>
+
+    <select id="countBrows"  resultType="java.lang.Long">
+        select count(id) from vke_browsing_history where user_id=#{userId,jdbcType=BIGINT} and obj_type =#{browsType,jdbcType=VARCHAR}
+    </select>
+
+    <select id="findAllSubsciberOfLecturer" parameterType="java.lang.Long"  resultType="java.util.HashMap">
+        select student.id,student.nick_name,student.phone,student.regist_device_num,subscibe.created_time
+        from vke_user student,vke_lecturer_subscibe subscibe
+        where  EXISTS
+        (
+            select student.id from vke_lecturer_subscibe vkeLecturerSubscibe,vke_user vkeUser
+            where vkeLecturerSubscibe.lecturer_id = vkeUser.id
+          and vkeLecturerSubscibe.student_id = student.id and vkeUser.id=#{userId,jdbcType=BIGINT}
+        )
+				and subscibe.student_id = student.id
+    </select>
+
+    <select id="statisticUser" resultType="java.util.HashMap">
+        CALL user_statistic( #{type,jdbcType=VARCHAR,mode=IN})
+    </select>
+</mapper>

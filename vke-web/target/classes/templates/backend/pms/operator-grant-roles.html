@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="backend/fragment/frag :: common_header(~{::title},_)">
+    <title>知识猫 - 运营系统</title>
+</head>
+<script src="/public/js/jquery.min.js?v=2.1.4"></script>
+<script src="/public/js/plugins/layer/layer.min.js?v=1.1"></script>
+<script src="/public/plugins/pickList/pickList.js"></script>
+<link href="/public/plugins/pickList/queryTemplate.css" rel="stylesheet"> </link>
+<script type="text/javascript">
+    $(function(){
+        var roleData = $("#roleDatasId").val();
+        $("#pickList").pickList($.parseJSON(roleData));
+
+
+        $("#getSelected").click(function(){
+            var userId = $("#userId").val();
+
+            var roleIds = '';
+            $("#pickList").find("#pickListResult option").each(function () {
+                roleIds += this.id+','
+            });
+            roleIds = roleIds.substr(0,roleIds.length-1);
+
+            $.ajax({
+                url : "/backend/operator/grantRoles.html",
+                type : "POST",
+                dataType : "json",
+                data : {
+                    "userId" : userId,
+                    "roleIds":roleIds
+                },
+                async : false,
+                success : function(data) {
+                    if(data){
+                        layer.alert("操作成功!",function () {
+                            window.location.href="/backend/operator/list.html"
+                        });
+                    }else{
+                        layer.alert("操作失败!");
+                    }
+
+                },
+                error : function() {
+                    alert("操作失败，请联系管理员！");
+                }
+            });
+        });
+    })
+</script>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>用户赋予角色</h5>
+                </div>
+                <input id="roleDatasId" type="hidden" th:value="${roleDatas}"/>
+                <input id="userId" type="hidden" th:value="${operator.id}"/>
+                <div class="popdiv">
+                    <div class="popdiv_cnt">
+                        <ul class="ipfp" id="cp_os_ul">
+                            <li>
+                                <div id="pickList"></div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="popdiv_btn">
+                        <a class="btnblue bodrad5" href="javascript:void(0)" id="getSelected">确定</a>
+                        <a class="btnblue bodrad5" href="javascript:history.go(-1)" >返回</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

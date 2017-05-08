@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhishimao.core.vke.dao.VkeBrowsingHistoryMapper">
+  <resultMap id="BaseResultMap" type="cn.zhishimao.core.vke.entity.VkeBrowsingHistory">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="obj_type" jdbcType="VARCHAR" property="objType" />
+    <result column="obj_id" jdbcType="BIGINT" property="objId" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="edit_time" jdbcType="TIMESTAMP" property="editTime" />
+    <result column="version" jdbcType="BIGINT" property="version" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    `id`, `user_id`, `obj_type`, `obj_id`, `created_time`, `remark`, `edit_time`, `version`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from `vke_browsing_history`
+    where `id` = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from `vke_browsing_history`
+    where `id` = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.zhishimao.core.vke.entity.VkeBrowsingHistory">
+    insert into `vke_browsing_history` (`id`, `user_id`, `obj_type`, 
+      `obj_id`, `created_time`, `remark`, 
+      `edit_time`, `version`)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{objType,jdbcType=VARCHAR}, 
+      #{objId,jdbcType=BIGINT}, #{createdTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, 
+      #{editTime,jdbcType=TIMESTAMP}, #{version,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.zhishimao.core.vke.entity.VkeBrowsingHistory">
+    insert into `vke_browsing_history`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        `id`,
+      </if>
+      <if test="userId != null">
+        `user_id`,
+      </if>
+      <if test="objType != null">
+        `obj_type`,
+      </if>
+      <if test="objId != null">
+        `obj_id`,
+      </if>
+      <if test="createdTime != null">
+        `created_time`,
+      </if>
+      <if test="remark != null">
+        `remark`,
+      </if>
+      <if test="editTime != null">
+        `edit_time`,
+      </if>
+      <if test="version != null">
+        `version`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="objType != null">
+        #{objType,jdbcType=VARCHAR},
+      </if>
+      <if test="objId != null">
+        #{objId,jdbcType=BIGINT},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="editTime != null">
+        #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.zhishimao.core.vke.entity.VkeBrowsingHistory">
+    update `vke_browsing_history`
+    <set>
+      <if test="userId != null">
+        `user_id` = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="objType != null">
+        `obj_type` = #{objType,jdbcType=VARCHAR},
+      </if>
+      <if test="objId != null">
+        `obj_id` = #{objId,jdbcType=BIGINT},
+      </if>
+      <if test="createdTime != null">
+        `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        `remark` = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="editTime != null">
+        `edit_time` = #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        `version` = #{version,jdbcType=BIGINT},
+      </if>
+    </set>
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.zhishimao.core.vke.entity.VkeBrowsingHistory">
+    update `vke_browsing_history`
+    set `user_id` = #{userId,jdbcType=BIGINT},
+      `obj_type` = #{objType,jdbcType=VARCHAR},
+      `obj_id` = #{objId,jdbcType=BIGINT},
+      `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+      `remark` = #{remark,jdbcType=VARCHAR},
+      `edit_time` = #{editTime,jdbcType=TIMESTAMP},
+      `version` = #{version,jdbcType=BIGINT}
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByType" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from vke_browsing_history
+    where user_id=#{userId,jdbcType=BIGINT} and obj_id= #{objId,jdbcType=BIGINT} and obj_type=#{objType,jdbcType=VARCHAR}
+  </select>
+</mapper>

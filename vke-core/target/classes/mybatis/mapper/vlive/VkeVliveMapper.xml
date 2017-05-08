@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhishimao.core.vlive.dao.VkeVliveMapper">
+  <resultMap id="BaseResultMap" type="cn.zhishimao.core.vlive.entity.VkeVlive">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="lecturer_id" jdbcType="BIGINT" property="lecturerId" />
+    <result column="course_id" jdbcType="BIGINT" property="courseId" />
+    <result column="max_member" jdbcType="INTEGER" property="maxMember" />
+    <result column="is_disable_interact" jdbcType="BIT" property="isDisableInteract" />
+    <result column="is_disable_forum" jdbcType="BIT" property="isDisableForum" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="version" jdbcType="BIGINT" property="version" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    `id`, `lecturer_id`, `course_id`, `max_member`, `is_disable_interact`, `is_disable_forum`, 
+    `start_time`, `end_time`, `created_time`, `version`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from `vke_vlive`
+    where `id` = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from `vke_vlive`
+    where `id` = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="cn.zhishimao.core.vlive.entity.VkeVlive">
+    insert into `vke_vlive` (`id`, `lecturer_id`, `course_id`, 
+      `max_member`, `is_disable_interact`, `is_disable_forum`, 
+      `start_time`, `created_time`, `version`
+      )
+    values (#{id,jdbcType=BIGINT}, #{lecturerId,jdbcType=BIGINT}, #{courseId,jdbcType=BIGINT}, 
+      #{maxMember,jdbcType=INTEGER}, #{isDisableInteract,jdbcType=BIT}, #{isDisableForum,jdbcType=BIT}, 
+      #{startTime,jdbcType=TIMESTAMP}, #{createdTime,jdbcType=TIMESTAMP}, #{version,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="cn.zhishimao.core.vlive.entity.VkeVlive">
+    insert into `vke_vlive`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        `id`,
+      </if>
+      <if test="lecturerId != null">
+        `lecturer_id`,
+      </if>
+      <if test="courseId != null">
+        `course_id`,
+      </if>
+      <if test="maxMember != null">
+        `max_member`,
+      </if>
+      <if test="isDisableInteract != null">
+        `is_disable_interact`,
+      </if>
+      <if test="isDisableForum != null">
+        `is_disable_forum`,
+      </if>
+      <if test="startTime != null">
+        `start_time`,
+      </if>
+      <if test="endTime != null">
+        `end_time`,
+      </if>
+      <if test="createdTime != null">
+        `created_time`,
+      </if>
+      <if test="version != null">
+        `version`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="lecturerId != null">
+        #{lecturerId,jdbcType=BIGINT},
+      </if>
+      <if test="courseId != null">
+        #{courseId,jdbcType=BIGINT},
+      </if>
+      <if test="maxMember != null">
+        #{maxMember,jdbcType=INTEGER},
+      </if>
+      <if test="isDisableInteract != null">
+        #{isDisableInteract,jdbcType=BIT},
+      </if>
+      <if test="isDisableForum != null">
+        #{isDisableForum,jdbcType=BIT},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.zhishimao.core.vlive.entity.VkeVlive">
+    update `vke_vlive`
+    <set>
+      <if test="lecturerId != null">
+        `lecturer_id` = #{lecturerId,jdbcType=BIGINT},
+      </if>
+      <if test="courseId != null">
+        `course_id` = #{courseId,jdbcType=BIGINT},
+      </if>
+      <if test="maxMember != null">
+        `max_member` = #{maxMember,jdbcType=INTEGER},
+      </if>
+      <if test="isDisableInteract != null">
+        `is_disable_interact` = #{isDisableInteract,jdbcType=BIT},
+      </if>
+      <if test="isDisableForum != null">
+        `is_disable_forum` = #{isDisableForum,jdbcType=BIT},
+      </if>
+      <if test="startTime != null">
+        `start_time` = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        `end_time` = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdTime != null">
+        `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        `version` = #{version,jdbcType=BIGINT},
+      </if>
+    </set>
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.zhishimao.core.vlive.entity.VkeVlive">
+    update `vke_vlive`
+    set `lecturer_id` = #{lecturerId,jdbcType=BIGINT},
+      `course_id` = #{courseId,jdbcType=BIGINT},
+      `max_member` = #{maxMember,jdbcType=INTEGER},
+      `is_disable_interact` = #{isDisableInteract,jdbcType=BIT},
+      `is_disable_forum` = #{isDisableForum,jdbcType=BIT},
+      `start_time` = #{startTime,jdbcType=TIMESTAMP},
+      `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+      `version` = #{version,jdbcType=BIGINT}
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByCourseIdAndLecturerId"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from `vke_vlive`
+    where `lecturer_id` = #{lecturerId,jdbcType=BIGINT} and `course_id` = #{courseId,jdbcType=BIGINT}
+  </select>
+</mapper>

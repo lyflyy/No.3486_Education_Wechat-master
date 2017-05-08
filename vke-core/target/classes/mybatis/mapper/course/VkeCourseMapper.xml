@@ -1,0 +1,668 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhishimao.core.course.dao.VkeCourseMapper">
+    <resultMap id="BaseResultMap" type="cn.zhishimao.core.course.entity.VkeCourse">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="lecturer_id" jdbcType="BIGINT" property="lecturerId"/>
+        <result column="cate_id" jdbcType="BIGINT" property="cateId"/>
+        <result column="cate_name" jdbcType="VARCHAR" property="cateName"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="intro" jdbcType="VARCHAR" property="intro"/>
+        <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
+        <result column="start_time" jdbcType="TIMESTAMP" property="startTime"/>
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime"/>
+        <result column="duration" jdbcType="BIGINT" property="duration"/>
+        <result column="price" jdbcType="DOUBLE" property="price"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="max_sigup_count" jdbcType="INTEGER" property="maxSigupCount"/>
+        <result column="sigup_count" jdbcType="INTEGER" property="sigupCount"/>
+        <result column="audit_count" jdbcType="INTEGER" property="auditCount"/>
+        <result column="interact_count" jdbcType="INTEGER" property="interactCount"/>
+        <result column="collect_count" jdbcType="INTEGER" property="collectCount"/>
+        <result column="evaluate_count" jdbcType="INTEGER" property="evaluateCount"/>
+        <result column="share_count" jdbcType="INTEGER" property="shareCount"/>
+        <result column="is_high_grade" jdbcType="BIT" property="isHighGrade"/>
+        <result column="is_recommend" jdbcType="BIT" property="isRecommend"/>
+        <result column="vlive_id" jdbcType="VARCHAR" property="vliveId"/>
+        <result column="created_time" jdbcType="TIMESTAMP" property="createdTime"/>
+        <result column="edit_time" jdbcType="TIMESTAMP" property="editTime"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="version" jdbcType="BIGINT" property="version"/>
+        <result column="is_deleted" jdbcType="VARCHAR" property="isDeleted"/>
+        <result column="audit_pass_time" jdbcType="TIMESTAMP" property="auditPassTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    `id`, `lecturer_id`, `cate_id`, `cate_name`, `name`, `intro`, `avatar`, `start_time`, `end_time`,
+    `duration`, `price`, `status`, `max_sigup_count`, `sigup_count`, `audit_count`, `interact_count`, 
+    `collect_count`, `share_count`,`evaluate_count`, `is_high_grade`, `is_recommend`, `vlive_id`, `created_time`,
+    `edit_time`, `remark`, `version`, `is_deleted`, `audit_pass_time`
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `vke_course`
+        where `id` = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from `vke_course`
+    where `id` = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"
+            parameterType="cn.zhishimao.core.course.entity.VkeCourse">
+    insert into `vke_course` (`id`, `lecturer_id`, `cate_id`, 
+      `cate_name`, `name`, `intro`, 
+      `avatar`, `start_time`, `duration`, 
+      `price`, `status`, `max_sigup_count`, 
+      `sigup_count`, `audit_count`, `interact_count`, 
+      `collect_count`, `share_count`,`evaluate_count`, `is_high_grade`,
+      `is_recommend`, `vlive_id`, `created_time`, 
+      `edit_time`, `remark`, `version`, 
+      `is_deleted`, `audit_pass_time`)
+    values (#{id,jdbcType=BIGINT}, #{lecturerId,jdbcType=BIGINT}, #{cateId,jdbcType=BIGINT}, 
+      #{cateName,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{intro,jdbcType=VARCHAR}, 
+      #{avatar,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, #{duration,jdbcType=BIGINT}, 
+      #{price,jdbcType=DOUBLE}, #{status,jdbcType=INTEGER}, #{maxSigupCount,jdbcType=INTEGER}, 
+      #{sigupCount,jdbcType=INTEGER}, #{auditCount,jdbcType=INTEGER}, #{interactCount,jdbcType=INTEGER}, 
+      #{collectCount,jdbcType=INTEGER}, #{shareCount,jdbcType=INTEGER}, #{evaluateCount,jdbcType=INTEGER}, #{isHighGrade,jdbcType=BIT},
+      #{isRecommend,jdbcType=BIT}, #{vliveId,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, 
+      #{editTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, #{version,jdbcType=BIGINT}, 
+      #{isDeleted,jdbcType=VARCHAR}, #{auditPassTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id"
+            parameterType="cn.zhishimao.core.course.entity.VkeCourse">
+        insert into `vke_course`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                `id`,
+            </if>
+            <if test="lecturerId != null">
+                `lecturer_id`,
+            </if>
+            <if test="cateId != null">
+                `cate_id`,
+            </if>
+            <if test="cateName != null">
+                `cate_name`,
+            </if>
+            <if test="name != null">
+                `name`,
+            </if>
+            <if test="intro != null">
+                `intro`,
+            </if>
+            <if test="avatar != null">
+                `avatar`,
+            </if>
+            <if test="startTime != null">
+                `start_time`,
+            </if>
+            <if test="endTime != null">
+                `end_time`,
+            </if>
+            <if test="duration != null">
+                `duration`,
+            </if>
+            <if test="price != null">
+                `price`,
+            </if>
+            <if test="status != null">
+                `status`,
+            </if>
+            <if test="maxSigupCount != null">
+                `max_sigup_count`,
+            </if>
+            <if test="sigupCount != null">
+                `sigup_count`,
+            </if>
+            <if test="auditCount != null">
+                `audit_count`,
+            </if>
+            <if test="interactCount != null">
+                `interact_count`,
+            </if>
+            <if test="collectCount != null">
+                `collect_count`,
+            </if>
+            <if test="shareCount != null">
+                `share_count`,
+            </if>
+            <if test="evaluateCount != null">
+                `evaluate_count`,
+            </if>
+            <if test="isHighGrade != null">
+                `is_high_grade`,
+            </if>
+            <if test="isRecommend != null">
+                `is_recommend`,
+            </if>
+            <if test="vliveId != null">
+                `vlive_id`,
+            </if>
+            <if test="createdTime != null">
+                `created_time`,
+            </if>
+            <if test="editTime != null">
+                `edit_time`,
+            </if>
+            <if test="remark != null">
+                `remark`,
+            </if>
+            <if test="version != null">
+                `version`,
+            </if>
+            <if test="isDeleted != null">
+                `is_deleted`,
+            </if>
+            <if test="auditPassTime != null">
+                `audit_pass_time`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="lecturerId != null">
+                #{lecturerId,jdbcType=BIGINT},
+            </if>
+            <if test="cateId != null">
+                #{cateId,jdbcType=BIGINT},
+            </if>
+            <if test="cateName != null">
+                #{cateName,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="intro != null">
+                #{intro,jdbcType=VARCHAR},
+            </if>
+            <if test="avatar != null">
+                #{avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="duration != null">
+                #{duration,jdbcType=BIGINT},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=DOUBLE},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="maxSigupCount != null">
+                #{maxSigupCount,jdbcType=INTEGER},
+            </if>
+            <if test="sigupCount != null">
+                #{sigupCount,jdbcType=INTEGER},
+            </if>
+            <if test="auditCount != null">
+                #{auditCount,jdbcType=INTEGER},
+            </if>
+            <if test="interactCount != null">
+                #{interactCount,jdbcType=INTEGER},
+            </if>
+            <if test="collectCount != null">
+                #{collectCount,jdbcType=INTEGER},
+            </if>
+            <if test="shareCount != null">
+                #{shareCount,jdbcType=INTEGER},
+            </if>
+            <if test="evaluateCount != null">
+                #{evaluateCount,jdbcType=INTEGER},
+            </if>
+            <if test="isHighGrade != null">
+                #{isHighGrade,jdbcType=BIT},
+            </if>
+            <if test="isRecommend != null">
+                #{isRecommend,jdbcType=BIT},
+            </if>
+            <if test="vliveId != null">
+                #{vliveId,jdbcType=VARCHAR},
+            </if>
+            <if test="createdTime != null">
+                #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="editTime != null">
+                #{editTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=BIGINT},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted,jdbcType=VARCHAR},
+            </if>
+            <if test="auditPassTime != null">
+                #{auditPassTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.zhishimao.core.course.entity.VkeCourse">
+        <include refid="updateByPrimaryKeySelectiveSql"/>
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.zhishimao.core.course.entity.VkeCourse">
+    update `vke_course`
+    set `lecturer_id` = #{lecturerId,jdbcType=BIGINT},
+      `cate_id` = #{cateId,jdbcType=BIGINT},
+      `cate_name` = #{cateName,jdbcType=VARCHAR},
+      `name` = #{name,jdbcType=VARCHAR},
+      `intro` = #{intro,jdbcType=VARCHAR},
+      `avatar` = #{avatar,jdbcType=VARCHAR},
+      `start_time` = #{startTime,jdbcType=TIMESTAMP},
+      `duration` = #{duration,jdbcType=BIGINT},
+      `price` = #{price,jdbcType=DOUBLE},
+      `status` = #{status,jdbcType=INTEGER},
+      `max_sigup_count` = #{maxSigupCount,jdbcType=INTEGER},
+      `sigup_count` = #{sigupCount,jdbcType=INTEGER},
+      `audit_count` = #{auditCount,jdbcType=INTEGER},
+      `interact_count` = #{interactCount,jdbcType=INTEGER},
+      `collect_count` = #{collectCount,jdbcType=INTEGER},
+      `share_count` = #{shareCount,jdbcType=INTEGER},
+      `is_high_grade` = #{isHighGrade,jdbcType=BIT},
+      `is_recommend` = #{isRecommend,jdbcType=BIT},
+      `vlive_id` = #{vliveId,jdbcType=VARCHAR},
+      `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+      `edit_time` = #{editTime,jdbcType=TIMESTAMP},
+      `remark` = #{remark,jdbcType=VARCHAR},
+      `version` = #{version,jdbcType=BIGINT},
+      `is_deleted` = #{isDeleted,jdbcType=VARCHAR},
+      `audit_pass_time` = #{auditPassTime,jdbcType=TIMESTAMP}
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+
+    <sql id="Base_Condition">
+        <if test="id != null">
+            and id = #{id,jdbcType=BIGINT}
+        </if>
+        <if test="lecturerId != null">
+            and lecturer_id = #{lecturerId,jdbcType=BIGINT}
+        </if>
+        <if test="cateId != null">
+            and cate_id = #{cateId,jdbcType=BIGINT}
+        </if>
+        <if test="cateName != null">
+            and cate_name = #{cateName,jdbcType=VARCHAR}
+        </if>
+        <if test="name != null">
+            and name = #{name,jdbcType=VARCHAR}
+        </if>
+        <if test="intro != null">
+            and intro = #{intro,jdbcType=VARCHAR}
+        </if>
+        <if test="avatar != null">
+            and avatar = #{avatar,jdbcType=VARCHAR}
+        </if>
+        <if test="startTime != null">
+            and start_time = #{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="duration != null">
+            and duration = #{duration,jdbcType=BIGINT}
+        </if>
+        <if test="price != null">
+            and price = #{price,jdbcType=DOUBLE}
+        </if>
+        <if test="status != null">
+            and status = #{status,jdbcType=INTEGER}
+        </if>
+        <if test="maxSigupCount != null">
+            and max_sigup_count = #{maxSigupCount,jdbcType=INTEGER}
+        </if>
+        <if test="sigupCount != null">
+            and sigup_count = #{sigupCount,jdbcType=INTEGER}
+        </if>
+        <if test="auditCount != null">
+            and audit_count = #{auditCount,jdbcType=INTEGER}
+        </if>
+        <if test="interactCount != null">
+            and interact_count = #{interactCount,jdbcType=INTEGER}
+        </if>
+        <if test="collectCount != null">
+            and collect_count = #{collectCount,jdbcType=INTEGER}
+        </if>
+        <if test="shareCount != null">
+            share_count = #{shareCount,jdbcType=INTEGER}
+        </if>
+        <if test="createdTime != null">
+            and created_time = #{createdTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="isDeleted != null">
+            and is_deleted = #{isDeleted,jdbcType=TIMESTAMP}
+        </if>
+        <if test="isRecommend != null">
+            and is_recommend = #{isRecommend,jdbcType=TIMESTAMP}
+        </if>
+        <if test="auditPassTime != null">
+            and audit_pass_time = #{auditPassTime,jdbcType=TIMESTAMP}
+        </if>
+    </sql>
+    <sql id="updateByPrimaryKeySelectiveSql">
+        update `vke_course`
+        <set>
+            <if test="lecturerId != null">
+                `lecturer_id` = #{lecturerId,jdbcType=BIGINT},
+            </if>
+            <if test="cateId != null">
+                `cate_id` = #{cateId,jdbcType=BIGINT},
+            </if>
+            <if test="cateName != null">
+                `cate_name` = #{cateName,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="intro != null">
+                `intro` = #{intro,jdbcType=VARCHAR},
+            </if>
+            <if test="avatar != null">
+                `avatar` = #{avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="startTime != null">
+                `start_time` = #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                `end_time` = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="duration != null">
+                `duration` = #{duration,jdbcType=BIGINT},
+            </if>
+            <if test="price != null">
+                `price` = #{price,jdbcType=DOUBLE},
+            </if>
+            <if test="status != null">
+                `status` = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="maxSigupCount != null">
+                `max_sigup_count` = #{maxSigupCount,jdbcType=INTEGER},
+            </if>
+            <if test="sigupCount != null">
+                `sigup_count` = #{sigupCount,jdbcType=INTEGER},
+            </if>
+            <if test="auditCount != null">
+                `audit_count` = #{auditCount,jdbcType=INTEGER},
+            </if>
+            <if test="interactCount != null">
+                `interact_count` = #{interactCount,jdbcType=INTEGER},
+            </if>
+            <if test="collectCount != null">
+                `collect_count` = #{collectCount,jdbcType=INTEGER},
+            </if>
+            <if test="shareCount != null">
+                `share_count` = #{shareCount,jdbcType=INTEGER},
+            </if>
+            <if test="isHighGrade != null">
+                `is_high_grade` = #{isHighGrade,jdbcType=BIT},
+            </if>
+            <if test="isRecommend != null">
+                `is_recommend` = #{isRecommend,jdbcType=BIT},
+            </if>
+            <if test="vliveId != null">
+                `vlive_id` = #{vliveId,jdbcType=VARCHAR},
+            </if>
+            <if test="createdTime != null">
+                `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="editTime != null">
+                `edit_time` = #{editTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                `remark` = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                `version` = #{version,jdbcType=BIGINT},
+            </if>
+            <if test="isDeleted != null">
+                `is_deleted` = #{isDeleted,jdbcType=VARCHAR},
+            </if>
+            <if test="auditPassTime != null">
+                `audit_pass_time` = #{auditPassTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where `id` = #{id,jdbcType=BIGINT}
+    </sql>
+
+    <select id="listBy" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from vke_course
+        where 1=1
+        <include refid="Base_Condition" />
+    </select>
+
+    <select id="listByEntity" parameterType="cn.zhishimao.core.course.entity.VkeCourse" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from vke_course
+        where 1=1
+        <include refid="Base_Condition" />
+    </select>
+
+
+
+    <update id="encreaseShareCount" parameterType="java.lang.Long">
+    update vke_course set share_count = share_count+1
+    where id = #{courseId,jdbcType=BIGINT}
+  </update>
+
+    <update id="encreaseCollectCount" parameterType="java.lang.Long">
+    update vke_course set collect_count = collect_count+1
+    where id = #{courseId,jdbcType=BIGINT}
+  </update>
+
+    <update id="subCollectCount" parameterType="java.lang.Long">
+        update vke_course set collect_count = collect_count-1
+        where id = #{courseId,jdbcType=BIGINT}
+    </update>
+
+    <update id="encreaseSignInteractCount" parameterType="java.lang.Long">
+    update vke_course
+    set sigup_count= sigup_count+1,interact_count = interact_count+1
+    where id =#{courseId,jdbcType=BIGINT}
+  </update>
+
+    <update id="encreaseSignAuditCount" parameterType="java.lang.Long">
+    update vke_course
+    set sigup_count= sigup_count+1,audit_count = audit_count+1
+    where id =#{courseId,jdbcType=BIGINT}
+  </update>
+
+    <select id="selectAllMyBuyCourse" parameterType="java.lang.Long" resultType="java.util.HashMap">
+      select
+        vc.`id`, vc.`lecturer_id`, vc.`cate_id`, vc.`cate_name`, vc.`name`, vc.`intro`, vc.`avatar`, vc.`start_time`,
+        vc.`duration`, vc.`price`, vc.`status`, vc.`max_sigup_count`, vc.`sigup_count`, vc.`audit_count`,
+        vc.`interact_count`,
+        vc.`collect_count`, vc.`share_count`,vc.`evaluate_count`, vc.`vlive_id`,
+        vcu.`created_time`,
+        vu.`nick_name`,
+        vl.`title`,timestampdiff(MINUTE,vc.start_time,NOW()) as start_vlive_time
+      from vke_course_user vcu
+      left join vke_course vc on vc.id = vcu.course_id
+      left join vke_user vu on vu.id = vc.lecturer_id
+      left join vke_lecturer vl on vl.user_id = vu.id
+      where vcu.student_id = #{userId,jdbcType=BIGINT}
+      order by vcu.created_time desc
+  </select>
+
+    <select id="selectMyCollectCourse" parameterType="java.lang.Long" resultType="java.util.HashMap">
+      select
+        vc.`id`, vc.`lecturer_id`, vc.`cate_id`, vc.`cate_name`, vc.`name`, vc.`intro`, vc.`avatar`, vc.`start_time`,
+        vc.`duration`, vc.`price`, vc.`status`, vc.`max_sigup_count`, vc.`sigup_count`, vc.`audit_count`,
+        vc.`interact_count`,
+        vc.`collect_count`, vc.`share_count`,vc.`evaluate_count`, vc.`vlive_id`,
+        vc2.`created_time`,
+        vu.`nick_name`,
+        vl.`title`,timestampdiff(MINUTE,vc.start_time,NOW()) as start_vlive_time
+      from vke_collect vc2
+      left join vke_course vc on vc.id = vc2.obj_id
+      left join vke_user vu on vu.id = vc.lecturer_id
+      left join vke_lecturer vl on vl.user_id = vu.id
+      where vc2.user_id = #{userId,jdbcType=BIGINT}
+      order by vc2.created_time desc
+  </select>
+
+    <select id="selectBrowsingHistory" parameterType="java.lang.Long" resultType="java.util.HashMap">
+      select
+        vc.`id`, vc.`lecturer_id`, vc.`cate_id`, vc.`cate_name`, vc.`name`, vc.`intro`, vc.`avatar`, vc.`start_time`,
+        vc.`duration`, vc.`price`, vc.`status`, vc.`max_sigup_count`, vc.`sigup_count`, vc.`audit_count`,
+        vc.`interact_count`,
+        vc.`collect_count`, vc.`share_count`,vc.`evaluate_count`, vc.`vlive_id`,
+        vbh.`created_time`,
+        vu.`nick_name`,
+        vl.`title`,timestampdiff(MINUTE,vc.start_time,NOW()) as start_vlive_time
+      from vke_browsing_history vbh
+      left join vke_course vc on vc.id = vbh.obj_id
+      left join vke_user vu on vu.id = vc.lecturer_id
+      left join vke_lecturer vl on vl.user_id = vu.id
+      where vbh.user_id = #{userId,jdbcType=BIGINT} and vbh.obj_type = 'course'
+      order by vbh.edit_time desc, vbh.created_time desc
+  </select>
+
+    <select id="selectAll" resultType="java.util.HashMap">
+        select
+        vc.`id`, vc.`lecturer_id`, vc.`cate_id`, vc.`cate_name`, vc.`name`, vc.`intro`, vc.`avatar`, vc.`start_time`, vc.`end_time`,
+        vc.`duration`, vc.`price`, vc.`status`, vc.`max_sigup_count`, vc.`sigup_count`, vc.`audit_count`,
+        vc.`interact_count`,
+        vc.`collect_count`, vc.`share_count`,vc.`evaluate_count`, vc.`is_high_grade`, vc.`is_recommend`, vc.`vlive_id`,
+        vc.`created_time`,
+        vc.`edit_time`, vc.`remark`, vc.`audit_pass_time`, vu.`nick_name`,
+        vl.`title`,timestampdiff(MINUTE,vc.start_time,NOW()) as start_vlive_time
+        from vke_course vc
+        left join vke_user vu on vu.id = vc.lecturer_id
+        left join vke_lecturer vl on vl.user_id = vu.id
+        <where>
+            <if test="status != null">
+                and vc.status = #{status,jdbcType=INTEGER}
+            </if>
+            <if test="status == null and isSelf == false">
+                and vc.status in (1,2,3)
+            </if>
+            <if test="status == null and isSelf == true">
+                and vc.status in (0,1,2,3)
+            </if>
+            <if test="userId != null">
+                and vc.lecturer_id = #{userId,jdbcType=BIGINT}
+            </if>
+            and vc.is_deleted = '0'
+        </where>
+        ORDER BY vc.`is_recommend` DESC, vc.`status` DESC ,vc.`created_time` DESC
+    </select>
+
+    <update id="adjustAuditInteractCount" parameterType="java.lang.Long">
+      update vke_course
+      set audit_count= audit_count-1,interact_count = interact_count+1
+      where id =#{courseId,jdbcType=BIGINT}
+  </update>
+
+    <update id="updateEvaluateCount" parameterType="java.lang.Long">
+    update vke_course
+    set evaluate_count= evaluate_count + 1
+    where id =#{courseId,jdbcType=BIGINT}
+  </update>
+
+    <select id="findAllCourseByLecturer" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from vke_course
+        where lecturer_id = #{userId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectStatusAndOverStartTime"  resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from vke_course
+        where status = #{status,jdbcType=INTEGER} and start_time &lt;= #{endTime,jdbcType=VARCHAR}
+    </select>
+    
+    <update id="updateBySelective" parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+            update `vke_course`
+            <set>
+                <if test="item.lecturerId != null">
+                    `lecturer_id` = #{item.lecturerId,jdbcType=BIGINT},
+                </if>
+                <if test="item.cateId != null">
+                    `cate_id` = #{item.cateId,jdbcType=BIGINT},
+                </if>
+                <if test="item.cateName != null">
+                    `cate_name` = #{item.cateName,jdbcType=VARCHAR},
+                </if>
+                <if test="item.name != null">
+                    `name` = #{item.name,jdbcType=VARCHAR},
+                </if>
+                <if test="item.intro != null">
+                    `intro` = #{item.intro,jdbcType=VARCHAR},
+                </if>
+                <if test="item.avatar != null">
+                    `avatar` = #{item.avatar,jdbcType=VARCHAR},
+                </if>
+                <if test="item.startTime != null">
+                    `start_time` = #{item.startTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="item.endTime != null">
+                    `end_time` = #{item.endTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="item.duration != null">
+                    `duration` = #{item.duration,jdbcType=BIGINT},
+                </if>
+                <if test="item.price != null">
+                    `price` = #{item.price,jdbcType=DOUBLE},
+                </if>
+                <if test="item.status != null">
+                    `status` = #{item.status,jdbcType=INTEGER},
+                </if>
+                <if test="item.maxSigupCount != null">
+                    `max_sigup_count` = #{item.maxSigupCount,jdbcType=INTEGER},
+                </if>
+                <if test="item.sigupCount != null">
+                    `sigup_count` = #{item.sigupCount,jdbcType=INTEGER},
+                </if>
+                <if test="item.auditCount != null">
+                    `audit_count` = #{item.auditCount,jdbcType=INTEGER},
+                </if>
+                <if test="item.interactCount != null">
+                    `interact_count` = #{item.interactCount,jdbcType=INTEGER},
+                </if>
+                <if test="item.collectCount != null">
+                    `collect_count` = #{item.collectCount,jdbcType=INTEGER},
+                </if>
+                <if test="item.shareCount != null">
+                    `share_count` = #{item.shareCount,jdbcType=INTEGER},
+                </if>
+                <if test="item.isHighGrade != null">
+                    `is_high_grade` = #{item.isHighGrade,jdbcType=BIT},
+                </if>
+                <if test="item.isRecommend != null">
+                    `is_recommend` = #{item.isRecommend,jdbcType=BIT},
+                </if>
+                <if test="item.vliveId != null">
+                    `vlive_id` = #{item.vliveId,jdbcType=VARCHAR},
+                </if>
+                <if test="item.createdTime != null">
+                    `created_time` = #{item.createdTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="item.editTime != null">
+                    `edit_time` = #{item.editTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="item.remark != null">
+                    `remark` = #{item.remark,jdbcType=VARCHAR},
+                </if>
+                <if test="item.version != null">
+                    `version` = #{item.version,jdbcType=BIGINT},
+                </if>
+                <if test="item.isDeleted != null">
+                    `is_deleted` = #{item.isDeleted,jdbcType=VARCHAR},
+                </if>
+                <if test="item.auditPassTime != null">
+                    `audit_pass_time` = #{item.auditPassTime,jdbcType=TIMESTAMP},
+                </if>
+            </set>
+            where `id` = #{item.id,jdbcType=BIGINT}
+        </foreach>
+    </update>
+</mapper>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
+<head th:replace="wx/fragment/frag :: common_header(~{::title},_)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>我的收益</title>
+</head>
+<body class="vke">
+<div class="container" id="app">
+    <div class="weui-tab">
+
+        <div class="page me">
+            <div class="page__bd">
+
+                <div class="weui-panel weui-panel_access">
+                    <div class="weui-panel__bd">
+                        <div class="weui-media-box weui-media-box_appmsg ">
+
+                            <div class="weui-media-box__bd cm_flex">
+                                <h4 class="weui-media-box__title ">当前可提现金额（元）</h4>
+                                <p class="tixian_num"
+                                   th:text="${#numbers.formatDecimal(account?.balance,1,2,'POINT')}"></p>
+                            </div>
+                            <div class="weui-media-box__bd text-right">
+                                <a href="#"
+                                   th:onclick="'javascript:withDraw(\''+ ${#numbers.formatDecimal(account?.balance,1,2,'POINT')} + '\');'"
+                                   id="showIOSDialog2" class="weui-btn weui-btn_mini weui-btn_plain-primary">提现</a>
+                            </div>
+                        </div>
+
+                        <div class="money-wrap">
+                            <div class="weui-flex">
+                                <div class="weui-flex__item">
+                                    <div class="">总收益(元)<br/><a class="link" href="javascript:void(0);"
+                                                                th:text="${#numbers.formatDecimal(account?.totalIncome,1,2,'POINT')}"></a>
+                                    </div>
+                                </div>
+                                <div class="weui-flex__item">
+                                    <div class="">总支出(元)<br/><a class="link" href="javascript:void(0);"
+                                                                th:text="${#numbers.formatDecimal(account?.totalExpend,1,2,'POINT')}"></a>
+                                    </div>
+                                </div>
+                                <div class="weui-flex__item">
+                                    <div class="">已提现总额(元)<br/><a class="link" href="javascript:void(0);"
+                                                                  th:text="${#numbers.formatDecimal(account?.totalWithdraw,1,2,'POINT')}"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="weui-panel">
+                    <!--小菜单-->
+                    <div class="cm_menu_group cm_menu_group2">
+                        <a th:href="@{/wx/view/user/account}" th:class="${tab eq 'default'}?'active':''"
+                           data-toggle="tab" aria-expanded="false">收益</a>
+                        <a th:href="@{/wx/view/user/account(tab='expend')}" th:class="${tab eq 'expend'}?'active':''"
+                           data-toggle="tab" aria-expanded="false">支出</a>
+                        <a th:href="@{/wx/view/user/account(tab='withDraw')}"
+                           th:class="${tab eq 'withDraw'}?'active':''" data-toggle="tab" aria-expanded="false">提现记录</a>
+                    </div>
+                    <!--小菜单 end-->
+                    <div class="panel-body">
+                        <div class="tab-content">
+                            <div layout:fragment="content" class="tab-pane active">
+                                <div th:each="item: ${pageData.list}" class="cm_list">
+                                    <div class="cm_today">
+                                        <span th:text="${#dates.format(item.createdTime,'yyyy-MM-dd')}"></span><br/><span
+                                            th:text="${#dates.format(item.createdTime,'HH:mm:ss')}"></span>
+                                    </div>
+                                    <div class="weui-flex__item">
+                                        <div class="placeholder"><img class="weui-media-box__thumb avatar"
+                                                                      th:src="${session.vkeu.avatar}" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="weui-flex__item">
+                                        <div class="placeholder">
+                                            <h4 class="weui-media-box__title" th:text="${item.remark}"></h4>
+                                            <p class=""
+                                               th:text="${#numbers.formatDecimal(item.balance,1,2,'POINT')}"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="weui-msg" th:if="${#lists.isEmpty(pageData.list)}">
+                                    <div class="weui-msg__icon-area"><i
+                                            class="weui-icon-warn weui-icon_msg-primary"></i></div>
+                                    <div class="weui-msg__text-area">
+                                        <h2 class="weui-msg__desc">暂时没有记录</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div th:replace="wx/fragment/frag::pageFooter"></div>
+    </div>
+</div>
+
+<div th:include="wx/fragment/frag::commonScript"></div>
+<script src="/public/js/plugins/layer/layer.min.js?v=1.1"></script>
+
+<script type="text/javascript">
+    function withDraw(blance) {
+        if (blance <= 0) {
+            $.alert("您当前余额为零，无法提现!", "提示");
+            return;
+        }
+        $.confirm("您当前余额为" + blance + ",确认全部提现？", "确认提现?", function () {
+            $.post("/api/account/withdraw", {}, function (data) {
+                if (data.success) {
+                    $.toast(data.msg);
+                } else {
+                    $.alert(data.msg, "提示");
+                }
+            })
+        });
+    }
+
+</script>
+</body>
+</html>

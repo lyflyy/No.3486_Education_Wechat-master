@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="backend/fragment/frag :: common_header(~{::title},_)">
+    <title>知识猫 - 运营系统</title>
+</head>
+<script src="/public/js/jquery.min.js?v=2.1.4"></script>
+<script src="/public/js/plugins/layer/layer.min.js?v=1.1"></script>
+<script type="text/javascript">
+$(function () {
+    $("#forbidHrefId").click(function () {
+        var id = $("#idVal").text()
+        $.post("/backend/operator/forbidLogin/"+id, {}, function (data) {
+            if(data){
+                layer.alert("禁止登陆成功!",function () {
+                    window.location.href="/backend/operator/list";
+                });
+            }else{
+                layer.alert("禁止登陆操作失败,请重新操作!");
+            }
+        })
+    });
+})
+
+
+</script>
+<body class="gray-bg">
+
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>所有管理员</h5>
+                    <div class="ibox-tools">
+                        <a  th:href="@{/backend/operator/addUi}" class="btn btn-primary btn-xs">添加管理员</a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row m-b-sm m-t-sm">
+                        <div class="col-md-1">
+                            <button type="button" id="loading-example-btn" class="btn btn-white btn-sm"><i class="fa fa-refresh"></i> 刷新</button>
+                        </div>
+                        <div class="col-md-11">
+                            <div class="input-group">
+                                <input type="text" placeholder="请输入管理员名称" class="input-sm form-control"> <span class="input-group-btn">
+                                        <button type="button" class="btn btn-sm btn-primary"> 搜索</button> </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-list">
+
+                        <table id="exampleTableToolbar" data-mobile-responsive="true" class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th style="" data-field="loginName">
+                                    <div class="th-inner ">登录名</div>
+                                    <div class="fht-cell"></div>
+                                </th>
+                                <th style="" data-field="roleName">
+                                    <div class="th-inner ">角色</div>
+                                </th>
+                                <th style="" data-field="status">
+                                    <div class="th-inner ">状态</div>
+                                    <div class="fht-cell"></div>
+                                </th>
+                                <th style="" data-field="createdTime">
+                                    <div class="th-inner ">创建时间</div>
+                                    <div class="fht-cell"></div>
+                                </th>
+                                <th style="" data-field="mark">
+                                    <div class="th-inner ">备注</div>
+                                    <div class="fht-cell"></div>
+                                </th>
+                                <th class="text-right">
+                                    <div class="th-inner ">操作</div>
+                                    <div class="fht-cell"></div>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr  th:if="${not #lists.isEmpty(pageData.list)}" th:each="item : ${pageData.list}">
+                                    <td>
+                                        <a th:href="@{/backend/operator/info/{id}(id=${item[id]})}"><span th:text="${item[loginName]}"></span></a>
+                                    </td>
+                                    <td th:text="${item[roleName]}"></td>
+                                    <td>
+                                        <span th:switch="${item[status]}">
+                                            <i th:case="'1'">正常</i>
+                                            <i th:case="'2'">锁定</i>
+                                            <i th:case="'3'">停用</i>
+                                        </span>
+                                    </td>
+                                    <td th:text="${item[createdTime]==0?'':#dates.format(item[createdTime],'yyyy-MM-dd HH:mm:ss')}"></td>
+                                    <td th:text="${item[remark]}"></td>
+                                    <td class="project-actions">
+                                        <a th:if="${not #strings.startsWith(item[loginName],'admin')}" th:href="@{/backend/operator/grantRolesPage/{userId}(userId=${item[id]})}" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> 赋予角色 </a>
+                                        <a th:href="@{/backend/operator/toUpdatePwd/{id}(id=${item[id]})}" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> 修改密码 </a>
+                                        <a th:if="${not #strings.startsWith(item[loginName],'admin')}" id="forbidHrefId"  class="btn btn-white btn-sm"><i class="fa fa-folder"></i> 禁止登录<span style="display: none" id="idVal" th:text="${item[id]}"></span> </a>
+                                    </td>
+                                </tr>
+                                <tr class="no-records-found" th:if="${#lists.isEmpty(pageData.list)}">
+                                    <td colspan="8">没有找到匹配的记录</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div th:replace="backend/fragment/frag :: pagination"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function(){$("#loading-example-btn").click(function(){btn=$(this);simpleLoad(btn,true);simpleLoad(btn,false)})});function simpleLoad(btn,state){if(state){btn.children().addClass("fa-spin");btn.contents().last().replaceWith(" Loading")}else{setTimeout(function(){btn.children().removeClass("fa-spin");btn.contents().last().replaceWith(" Refresh")},2000)}};
+</script>
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/projects.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:44 GMT -->
+
+</body>
+</html>

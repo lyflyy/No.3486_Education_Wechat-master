@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head></head>
+<body>
+
+<div class="weui-panel__bd">
+    <a th:each="lecturer: ${pageData.list}" th:href="@{/wx/view/lecturer/{id}(id=${lecturer.user_id})}"
+       class="weui-media-box weui-media-box_appmsg ">
+        <div class="weui-media-box__hd">
+            <img class="weui-media-box__thumb avatar"
+                 th:src="${lecturer.avatar}">
+            <span th:if="${lecturer.is_high_quality eq true}"
+                  class="quality vke-icon-you"></span>
+        </div>
+
+        <div class="weui-media-box__bd">
+            <h4 class="weui-media-box__title " th:text="${lecturer.nick_name}"></h4>
+            <p class="weui-media-box__desc" th:text="${lecturer?.title}"></p>
+        </div>
+        <div class="weui-media-box__bd text-right">
+            <p class="weui-media-box__desc">
+                <span th:text="${lecturer.subscibe_count}"></span> 订阅
+            </p>
+        </div>
+    </a>
+
+    <div class="weui-msg" th:if="${#lists.isEmpty(pageData.list)}">
+        <div class="weui-msg__icon-area"><i class="weui-icon-warn weui-icon_msg-primary"></i></div>
+        <div class="weui-msg__text-area">
+            <h2 class="weui-msg__desc">暂时没有数据</h2>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

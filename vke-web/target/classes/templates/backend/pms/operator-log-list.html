@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="backend/fragment/frag :: common_header(~{::title},_)">
+    <title>知识猫 - 运营系统</title>
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>后台用户操作日志列表</h5>
+                </div>
+                <div class="ibox-content">
+
+                    <div class="project-list">
+
+                        <table id="exampleTableToolbar" data-mobile-responsive="true" class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th style="" data-field="moduleName">
+                                    <div class="th-inner ">模块名称</div>
+                                </th>
+                                <th style="" data-field="operateName">
+                                    <div class="th-inner ">动作名称</div>
+                                    <div class="fht-cell"></div>
+                                </th>
+                                <th style="" data-field="remark">
+                                    <div class="th-inner ">动作描述</div>
+                                    <div class="fht-cell"></div>
+                                </th>
+                                <th style="" data-field="ip">
+                                    <div class="th-inner ">ip地址</div>
+                                    <div class="fht-cell"></div>
+                                </th>
+                                <th style="" data-field="params">
+                                    <div class="th-inner ">请求参数</div>
+                                    <div class="fht-cell"></div>
+                                </th>
+                                <th style="" data-field="workTime">
+                                    <div class="th-inner ">耗时(s)</div>
+                                    <div class="fht-cell"></div>
+                                </th>
+                                <th style="" data-field="creater">
+                                    <div class="th-inner ">操作人</div>
+                                    <div class="fht-cell"></div>
+                                </th>
+                                <th style="" data-field="createdTime">
+                                    <div class="th-inner ">操作时间</div>
+                                    <div class="fht-cell"></div>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:if="${not #lists.isEmpty(pageData.list)}" th:each="item : ${pageData.list}">
+                                    <td th:text="${item.moduleName}"></td>
+                                    <td th:text="${item.operateName}"></td>
+                                    <td th:text="${item.remark}"></td>
+                                    <td th:text="${item.ip}"></td>
+                                    <td th:text="${item.params}"></td>
+                                    <td th:text="${item.workTime}"></td>
+                                    <td th:text="${item.creater}"></td>
+                                    <td th:text="${item.createdTime==0?'':#dates.format(item.createdTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+                                </tr>
+                                <tr class="no-records-found" th:if="${#lists.isEmpty(pageData.list)}">
+                                    <td colspan="8">没有找到匹配的记录</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div th:replace="backend/fragment/frag :: pagination"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function(){$("#loading-example-btn").click(function(){btn=$(this);simpleLoad(btn,true);simpleLoad(btn,false)})});function simpleLoad(btn,state){if(state){btn.children().addClass("fa-spin");btn.contents().last().replaceWith(" Loading")}else{setTimeout(function(){btn.children().removeClass("fa-spin");btn.contents().last().replaceWith(" Refresh")},2000)}};
+</script>
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/projects.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:44 GMT -->
+
+</body>
+</html>

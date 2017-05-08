@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="backend/fragment/frag :: common_header(~{::title},_)">
+    <title>知识猫 - 运营系统</title>
+</head>
+<body class="gray-bg">
+<link href="/public/plugins/datetime-picker/css/bootstrap-datetimepicker.min.css" rel="stylesheet"/>
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>编辑课程信息</h5>
+                </div>
+                <div class="ibox-content">
+                    <form role="form" method="post">
+                        <div class="row">
+                            <div class="col-sm-7 b-r">
+                                <div class="form-group">
+                                    <label>课程标题</label>
+                                    <input type="text" name="name" placeholder="课程标题" required="true"
+                                           th:value="${course.name}"
+                                           class="form-control">
+                                    <input type="hidden" id="userId" th:value="${course.lecturerId}">
+                                    <input type="hidden" name="id" th:value="${course.id}">
+                                </div>
+                                <div class="form-group" id="upload-course-avatar">
+                                    <label>推荐图片</label>
+                                    <img  id="course-avatar" th:src="'http://vke2016-10071423.image.myqcloud.com/' + ${course.avatar}  +'?imageView2/1/w/375/h/180'"/>
+                                    <div id="upLoading" style="display: none;" class="sk-spinner sk-spinner-fading-circle">
+                                        <div class="sk-circle1 sk-circle"></div>
+                                        <div class="sk-circle2 sk-circle"></div>
+                                        <div class="sk-circle3 sk-circle"></div>
+                                        <div class="sk-circle4 sk-circle"></div>
+                                        <div class="sk-circle5 sk-circle"></div>
+                                        <div class="sk-circle6 sk-circle"></div>
+                                        <div class="sk-circle7 sk-circle"></div>
+                                        <div class="sk-circle8 sk-circle"></div>
+                                        <div class="sk-circle9 sk-circle"></div>
+                                        <div class="sk-circle10 sk-circle"></div>
+                                        <div class="sk-circle11 sk-circle"></div>
+                                        <div class="sk-circle12 sk-circle"></div>
+                                    </div>
+                                    <input name="avatar" id="avatar" type="hidden" th:value="${course.avatar}">
+                                </div>
+                                <div class="form-group">
+                                    <label>课程时间</label>
+                                    <div class="form-inline">
+                                        <div class="form-group">
+                                            <label for="startTime" class="sr-only">开始时间</label>
+                                            <input type="text" placeholder="开始时间" name="startTime" id="startTime"
+                                                   th:value="${#dates.format(course.startTime, 'yyyy-MM-dd HH:mm')}"
+                                                   class="form-control form_datetime">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="duration" class="sr-only">持续时间(分钟数)</label>
+                                            <input type="text" placeholder="持续时间" name="duration" id="duration"
+                                                   th:value="${course.duration}"
+                                                   class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>课程价格</label>
+                                    <input type="number" name="roleCode" placeholder="课程价格" th:name="price"
+                                           th:value="${course.price}" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>学员数量(互动生+旁听生)</label>
+                                    <input type="number" name="roleCode" placeholder="学员数量"
+                                           th:value="${course.maxSigupCount}" th:name="maxSigupCount"
+                                           class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" style="padding-left: 0;"><input type="checkbox"
+                                                                                                 th:checked="${course.isHighGrade eq true}"
+                                                                                                 name="isHighGrade"
+                                                                                                 th:value="1">
+                                        设置为优质课程</label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" style="padding-left: 0;">课程状态</label>
+
+                                    <div class="col-sm-10">
+                                        <select class="form-control m-b" name="status">
+                                            <option th:value="0" th:selected="${course.status eq 0}">审核中</option>
+                                            <option th:value="1" th:selected="${course.status eq 1}">报名中</option>
+                                            <option th:value="2" th:selected="${course.status eq 2}">正在直播</option>
+                                            <option th:value="4" th:selected="${course.status eq 4}">未通过审核</option>
+                                            <option th:value="3" th:selected="${course.status eq 3}">结束</option>
+                                            <option th:value="5" th:selected="${course.status eq 5}">关闭</option>
+                                            <option th:value="6" th:selected="${course.status eq 6}">删除</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>课程介绍</label>
+                                    <textarea class="form-control" name="intro" placeholder="课程介绍" rows="3" th:text="${course.intro}"> </textarea>
+                                </div>
+                                <div>
+                                    <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit">
+                                        <strong>保存</strong></button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="backend/fragment/frag::commonScript"></div>
+<script src="/public/plugins/datetime-picker/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+<script src="/public/plugins/datetime-picker/js/locales/bootstrap-datetimepicker.zh-CN.js" type="text/javascript"></script>
+<script src="/public/plugins/webuploader/webuploader.min.js" type="text/javascript" charset="utf-8"></script>
+
+<script th:inline="javascript">
+    $(function () {
+        $(".form_datetime").datetimepicker({
+            format: 'yyyy-mm-dd hh:ii',
+            minView: 'hour',
+            language: 'zh-CN',
+            autoclose: true
+        });
+        var userId = $("#userId");
+
+        /**
+         * 初始化文件上传
+         * @param data
+         */
+        var initUpload = function (data) {
+            var uploader = WebUploader.create({
+                // swf文件路径
+//            swf: '/public/plugins/webuploader/Uploader.swf',
+                // 文件接收服务端。
+                server: 'http://web.image.myqcloud.com/photos/v2/' + data.appid + "/" + data.bucket + "/0",
+                // 选择文件的按钮。可选。
+                // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+                pick: '#upload-course-avatar',
+                auto: true,
+                fileVal: 'FileContent',
+                // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
+                resize: false,
+                accept: {
+                    title: 'Images',
+                    extensions: 'gif,jpg,jpeg,bmp,png'
+                }
+            });
+            //上传之前添加一些附加参数
+            uploader.on('uploadBeforeSend', function (object, _data, headers) {
+                if (data.md5) {
+                    _data['Md5'] = data.md5;
+                }
+                _data['MagicContext'] = JSON.stringify({
+                    userId: userId,
+                    type: 3,
+                    remark: '课程图片'
+                });
+                headers['Authorization'] = data.sign;
+            })
+
+            // 当有文件添加进来的时候
+            uploader.on('fileQueued', function (file) {
+                $("#upLoading").show();
+                // 创建缩略图
+                // 如果为非图片文件，可以不用调用此方法。
+                // thumbnailWidth x thumbnailHeight 为 100 x 100
+                uploader.makeThumb(file, function (error, src) {
+                    if (error) {
+                        $img.replaceWith('<span>不能预览</span>');
+                        return;
+                    }
+                    $("#course-avatar").attr('src', src);
+                }, 375, 180);
+                //计算md5
+                uploader.md5File(file)
+                // 及时显示进度
+                    .progress(function (percentage) {
+                        console.log('Percentage:', percentage);
+                    })
+                    // 完成
+                    .then(function (val) {
+                        data['md5'] = val;
+                    });
+
+            });
+            // 文件上传成功回调
+            uploader.on('uploadSuccess', function (file, res) {
+                $("#avatar").val(res.data.fileid);
+                alert("图片上传成功");
+                $("#upLoading").hide();
+            });
+            //上传失败
+            uploader.on('uploadError', function (file) {
+                $("#upLoading").hide();
+                alert("图片上传失败");
+            })
+        };
+        $.post("/api/file/sign", function (res) {
+            initUpload(res.data);
+        })
+
+    });
+</script>
+
+</body>
+</html>

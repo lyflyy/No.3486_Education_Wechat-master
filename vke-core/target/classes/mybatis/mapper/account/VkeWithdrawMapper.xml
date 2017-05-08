@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhishimao.core.account.dao.VkeWithdrawMapper">
+  <resultMap id="BaseResultMap" type="cn.zhishimao.core.account.entity.VkeWithdraw">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="balance" jdbcType="DECIMAL" property="balance" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="transaction_id" jdbcType="VARCHAR" property="transactionId" />
+    <result column="checked_time" jdbcType="TIMESTAMP" property="checkedTime" />
+    <result column="pay_time" jdbcType="TIMESTAMP" property="payTime" />
+    <result column="completed_time" jdbcType="TIMESTAMP" property="completedTime" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="edit_time" jdbcType="TIMESTAMP" property="editTime" />
+    <result column="version" jdbcType="BIGINT" property="version" />
+    <result column="order_num" jdbcType="VARCHAR" property="orderNum" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    `id`, `user_id`, `user_name`, `remark`, `balance`, `status`, `transaction_id`, `checked_time`, 
+    `pay_time`, `completed_time`, `created_time`, `edit_time`, `version`, `order_num`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from `vke_withdraw`
+    where `id` = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from `vke_withdraw`
+    where `id` = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.zhishimao.core.account.entity.VkeWithdraw">
+    insert into `vke_withdraw` (`id`, `user_id`, `user_name`, 
+      `remark`, `balance`, `status`, 
+      `transaction_id`, `checked_time`, `pay_time`, 
+      `completed_time`, `created_time`, `edit_time`, 
+      `version`, `order_num`)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{balance,jdbcType=DECIMAL}, #{status,jdbcType=VARCHAR}, 
+      #{transactionId,jdbcType=VARCHAR}, #{checkedTime,jdbcType=TIMESTAMP}, #{payTime,jdbcType=TIMESTAMP}, 
+      #{completedTime,jdbcType=TIMESTAMP}, #{createdTime,jdbcType=TIMESTAMP}, #{editTime,jdbcType=TIMESTAMP}, 
+      #{version,jdbcType=BIGINT}, #{orderNum,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.zhishimao.core.account.entity.VkeWithdraw">
+    insert into `vke_withdraw`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        `id`,
+      </if>
+      <if test="userId != null">
+        `user_id`,
+      </if>
+      <if test="userName != null">
+        `user_name`,
+      </if>
+      <if test="remark != null">
+        `remark`,
+      </if>
+      <if test="balance != null">
+        `balance`,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="transactionId != null">
+        `transaction_id`,
+      </if>
+      <if test="checkedTime != null">
+        `checked_time`,
+      </if>
+      <if test="payTime != null">
+        `pay_time`,
+      </if>
+      <if test="completedTime != null">
+        `completed_time`,
+      </if>
+      <if test="createdTime != null">
+        `created_time`,
+      </if>
+      <if test="editTime != null">
+        `edit_time`,
+      </if>
+      <if test="version != null">
+        `version`,
+      </if>
+      <if test="orderNum != null">
+        `order_num`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null">
+        #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionId != null">
+        #{transactionId,jdbcType=VARCHAR},
+      </if>
+      <if test="checkedTime != null">
+        #{checkedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payTime != null">
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="completedTime != null">
+        #{completedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editTime != null">
+        #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=BIGINT},
+      </if>
+      <if test="orderNum != null">
+        #{orderNum,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.zhishimao.core.account.entity.VkeWithdraw">
+    update `vke_withdraw`
+    <set>
+      <if test="userId != null">
+        `user_id` = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null">
+        `user_name` = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        `remark` = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null">
+        `balance` = #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionId != null">
+        `transaction_id` = #{transactionId,jdbcType=VARCHAR},
+      </if>
+      <if test="checkedTime != null">
+        `checked_time` = #{checkedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payTime != null">
+        `pay_time` = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="completedTime != null">
+        `completed_time` = #{completedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdTime != null">
+        `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editTime != null">
+        `edit_time` = #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        `version` = #{version,jdbcType=BIGINT},
+      </if>
+      <if test="orderNum != null">
+        `order_num` = #{orderNum,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.zhishimao.core.account.entity.VkeWithdraw">
+    update `vke_withdraw`
+    set `user_id` = #{userId,jdbcType=BIGINT},
+      `user_name` = #{userName,jdbcType=VARCHAR},
+      `remark` = #{remark,jdbcType=VARCHAR},
+      `balance` = #{balance,jdbcType=DECIMAL},
+      `status` = #{status,jdbcType=VARCHAR},
+      `transaction_id` = #{transactionId,jdbcType=VARCHAR},
+      `checked_time` = #{checkedTime,jdbcType=TIMESTAMP},
+      `pay_time` = #{payTime,jdbcType=TIMESTAMP},
+      `completed_time` = #{completedTime,jdbcType=TIMESTAMP},
+      `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+      `edit_time` = #{editTime,jdbcType=TIMESTAMP},
+      `version` = #{version,jdbcType=BIGINT},
+      `order_num` = #{orderNum,jdbcType=VARCHAR}
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+
+  <sql id="Base_Condition">
+    <if test="userId != null">
+      and `user_id` = #{userId,jdbcType=BIGINT}
+    </if>
+    <if test="userName != null">
+      and `user_name` = #{userName,jdbcType=BIGINT}
+    </if>
+    <if test="remark != null">
+      and `remark` = #{remark,jdbcType=VARCHAR}
+    </if>
+    <if test="balance != null">
+      and `balance` = #{balance,jdbcType=DECIMAL}
+    </if>
+    <if test="status != null">
+      and `status` = #{status,jdbcType=VARCHAR}
+    </if>
+    <if test="transactionId != null">
+      and `transaction_id` = #{transactionId,jdbcType=VARCHAR}
+    </if>
+    <if test="checkedTime != null">
+      `checked_time` = #{checkedTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="payTime != null">
+      and `pay_time` = #{payTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="completedTime != null">
+      and `completed_time` = #{completedTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="createdTime != null">
+      and `created_time` = #{createdTime,jdbcType=TIMESTAMP}n
+    </if>
+    <if test="editTime != null">
+      and `edit_time` = #{editTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="version != null">
+      and `version` = #{version,jdbcType=BIGINT}
+    </if>
+    <if test="orderNum != null">
+      and `order_num` = #{orderNum,jdbcType=BIGINT}
+    </if>
+  </sql>
+  <select id="listByEntity" parameterType="cn.zhishimao.core.account.entity.VkeWithdraw" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from vke_withdraw
+    where 1=1
+    <include refid="Base_Condition" />
+  </select>
+
+  <select id="findPageWhthDrawByUserId" resultMap="BaseResultMap">
+      select <include refid="Base_Column_List" />
+      from vke_withdraw
+      where user_id = #{userId,jdbcType=BIGINT}
+      order by created_time desc
+  </select>
+
+  <select id="findByUserIdAndStatus" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from vke_withdraw
+    where user_id = #{userId,jdbcType=BIGINT}
+    and status in
+    <foreach item="item" index="index" collection="status"
+             open="(" separator="," close=")">
+      #{item}
+    </foreach>
+
+  </select>
+</mapper>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="backend/fragment/frag :: common_header(~{::title},_)">
+    <title>知识猫 - 运营系统</title>
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>添加推荐内容</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row m-b-sm m-t-sm">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <input type="text" placeholder="搜索课程或者讲师名并推广" class="input-sm form-control"> <span
+                                    class="input-group-btn">
+                                        <button type="button" class="btn btn-sm btn-primary"> 搜索</button> </span>
+                            </div>
+                        </div>
+                    </div>
+                    <form role="form">
+                        <div class="row">
+                            <div class="col-sm-7 b-r">
+                                <div class="form-group">
+                                    <label>推荐语</label>
+                                    <input type="text" name="title" placeholder="推荐语" required="true"
+                                           class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>推荐图片</label>
+                                    <input type="text" name="roleCode" placeholder="角色标识" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>推荐时间区间</label>
+                                    <div class="form-inline">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail2" class="sr-only">开始时间</label>
+                                            <input type="text" placeholder="开始时间" id="exampleInputEmail2"
+                                                   class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputPassword2" class="sr-only">结束时间</label>
+                                            <input type="text" placeholder="结束时间" id="exampleInputPassword2"
+                                                   class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>推荐内容</label>
+                                    <textarea class="form-control" name="content" placeholder="推荐内容"
+                                              rows="3"> </textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>备注</label>
+                                    <textarea class="form-control" name="remark" placeholder="推荐内容"
+                                              rows="2"> </textarea>
+                                </div>
+                                <div>
+                                    <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit">
+                                        <strong>保存</strong></button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhishimao.core.pms.dao.PmsRoleMapper">
+  <resultMap id="BaseResultMap" type="cn.zhishimao.core.pms.entity.PmsRole">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="version" jdbcType="BIGINT" property="version" />
+    <result column="creater" jdbcType="VARCHAR" property="creater" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="editor" jdbcType="VARCHAR" property="editor" />
+    <result column="edit_time" jdbcType="TIMESTAMP" property="editTime" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="role_code" jdbcType="VARCHAR" property="roleCode" />
+    <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    `id`, `version`, `creater`, `created_time`, `editor`, `edit_time`, `status`, `remark`, 
+    `role_code`, `role_name`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from `pms_role`
+    where `id` = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from `pms_role`
+    where `id` = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.zhishimao.core.pms.entity.PmsRole">
+    insert into `pms_role` (`id`, `version`, `creater`, 
+      `created_time`, `editor`, `edit_time`, 
+      `status`, `remark`, `role_code`, 
+      `role_name`)
+    values (#{id,jdbcType=BIGINT}, #{version,jdbcType=BIGINT}, #{creater,jdbcType=VARCHAR}, 
+      #{createdTime,jdbcType=TIMESTAMP}, #{editor,jdbcType=VARCHAR}, #{editTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{roleCode,jdbcType=VARCHAR}, 
+      #{roleName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.zhishimao.core.pms.entity.PmsRole">
+    insert into `pms_role`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        `id`,
+      </if>
+      <if test="version != null">
+        `version`,
+      </if>
+      <if test="creater != null">
+        `creater`,
+      </if>
+      <if test="createdTime != null">
+        `created_time`,
+      </if>
+      <if test="editor != null">
+        `editor`,
+      </if>
+      <if test="editTime != null">
+        `edit_time`,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="remark != null">
+        `remark`,
+      </if>
+      <if test="roleCode != null">
+        `role_code`,
+      </if>
+      <if test="roleName != null">
+        `role_name`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=BIGINT},
+      </if>
+      <if test="creater != null">
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editor != null">
+        #{editor,jdbcType=VARCHAR},
+      </if>
+      <if test="editTime != null">
+        #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="roleCode != null">
+        #{roleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="roleName != null">
+        #{roleName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.zhishimao.core.pms.entity.PmsRole">
+    update `pms_role`
+    <set>
+      <if test="version != null">
+        `version` = #{version,jdbcType=BIGINT},
+      </if>
+      <if test="creater != null">
+        `creater` = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editor != null">
+        `editor` = #{editor,jdbcType=VARCHAR},
+      </if>
+      <if test="editTime != null">
+        `edit_time` = #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        `remark` = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="roleCode != null">
+        `role_code` = #{roleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="roleName != null">
+        `role_name` = #{roleName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.zhishimao.core.pms.entity.PmsRole">
+    update `pms_role`
+    set `version` = #{version,jdbcType=BIGINT},
+      `creater` = #{creater,jdbcType=VARCHAR},
+      `created_time` = #{createdTime,jdbcType=TIMESTAMP},
+      `editor` = #{editor,jdbcType=VARCHAR},
+      `edit_time` = #{editTime,jdbcType=TIMESTAMP},
+      `status` = #{status,jdbcType=VARCHAR},
+      `remark` = #{remark,jdbcType=VARCHAR},
+      `role_code` = #{roleCode,jdbcType=VARCHAR},
+      `role_name` = #{roleName,jdbcType=VARCHAR}
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+  <sql id="Base_Condition">
+    <if test="id != null">
+      and id = #{id,jdbcType=BIGINT}
+    </if>
+    <if test="version != null">
+      and version = #{version,jdbcType=BIGINT}
+    </if>
+    <if test="creater != null">
+      and creater = #{creater,jdbcType=VARCHAR}
+    </if>
+    <if test="createdTime != null">
+      and createdTime =  #{createdTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="editor != null">
+      and editor = #{editor,jdbcType=VARCHAR}
+    </if>
+    <if test="editTime != null">
+      and editTime = #{editTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="status != null">
+      and status = #{status,jdbcType=VARCHAR}
+    </if>
+    <if test="remark != null">
+      and remark = #{remark,jdbcType=VARCHAR}
+    </if>
+    <if test="roleCode != null">
+      and roleCode = #{roleCode,jdbcType=VARCHAR}
+    </if>
+    <if test="roleName != null">
+      and roleName = #{roleName,jdbcType=VARCHAR}
+    </if>
+  </sql>
+  <select id="listByEntity" parameterType="cn.zhishimao.core.pms.entity.PmsRole" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from `pms_role`
+    where 1=1
+    <include refid="Base_Condition" />
+    order by created_time
+  </select>
+
+  <select id="findAll">
+    select
+    <include refid="Base_Column_List" />
+    from `pms_role`
+  </select>
+
+  <select id="findRoleCodeByLoginName" parameterType="java.lang.String" resultType="java.lang.String">
+    select pmsRole.role_code roleCode
+    from pms_operator pmsOperator,pms_role_operator roleOperator,pms_role pmsRole
+    where pmsOperator.id = roleOperator.operator_id and roleOperator.role_id = pmsRole.id and pmsOperator.login_name =#{loginName,jdbcType=VARCHAR};
+  </select>
+
+  <select id="findRoleByLoginName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select pmsRole.`id`, pmsRole.`version`, pmsRole.`creater`, pmsRole.`created_time`, pmsRole.`editor`, pmsRole.`edit_time`, pmsRole.`status`, pmsRole.`remark`,
+    pmsRole.`role_code`, pmsRole.`role_name`
+    from pms_role pmsRole ,pms_operator pmsOperator ,pms_role_operator pmsRoleOperator
+    where pmsRole.id = pmsRoleOperator.role_id and pmsRoleOperator.operator_id = pmsOperator.id and pmsOperator.login_name = #{loginName,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="findUngrantRolesByLoginName" parameterType="java.lang.String" resultMap="BaseResultMap">
+  </select>
+
+  <select id="findRoleByRoleCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List" />
+      from pms_role
+      where role_code = #{roleCode,jdbcType=VARCHAR}
+  </select>
+</mapper>

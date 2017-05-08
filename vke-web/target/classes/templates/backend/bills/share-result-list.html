@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="backend/fragment/frag :: common_header(~{::title},_)">
+    <title>知识猫 - 运营系统</title>
+</head>
+<body>
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>分享返现</h5>
+                    <div class="ibox-tools">
+                        <!--<a href="projects.html" class="btn btn-primary btn-xs">添加管理员</a>-->
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="project-list">
+                        <table id="exampleTableToolbar" data-mobile-responsive="true" class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>
+                                    新用户
+                                </th>
+                                <th>
+                                    分享用户
+                                </th>
+                                <th>
+                                    课程
+                                </th>
+                                <th>
+                                    分享收益
+                                </th>
+                                <th>
+                                    创建时间
+                                </th>
+                                <th>
+                                    操作
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr   th:if="${not #lists.isEmpty(pageData.list)}" th:each="item : ${pageData.list}">
+                                <td>
+                                    <a  th:href="@{/backend/user/info/{userId}(userId=${item[new_id]})}"><span th:text="${item[new_user]}"></span></a>
+                                </td>
+                                <td>
+                                    <a  th:href="@{/backend/user/info/{userId}(userId=${item[share_user_id]})}"><span th:text="${item[share_user]}"></span></a>
+                                </td>
+                                <td>
+                                    <a th:href="@{/backend/course/info/{courseId}(courseId=${item[course_id]})}"><span
+                                            th:text="${item[course_name]}"></span></a>
+                                </td>
+                                <td  th:text="${#numbers.formatDecimal(item[earnings_amount],1,2,'COMMA')}"></td>
+                                <td  th:text="${item[created_time]==0?'':#dates.format(item[created_time],'yyyy-MM-dd HH:mm:ss')}"></td>
+                                <td>
+                                    <!--<a  th:href="@{/backend/bills/account/accountHistoty/{id}(id=${item.id})}"  class="btn btn-white btn-sm"><i class="fa fa-folder"></i> 账户历史流水 </a>-->
+                                </td>
+                            </tr>
+                            <tr class="no-records-found" th:if="${#lists.isEmpty(pageData.list)}">
+                                <td colspan="8">没有找到匹配的记录</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div th:replace="backend/fragment/frag :: pagination"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

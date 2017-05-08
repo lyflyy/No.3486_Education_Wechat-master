@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="backend/fragment/frag :: common_header(~{::title},_)">
+    <title>知识猫 - 运营系统</title>
+</head>
+<body>
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>所有讲师</h5>
+                    <div class="ibox-tools">
+                        <!--<a href="projects.html" class="btn btn-primary btn-xs">添加管理员</a>-->
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <!--<div class="row m-b-sm m-t-sm">-->
+                        <!--<div class="col-md-1">-->
+                            <!--<button type="button" id="refresh" class="btn btn-white btn-sm"><i class="fa fa-refresh"></i> 刷新</button>-->
+                        <!--</div>-->
+                        <!--<div class="col-md-11">-->
+                            <!--<form method="get">-->
+                                <!--<div class="input-group">-->
+                                    <!--<input type="text" th:name="searchKey" th:value="${param.searchKey}" placeholder="请输入讲师名称" class="input-sm form-control"> <span class="input-group-btn">-->
+                                        <!--<button type="submit" class="btn btn-sm btn-primary"> 搜索</button> </span>-->
+                                <!--</div>-->
+                            <!--</form>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                    <div class="project-list">
+
+
+                        <table id="exampleTableToolbar" data-mobile-responsive="true" class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th style="" data-field="nickName">
+                                    <div class="th-inner ">昵称</div>
+                                    <div class="fht-cell"></div>
+                                </th>
+                                <th style="" data-field="realName">
+                                    <div class="th-inner ">真实姓名</div>
+                                    <div class="fht-cell"></div>
+                                </th>
+                                <th style="" data-field="sex">
+                                    <div class="th-inner ">性别</div>
+                                    <div class="fht-cell"></div>
+                                </th>
+                                <th style="" data-field="phone">
+                                    <div class="th-inner ">手机号</div>
+                                    <div class="fht-cell"></div>
+                                </th>
+                                <th style="" data-field="status">
+                                    <div class="th-inner ">状态</div>
+                                    <div class="fht-cell"></div>
+                                </th>
+                                <th style="" data-field="title">
+                                    <div class="th-inner ">头衔</div>
+                                    <div class="fht-cell"></div>
+                                </th>
+                                <th style="" data-field="isHighQuality">
+                                    <div class="th-inner ">是否优质讲师</div>
+                                    <div class="fht-cell"></div>
+                                </th>
+                                <th style="" data-field="subscibeCount">
+                                    <div class="th-inner ">订阅学生数量</div>
+                                    <div class="fht-cell"></div>
+                                </th>
+                                <th style="" data-field="isRecommend">
+                                    <div class="th-inner ">是否推广</div>
+                                    <div class="fht-cell"></div>
+                                </th>
+                                <th style="" data-field="lecturerCreateTime">
+                                    <div class="th-inner ">讲师注册时间</div>
+                                    <div class="fht-cell"></div>
+                                </th>
+                                <th style="" data-field="operate">
+                                    <div class="th-inner ">操作</div>
+                                    <div class="fht-cell"></div>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr   th:if="${not #lists.isEmpty(pageData.list)}" th:each="item : ${pageData.list}">
+                                    <td>
+                                        <a  th:href="@{/backend/user/info/lecturer/{userId}(userId=${item[userId]})}"><span th:text="${item[nickName]}"></span></a>
+                                    </td>
+                                    <td  th:text="${item[realName]}"></td>
+                                    <td  th:text="${item[sex]}"></td>
+                                    <td  th:text="${item[phone]}"></td>
+                                    <td>
+                                        <span th:switch="${item[status]}">
+                                            　　<i th:case="'0'">正常</i>
+                                        </span>
+                                    </td>
+                                    <td  th:text="${item[title]}"></td>
+                                    <td  th:text="${item[isHighQuality]==1?'是':'否'}"></td>
+                                    <td  th:text="${item[subscibeCount]}"></td>
+                                    <td  th:text="${item[isRecommend]==1?'已推广':'未推广'}"></td>
+                                    <td  th:text="${item[lecturerCreateTime]==0?'':#dates.format(item[lecturerCreateTime],'yyyy-MM-dd HH:mm:ss')}"></td>
+                                    <td class="project-actions">
+                                        <div  th:if="${item[isRecommend]==0}">
+                                            <a th:href="@{/backend/recommend/toRecommend/2/{objId}(objId=${item.lecturerId})}" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> 推广</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="no-records-found" th:if="${#lists.isEmpty(pageData.list)}">
+                                    <td colspan="8">没有找到匹配的记录</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div th:replace="backend/fragment/frag :: pagination"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<script src="/public/js/jquery.min.js?v=2.1.4"></script>
+<script src="/public/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="/public/js/content.min.js?v=1.0.0"></script>
+<script src="/public/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+<script src="/public/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+<script src="/public/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+<script src="/public/js/admin-common.js?v=2.1.4"></script>
+<!--<script src="/public/js/demo/bootstrap-table-demo.min.js"></script>-->
+
+</body>
+</html>

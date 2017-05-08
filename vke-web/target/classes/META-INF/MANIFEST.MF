@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Implementation-Title: vke-web
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: Administrator
+Implementation-Vendor-Id: cn.zhishimao
+Build-Jdk: 1.8.0_31
+Implementation-URL: http://projects.spring.io/spring-boot/vke-service/
+ vke-web/
+Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
+Main-Class: cn.zhishimao.web.VkeWebApplication
+

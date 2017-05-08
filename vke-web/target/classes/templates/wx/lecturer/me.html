@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="wx/fragment/frag :: common_header(~{::title},_)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>我订阅的讲师</title>
+</head>
+<body class="vke">
+<div class="container" id="app">
+    <div class="page course">
+        <div class="page__bd">
+            <div class="weui-tab">
+                <div class="weui-tab__panel">
+                    <div class="weui-panel weui-panel_access  lecturer-panel">
+                        <div class="weui-panel__bd" th:if="${not #lists.isEmpty(pageData.list)}" >
+                            <a th:each="item : ${pageData.list}"  th:href="@{/wx/view/lecturer/{lecturerId}(lecturerId=${item[id]})}" class="weui-media-box weui-media-box_appmsg ">
+                                <div class="weui-media-box__hd">
+                                    <img class="weui-media-box__thumb avatar"
+                                         th:src="${item[avatar]}">
+                                    <span th:if="${item[is_high_quality] eq true}"
+                                          class="quality vke-icon-you"></span>
+                                </div>
+
+                                <div class="weui-media-box__bd">
+                                    <h5 class="weui-media-box__title"><span th:text="${item.nick_name}"></span> 讲师</h5>
+                                    <p class="weui-media-box__desc">
+                                        <span th:text="${item[title]}"></span>
+                                    </p>
+                                </div>
+                                <div class="weui-media-box__bd text-right">
+                                    <p class="weui-media-box__desc">
+                                        <span th:text="${item[subscibe_count]}"></span> 订阅
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="weui-msg" th:if="${#lists.isEmpty(pageData.list)}">
+                            <div class="weui-msg__icon-area"><i class="weui-icon-warn weui-icon_msg-primary"></i></div>
+                            <div class="weui-msg__text-area">
+                                <p class="weui-msg__desc">暂时没有记录</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:include="wx/fragment/frag::commonScript"></div>
+<script src="/public/wx/js/main.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="backend/fragment/frag :: common_header(~{::title},_)">
+    <title>知识猫 - 登录 运营系统</title>
+</head>
+
+<body class="gray-bg">
+<h1>哎呀呀，快点去找管理员授权啊！！！</h1>
+<div th:text="${url}"></div>
+<div th:text="${message}"></div>
+</body>
+</html>
